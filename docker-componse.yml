@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16.4
+    container_name: meu-postgres
+    networks:
+      - compose-bridge
+
+  blogensino:
+    image: autor/blogensino:1.0
+    container_name: blogensino
+    networks:
+      - compose-bridge
+    ports:
+      - 3001:3001
+
+networks:
+  compose-bridge:
+    driver: bridge
