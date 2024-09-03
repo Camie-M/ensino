@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    build: .
+    container_name: challenge2-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tech123
+      POSTGRES_DB: challenge2
+    ports:
+      - "5434:5434"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  node:
+    image: brenoferrari/challenge2:1
+    container_name: challenge2-node
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=tech123
+      - DB_NAME=challenge2
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
+
+    # version: '3.8'
+
+    # services:
+    #   db:
+    #     image: postgres:14
+    #     environment:
+    #       POSTGRES_USER: yourusername
+    #       POSTGRES_PASSWORD: yourpassword
+    #       POSTGRES_DB: yourdatabase
+    #     volumes:
+    #       - postgres_data:/var/lib/postgresql/data
+    #     ports:
+    #       - "5432:5432"
+
+    #   app:
+    #     build:
+    #       context: ./ensino
+    #       dockerfile: Dockerfile
+    #     ports:
+    #       - "3000:3000"
+    #     environment:
+    #       NODE_ENV: development
+    #       DATABASE_URL: postgres://yourusername:yourpassword@db:5432/yourdatabase
+    #     depends_on:
+    #       - db
+    #     volumes:
+    #       - ./node-app:/usr/src/app
+    #       - /usr/src/app/node_modules
+
+    # volumes:
+    #   postgres_data:
+

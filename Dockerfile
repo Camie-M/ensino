@@ -1,15 +1,10 @@
-FROM node:20
+FROM postgres:16
 
-WORKDIR /src
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=tech123
+ENV POSTGRES_DB=challenge2
+COPY . docker-entrypoint-initdb.d
+# COPY challenge2.sql /docker-entrypoint-initdb.d/
 
-ARG PORT=6000
-
-ENV PORT=$PORT
-
-EXPOSE $PORT
-
-COPY . .
-
-RUN npm install
-
-ENTRYPOINT npm start
+EXPOSE 5434
+CMD ["postgres", "-c", "port=5434"]
