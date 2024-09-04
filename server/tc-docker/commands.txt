@@ -1,3 +1,0 @@
-docker build -t challenge2:latest .    
-docker run --name challenge2 -d challenge2:latest
-docker-compose up -d
