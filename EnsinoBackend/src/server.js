@@ -2,17 +2,21 @@ import express from "express"
 import Sequelize from "sequelize"
 
 import Post from "./models/Post.js"
+import User from "./models/User.js"
 import config from './config/database.js'
 
-import postRoutes from './routes.js'
+import postRoutes from './routes/postRoutes.js'
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express()
 app.use(express.json())
 
 const sequelize = new Sequelize(config)
 Post.init(sequelize)
+User.init(sequelize)
 
 app.use('/posts', postRoutes)
+app.use('/user', userRoutes)
 
 sequelize.authenticate().then(() => {
     console.log("Banco de dados conectado")
@@ -20,17 +24,3 @@ sequelize.authenticate().then(() => {
 }).catch(err => {
     console.error(err)
 })
-
-
-/* const mockPosts = [
-    {
-        title: "Titulo 1",
-        author: "Author 1",
-        text: "Lorem ipsum"
-    },
-    {
-        title: "Titulo 2",
-        author: "Author 2",
-        text: "Lorem ipsum"
-    }
-] */
