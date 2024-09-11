@@ -1,7 +1,7 @@
 export default {
   dialect: 'postgres',
-  host: 'localhost',
-  port: 5434,
+  host: 'postgres',
+  port: 5432,
   username: 'postgres',
   password: 'tech123',
   database: 'challenge2',
@@ -10,4 +10,4 @@ export default {
     underscored: true,
     underscoredAll: true
   }
-}
+};

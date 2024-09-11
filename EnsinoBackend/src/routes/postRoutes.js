@@ -1,31 +1,20 @@
-import express from 'express'
-
+import express from 'express';
 import {
-    getAllPosts,
-    getPostById,
-    createPost,
-    editPost,
-    deletePost,
-    searchPost
-} from '../controllers/postController.js'
+  getAllPosts,
+  getPostById,
+  createPost,
+  editPost,
+  deletePost,
+  searchPost
+} from '../controllers/postController.js';
 
-import {
-    createUser,
-    editUser,
-    deleteUser
-} from '../controllers/userController.js'
+const postRoutes = express.Router();
 
-const postRoutes = express.Router()
+postRoutes.get('/get-posts', getAllPosts);
+postRoutes.get('/create-post/:id', getPostById);
+postRoutes.post('/create-post', createPost);
+postRoutes.put('/edit-post/:id', editPost);
+postRoutes.delete('/delete-post/:id', deletePost);
+postRoutes.get('/search', searchPost);
 
-router.get('/get-posts', getAllPosts)
-router.get('/create-post/:id', getPostById)
-router.post('/create-post', createPost)
-router.put('/edit-post/:id', editPost)
-router.delete('/delete-post/:id', deletePost)
-router.get('/search', searchPost)
-
-router.post('/create-user', createUser)
-router.put('/edit-user/:id', editUser)
-router.delete('/delete-user/:id', deleteUser)
-
-export default postRoutes
+export default postRoutes;
