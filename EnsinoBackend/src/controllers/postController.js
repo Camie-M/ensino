@@ -23,13 +23,13 @@ export const createPost = async (req, res) => {
     try {
         const postToCreate = {
             id: crypto.randomUUID(),
-            ...req.body,
-            userId: req.user.id  // Associando o post ao usuário autenticado
+            title: req.body.title,
+            text: req.body.text,
         };
         const post = await PostRepository.create(postToCreate);
         res.status(201).json(post);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ error: error.message, debugMessage: 'Here is what we received', data: req.body }) // Retorna a mensagem de erro
     }
 };
 

@@ -11,12 +11,9 @@ export const createUser = async (req, res) => {
         const user = await User.create(userToCreate)
         res.status(201).json(user)
     } catch (error) {
-        console.error(error); // Loga o erro no console para depuração
-
-        // return 
         return (
-            res.status(500).json({ error: error.message, debugMessage: 'Here is what we received', data: req.body }) // Retorna a mensagem de erro
-        ); // Retorna a mensagem de erro
+            res.status(500).json({ error: error.message, debugMessage: 'Here is what we received', data: req.body })
+        );
 
     }
 }
