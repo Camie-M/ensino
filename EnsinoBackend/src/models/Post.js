@@ -1,25 +1,19 @@
-import Sequelize, { Model } from 'sequelize'
+import Sequelize, { Model } from 'sequelize';
 
 class Post extends Model {
     static init(sequelize) {
         super.init(
             {
-                title: {
-                    type: Sequelize.STRING,
-                    allowNull: false
-                },
-                author: {
-                    type: Sequelize.STRING,
-                    allowNull: false
-                },
-                text: {
-                    type: Sequelize.STRING,
-                    allowNull: false
-                }
-            }, 
-            {sequelize}
-        )
+                title: Sequelize.STRING,
+                text: Sequelize.STRING,
+            },
+            { sequelize }
+        );
+    }
+
+    static associate(models) {
+        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     }
 }
 
-export default Post
+export default Post;
