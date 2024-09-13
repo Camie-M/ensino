@@ -10,7 +10,8 @@ export class UserController {
             const user = await userRepository.create(username, role);
             res.status(201).json(user);
         } catch (error) {
-            res.status(500).json({ message: 'Failed to create user', error });
+            console.error('Error in createUser:', error); // Adiciona um log mais detalhado
+            res.status(500).json({ message: 'Failed to create user', error: error });
         }
     }
 

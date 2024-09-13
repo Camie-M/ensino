@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
+// Define o modelo User
 class User extends sequelize_1.Model {
+    // Inicializa o modelo
     static initModel() {
         User.init({
             id: {
@@ -24,14 +26,28 @@ class User extends sequelize_1.Model {
                 type: sequelize_1.DataTypes.STRING,
                 allowNull: false,
             },
+            createdAt: {
+                type: sequelize_1.DataTypes.DATE,
+                allowNull: false,
+                defaultValue: sequelize_1.DataTypes.NOW,
+            },
+            updatedAt: {
+                type: sequelize_1.DataTypes.DATE,
+                allowNull: false,
+                defaultValue: sequelize_1.DataTypes.NOW,
+            },
         }, {
             sequelize: database_1.default,
             tableName: 'users',
-            timestamps: true,
+            timestamps: true, // Se true, Sequelize adiciona createdAt e updatedAt automaticamente
         });
     }
+    // Associações de modelo
     static associate(models) {
+        // Exemplo de associação, ajuste conforme necessário
         this.hasMany(models.Post, { foreignKey: 'user_id', as: 'posts' });
     }
 }
 exports.User = User;
+// Inicialize o modelo ao iniciar o aplicativo
+User.initModel();
