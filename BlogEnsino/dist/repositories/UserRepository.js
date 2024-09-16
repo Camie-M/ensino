@@ -13,19 +13,27 @@ class UserRepository {
         return User_1.User.create({ username, role });
     }
     async update(id, updatedFields) {
-        const user = await User_1.User.findByPk(id);
-        if (user) {
-            return user.update(updatedFields);
+        try {
+            const user = await User_1.User.findByPk(id);
+            if (user) {
+                return user.update(updatedFields);
+            }
         }
-        return null;
+        catch (error) {
+            throw new Error(`Não foi possivel atualizar o user ${error}`);
+        }
     }
     async delete(id) {
-        const user = await User_1.User.findByPk(id);
-        if (user) {
-            await user.destroy();
-            return true;
+        try {
+            const user = await User_1.User.findByPk(id);
+            if (user) {
+                user.destroy();
+            }
+            return user;
         }
-        return false;
+        catch (error) {
+            throw new Error(`Não foi deletar o user ${error}`);
+        }
     }
 }
 exports.UserRepository = UserRepository;

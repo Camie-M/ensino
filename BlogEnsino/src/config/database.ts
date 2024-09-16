@@ -1,9 +1,11 @@
 import { Sequelize } from 'sequelize';
+import { env } from '../env';
+// Ajuste o caminho conforme necessário
 
-const sequelize = new Sequelize(process.env.DB_NAME || 'challenge2', process.env.DB_USER || 'postgres', process.env.DB_PASSWORD || 'tech123', {
-  host: process.env.DB_HOST || 'localhost',
+const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USER, env.DATABASE_PASSWORD, {
+  host: env.DATABASE_HOST,
   dialect: 'postgres',
-  port: parseInt(process.env.DB_PORT || '5432', 10),
+  port: parseInt(env.DATABASE_PORT, 10),
 });
 
 export default sequelize;

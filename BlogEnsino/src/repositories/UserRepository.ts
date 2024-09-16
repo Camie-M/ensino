@@ -13,20 +13,26 @@ export class UserRepository {
         return User.create({ username, role });
     }
 
-    async update(id: string, updatedFields: Partial<{ username: string; role: string }>) {
-        const user = await User.findByPk(id);
-        if (user) {
-            return user.update(updatedFields);
+    async update(id: string, updatedFields: { username: string; role: string }) {
+        try {
+            const user = await User.findByPk(id);
+            if (user) {
+                return user.update(updatedFields);
+            }
+        } catch (error) {
+            throw new Error(`Não foi possivel atualizar o user ${error}`);
         }
-        return null;
     }
 
     async delete(id: string) {
-        const user = await User.findByPk(id);
-        if (user) {
-            await user.destroy();
-            return true;
+        try {
+            const user = await User.findByPk(id);
+            if (user) {
+                user.destroy();
+            }
+            return user
+        } catch (error) {
+            throw new Error(`Não foi deletar o user ${error}`);
         }
-        return false;
     }
 }

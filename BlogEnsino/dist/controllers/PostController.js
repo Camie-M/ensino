@@ -6,12 +6,14 @@ const postRepository = new PostRepository_1.PostRepository();
 class PostController {
     static async createPost(req, res) {
         try {
-            const { title, text, userId } = req.body;
-            const post = await postRepository.create(title, text, userId);
+            const { title, text, user_id } = req.body;
+            const post = await postRepository.create(title, text, user_id);
             res.status(201).json(post);
+            console.log({ title, text, user_id });
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to create post", error });
+            res.status(500).json({ message: "Falha ao criar o Post", error });
+            throw new Error(`Falha ao criar o Post", ${error}`);
         }
     }
     static async getAllPosts(req, res) {

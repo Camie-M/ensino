@@ -1,39 +1,70 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostRepository = void 0;
-const PostEntity_1 = require("../entities/PostEntity");
-const uuid_1 = require("uuid");
+const Post_1 = require("../models/Post");
+const sequelize_1 = require("sequelize");
 class PostRepository {
-    constructor() {
-        this.posts = [];
-    }
     async findAll() {
-        return this.posts;
+        return Post_1.Post.findAll();
+    }
+    async findByTitle(title) {
+        try {
+            const posts = await Post_1.Post.findAll({
+                where: {
+                    title: {
+                        [sequelize_1.Op.like]: `%${title}%`
+                    }
+                }
+            });
+            return posts;
+        }
+        catch (error) {
+            console.error(`Erro ao procurar pelo titulo ${title} :`, error);
+            throw new Error(`Erro ao procurar pelo titulo ${title} :`);
+        }
     }
     async findById(id) {
-        const post = this.posts.find(post => post.id === id);
-        return post || null;
+        return Post_1.Post.findByPk(id);
     }
-    async create(title, text, userId) {
-        const newPost = new PostEntity_1.PostEntity(title, text, userId, (0, uuid_1.v4)());
-        this.posts.push(newPost);
-        return newPost;
+    async create(title, text, user_id) {
+        try {
+            const post = await Post_1.Post.create({
+                title,
+                text,
+                user_id
+            });
+            if (!user_id) {
+                throw new Error('User ID is missing');
+            }
+            return post;
+        }
+        catch (error) {
+            console.error('Failed to create post:', error); // Isso ajuda a depurar o erro
+            throw new Error('Failed to create post');
+        }
     }
     async update(id, updatedFields) {
-        const postIndex = this.posts.findIndex(post => post.id === id);
-        if (postIndex !== -1) {
-            this.posts[postIndex] = { ...this.posts[postIndex], ...updatedFields, updatedAt: new Date() };
-            return this.posts[postIndex];
+        try {
+            const post = await Post_1.Post.findByPk(id);
+            if (post) {
+                return post.update(updatedFields);
+            }
         }
-        return null;
+        catch (error) {
+            throw new Error(`Não foi possivel atualizar o Post ${error}`);
+        }
     }
     async delete(id) {
-        const postIndex = this.posts.findIndex(post => post.id === id);
-        if (postIndex !== -1) {
-            this.posts.splice(postIndex, 1);
-            return true;
+        try {
+            const post = await Post_1.Post.findByPk(id);
+            if (post) {
+                post.destroy();
+            }
+            return post;
         }
-        return false;
+        catch (error) {
+            throw new Error(`Não foi deletar o Post ${error}`);
+        }
     }
 }
 exports.PostRepository = PostRepository;

@@ -1,20 +1,21 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, CreationOptional, Optional } from 'sequelize';
 import sequelize from '../config/database';
 
 interface PostAttributes {
-    id: string;
+    id: CreationOptional<string>;
     title: string;
     text: string;
     user_id: string;
+    createdAt?: CreationOptional<Date>;
+    updatedAt?: CreationOptional<Date>;
 }
+interface PostCreationAttributes extends Optional<PostAttributes, 'id'> { }
 
-export class Post extends Model<PostAttributes> implements PostAttributes {
-    public id!: string;
+export class Post extends Model<PostAttributes, PostCreationAttributes> implements PostAttributes {
+    public id!: CreationOptional<string>;
     public title!: string;
     public text!: string;
     public user_id!: string;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
 
     static initModel() {
         Post.init(
@@ -30,12 +31,18 @@ export class Post extends Model<PostAttributes> implements PostAttributes {
                     allowNull: false,
                 },
                 text: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                     allowNull: false,
                 },
                 user_id: {
                     type: DataTypes.UUID,
                     allowNull: false,
+                    references: {
+                        model: 'users',
+                        key: 'id'
+                    },
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL'
                 },
             },
             {
@@ -50,3 +57,4 @@ export class Post extends Model<PostAttributes> implements PostAttributes {
         this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     }
 }
+Post.initModel();

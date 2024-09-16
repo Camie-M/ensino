@@ -6,11 +6,13 @@ const postRepository = new PostRepository();
 export class PostController {
   static async createPost(req: Request, res: Response): Promise<void> {
     try {
-      const { title, text, userId } = req.body;
-      const post = await postRepository.create(title, text, userId);
+      const { title, text, user_id } = req.body;
+      const post = await postRepository.create(title, text, user_id);
       res.status(201).json(post);
+      console.log({ title, text, user_id });
     } catch (error) {
-      res.status(500).json({ message: "Failed to create post", error });
+      res.status(500).json({ message: "Falha ao criar o Post", error });
+      throw new Error(`Falha ao criar o Post", ${error}`)
     }
   }
 
@@ -19,7 +21,8 @@ export class PostController {
       const posts = await postRepository.findAll();
       res.status(200).json(posts);
     } catch (error) {
-      res.status(500).json({ message: "Failed to retrieve posts", error });
+      res.status(500).json({ message: "Falha ao Buscar os Posts", error });
+      throw new Error(`Falha ao Buscar os Posts", ${error}`)
     }
   }
 
@@ -29,10 +32,11 @@ export class PostController {
       if (post) {
         res.status(200).json(post);
       } else {
-        res.status(404).json({ message: "Post not found" });
+        res.status(404).json({ message: "Post não encontrado" });
       }
     } catch (error) {
-      res.status(500).json({ message: "Failed to retrieve post", error });
+      res.status(500).json({ message: "Falha ao Buscar o Post", error });
+      throw new Error(`Falha ao Buscar o Post", ${error}`)
     }
   }
 
@@ -42,10 +46,11 @@ export class PostController {
       if (updatedPost) {
         res.status(200).json(updatedPost);
       } else {
-        res.status(404).json({ message: "Post not found" });
+        res.status(404).json({ message: "Post não encontrado" });
       }
     } catch (error) {
-      res.status(500).json({ message: "Failed to update post", error });
+      res.status(500).json({ message: "Falha ao atualizar o Post", error });
+      throw new Error(`Falha ao atualizar o Post", ${error}`)
     }
   }
 
@@ -53,12 +58,13 @@ export class PostController {
     try {
       const success = await postRepository.delete(req.params.id);
       if (success) {
-        res.status(200).json({ message: "Post deleted successfully" });
+        res.status(200).json({ message: "Post Deletado com sucesso" });
       } else {
-        res.status(404).json({ message: "Post not found" });
+        res.status(404).json({ message: "Falha ao deletar o post" });
       }
     } catch (error) {
-      res.status(500).json({ message: "Failed to delete post", error });
+      res.status(500).json({ message: "Falha ao deletar o post", error });
+      throw new Error(`Falha ao deletar o post", ${error}`)
     }
   }
 }

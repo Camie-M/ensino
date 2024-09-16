@@ -1,39 +1,69 @@
-import { PostEntity } from '../entities/PostEntity';
-import { v4 as uuidv4 } from 'uuid';
+import { Post } from '../models/Post';
+import { Op } from 'sequelize';
 
 export class PostRepository {
-    private posts: PostEntity[] = [];
-
-    async findAll(): Promise<PostEntity[]> {
-        return this.posts;
+    async findAll() {
+        return Post.findAll();
     }
-
-    async findById(id: string): Promise<PostEntity | null> {
-        const post = this.posts.find(post => post.id === id);
-        return post || null;
-    }
-
-    async create(title: string, text: string, userId: string): Promise<PostEntity> {
-        const newPost = new PostEntity(title, text, userId, uuidv4());
-        this.posts.push(newPost);
-        return newPost;
-    }
-
-    async update(id: string, updatedFields: Partial<PostEntity>): Promise<PostEntity | null> {
-        const postIndex = this.posts.findIndex(post => post.id === id);
-        if (postIndex !== -1) {
-            this.posts[postIndex] = { ...this.posts[postIndex], ...updatedFields, updatedAt: new Date() };
-            return this.posts[postIndex];
+    async findByTitle(title: string) {
+        try {
+            const posts = await Post.findAll({
+                where: {
+                    title: {
+                        [Op.like]: `%${title}%`
+                    }
+                }
+            });
+            return posts;
+        } catch (error) {
+            console.error(`Erro ao procurar pelo titulo ${title} :`, error);
+            throw new Error(`Erro ao procurar pelo titulo ${title} :`);
         }
-        return null;
+    }
+    async findById(id: string) {
+        return Post.findByPk(id);
     }
 
-    async delete(id: string): Promise<boolean> {
-        const postIndex = this.posts.findIndex(post => post.id === id);
-        if (postIndex !== -1) {
-            this.posts.splice(postIndex, 1);
-            return true;
+    async create(title: string, text: string, user_id: string) {
+        try {
+            const post = await Post.create({
+                title,
+                text,
+                user_id
+            });
+
+            if (!user_id) {
+                throw new Error('User ID is missing');
+            }
+            return post;
+        } catch (error) {
+            console.error('Failed to create post:', error);
+            throw new Error('Failed to create post');
         }
-        return false;
+    }
+
+
+    async update(id: string, updatedFields: Partial<{ title: string; text: string }>) {
+        try {
+            const post = await Post.findByPk(id);
+            if (post) {
+                return post.update(updatedFields);
+            }
+        } catch (error) {
+            throw new Error(`Não foi possivel atualizar o Post ${error}`);
+        }
+    }
+
+
+    async delete(id: string) {
+        try {
+            const post = await Post.findByPk(id);
+            if (post) {
+                post.destroy();
+            }
+            return post
+        } catch (error) {
+            throw new Error(`Não foi deletar o Post ${error}`);
+        }
     }
 }
