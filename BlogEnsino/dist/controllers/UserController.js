@@ -11,8 +11,8 @@ class UserController {
             res.status(201).json(user);
         }
         catch (error) {
-            console.error('Error in createUser:', error); // Adiciona um log mais detalhado
-            res.status(500).json({ message: 'Failed to create user', error: error });
+            console.error('Erro ao criar o usuario:', error);
+            res.status(500).json({ message: 'Erro ao criar o usuario:', error: error });
         }
     }
     static async getAllUsers(req, res) {
@@ -21,7 +21,8 @@ class UserController {
             res.status(200).json(users);
         }
         catch (error) {
-            res.status(500).json({ message: 'Failed to retrieve users', error });
+            console.error('Erro Buscar por Usuarios:', error);
+            res.status(500).json({ message: 'Erro Buscar por Usuarios:', error: error });
         }
     }
     static async getUserById(req, res) {
@@ -31,11 +32,12 @@ class UserController {
                 res.status(200).json(user);
             }
             else {
-                res.status(404).json({ message: 'User not found' });
+                res.status(404).json({ message: 'Usuario não encontrado' });
             }
         }
         catch (error) {
-            res.status(500).json({ message: 'Failed to retrieve user', error });
+            console.error('Erro ao buscar o usuario:', error);
+            res.status(500).json({ message: 'Erro ao buscar o usuario:', error: error });
         }
     }
     static async editUser(req, res) {
@@ -45,25 +47,27 @@ class UserController {
                 res.status(200).json(updatedUser);
             }
             else {
-                res.status(404).json({ message: 'User not found' });
+                res.status(404).json({ message: 'Usuario não encontrado' });
             }
         }
         catch (error) {
-            res.status(500).json({ message: 'Failed to update user', error });
+            console.error('Erro ao buscar Usuario', error);
+            res.status(500).json({ message: 'Erro ao buscar Usuario', error: error });
         }
     }
     static async deleteUser(req, res) {
         try {
             const success = await userRepository.delete(req.params.id);
             if (success) {
-                res.status(200).json({ message: 'User deleted successfully' });
+                res.status(200).json({ message: 'Usuario deletado com sucesso' });
             }
             else {
-                res.status(404).json({ message: 'User not found' });
+                res.status(404).json({ message: 'Usuario não encontrado' });
             }
         }
         catch (error) {
-            res.status(500).json({ message: 'Failed to delete user', error });
+            console.error('Erro ao deletar usuario:', error);
+            res.status(500).json({ message: 'Erro ao deletar usuario:', error: error });
         }
     }
 }

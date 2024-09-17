@@ -40,6 +40,25 @@ export class PostController {
     }
   }
 
+  static async getPostByTitle(req: Request, res: Response): Promise<void> {
+    try {
+      const title = req.query.title as string
+      if (!title) {
+        res.status(400).json({ message: "Título é necessário" });
+        return;
+      }
+      const posts = await postRepository.findByTitle(title);
+      if (posts.length > 0) {
+        res.status(200).json(posts);
+      } else {
+        res.status(404).json({ message: "Post não encontrado" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Falha ao Buscar o Post title", error });
+      throw new Error(`Falha ao Buscar o Post title", ${error}`)
+    }
+  }
+
   static async editPost(req: Request, res: Response): Promise<void> {
     try {
       const updatedPost = await postRepository.update(req.params.id, req.body);

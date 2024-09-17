@@ -11,7 +11,7 @@ class Post extends sequelize_1.Model {
         Post.init({
             id: {
                 type: sequelize_1.DataTypes.UUID,
-                defaultValue: sequelize_1.DataTypes.UUIDV4, // Geração automática de UUID
+                defaultValue: sequelize_1.DataTypes.UUIDV4,
                 allowNull: false,
                 primaryKey: true,
             },
@@ -20,11 +20,11 @@ class Post extends sequelize_1.Model {
                 allowNull: false,
             },
             text: {
-                type: sequelize_1.DataTypes.TEXT, // Alterei para TEXT para suportar textos maiores
+                type: sequelize_1.DataTypes.TEXT,
                 allowNull: false,
             },
             user_id: {
-                type: sequelize_1.DataTypes.UUID, // Definido como UUID, pois é uma chave estrangeira
+                type: sequelize_1.DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: 'users',
@@ -36,11 +36,10 @@ class Post extends sequelize_1.Model {
         }, {
             sequelize: database_1.default,
             tableName: 'posts',
-            timestamps: true, // createdAt e updatedAt são gerados automaticamente
+            timestamps: true,
         });
     }
     static associate(models) {
-        // Associação com o modelo 'User' usando a chave estrangeira 'user_id'
         this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     }
 }
