@@ -20,12 +20,18 @@ class Post extends sequelize_1.Model {
                 allowNull: false,
             },
             text: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_1.DataTypes.TEXT,
                 allowNull: false,
             },
             user_id: {
                 type: sequelize_1.DataTypes.UUID,
                 allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'SET NULL'
             },
         }, {
             sequelize: database_1.default,
@@ -38,3 +44,4 @@ class Post extends sequelize_1.Model {
     }
 }
 exports.Post = Post;
+Post.initModel();

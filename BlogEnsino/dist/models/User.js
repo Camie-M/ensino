@@ -24,6 +24,16 @@ class User extends sequelize_1.Model {
                 type: sequelize_1.DataTypes.STRING,
                 allowNull: false,
             },
+            createdAt: {
+                type: sequelize_1.DataTypes.DATE,
+                allowNull: false,
+                defaultValue: sequelize_1.DataTypes.NOW,
+            },
+            updatedAt: {
+                type: sequelize_1.DataTypes.DATE,
+                allowNull: false,
+                defaultValue: sequelize_1.DataTypes.NOW,
+            },
         }, {
             sequelize: database_1.default,
             tableName: 'users',
@@ -35,3 +45,4 @@ class User extends sequelize_1.Model {
     }
 }
 exports.User = User;
+User.initModel();

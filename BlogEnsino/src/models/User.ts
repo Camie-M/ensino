@@ -1,18 +1,20 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Optional, CreationOptional } from 'sequelize';
 import sequelize from '../config/database';
 
 interface UserAttributes {
-    id: string;
+    id: CreationOptional<string>;
     username: string;
     role: string;
+    createdAt?: CreationOptional<Date>;
+    updatedAt?: CreationOptional<Date>;
 }
 
-export class User extends Model<UserAttributes> implements UserAttributes {
-    public id!: string;
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
+
+export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+    public id!: CreationOptional<string>;
     public username!: string;
     public role!: string;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
 
     static initModel() {
         User.init(
@@ -32,6 +34,16 @@ export class User extends Model<UserAttributes> implements UserAttributes {
                     type: DataTypes.STRING,
                     allowNull: false,
                 },
+                createdAt: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW,
+                },
+                updatedAt: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW,
+                },
             },
             {
                 sequelize,
@@ -45,3 +57,5 @@ export class User extends Model<UserAttributes> implements UserAttributes {
         this.hasMany(models.Post, { foreignKey: 'user_id', as: 'posts' });
     }
 }
+
+User.initModel();

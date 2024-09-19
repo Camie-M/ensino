@@ -2,38 +2,48 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRepository = void 0;
 const UserEntity_1 = require("../entities/UserEntity");
-const uuid_1 = require("uuid");
+const User_1 = require("../models/User");
 class UserRepository {
-    constructor() {
-        this.users = [];
-    }
     async findAll() {
-        return this.users;
+        const users = await User_1.User.findAll();
+        return users.map(user => new UserEntity_1.UserEntity(user.username, user.role, user.id));
     }
     async findById(id) {
-        const user = this.users.find(user => user.id === id);
-        return user || null;
-    }
-    async create(username, role) {
-        const newUser = new UserEntity_1.UserEntity(username, role, (0, uuid_1.v4)());
-        this.users.push(newUser);
-        return newUser;
-    }
-    async update(id, updatedFields) {
-        const userIndex = this.users.findIndex(user => user.id === id);
-        if (userIndex !== -1) {
-            this.users[userIndex] = { ...this.users[userIndex], ...updatedFields, updatedAt: new Date() };
-            return this.users[userIndex];
+        const user = await User_1.User.findByPk(id);
+        if (user) {
+            return new UserEntity_1.UserEntity(user.username, user.role, user.id);
         }
         return null;
     }
-    async delete(id) {
-        const userIndex = this.users.findIndex(user => user.id === id);
-        if (userIndex !== -1) {
-            this.users.splice(userIndex, 1);
-            return true;
+    async create(username, role) {
+        const user = await User_1.User.create({ username, role });
+        return new UserEntity_1.UserEntity(user.username, user.role, user.id);
+    }
+    async update(id, updatedFields) {
+        try {
+            const user = await User_1.User.findByPk(id);
+            if (user) {
+                const updatedUser = await user.update(updatedFields);
+                return new UserEntity_1.UserEntity(updatedUser.username, updatedUser.role, updatedUser.id);
+            }
+            return null;
         }
-        return false;
+        catch (error) {
+            throw new Error(`Não foi possível atualizar o usuário: ${error}`);
+        }
+    }
+    async delete(id) {
+        try {
+            const user = await User_1.User.findByPk(id);
+            if (user) {
+                await user.destroy();
+                return new UserEntity_1.UserEntity(user.username, user.role, user.id);
+            }
+            return null;
+        }
+        catch (error) {
+            throw new Error(`Não foi possível deletar o usuário: ${error}`);
+        }
     }
 }
 exports.UserRepository = UserRepository;
