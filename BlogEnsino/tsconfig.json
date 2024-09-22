@@ -9,6 +9,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "@types/**/*.d.ts"
+  ], // Inclui a nova pasta de tipos
+  "exclude": [
+    "node_modules"
+  ]
 }
