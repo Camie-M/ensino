@@ -7,13 +7,15 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts",
+    "tests/**/*.ts",
     "@types/**/*.d.ts"
-  ], // Inclui a nova pasta de tipos
+  ],
   "exclude": [
     "node_modules"
   ]

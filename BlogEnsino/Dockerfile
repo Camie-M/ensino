@@ -4,6 +4,9 @@ FROM node:20-slim
 # Defina o diretório de trabalho
 WORKDIR /app
 
+# Instale o OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
+
 # Copie apenas os arquivos de manifesto para otimizar o cache de camadas
 COPY package.json package-lock.json ./
 
@@ -15,6 +18,9 @@ RUN npm install -g ts-node
 
 # Copie o restante dos arquivos da aplicação
 COPY . .
+
+# Gere o Prisma Client
+RUN npx prisma generate
 
 # Exponha a porta que o aplicativo usa
 EXPOSE 3001

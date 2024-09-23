@@ -3,14 +3,11 @@ import { PostController } from '../controllers/PostController';
 
 const postRoutes: Router = Router();
 
-postRoutes.post('', PostController.createPost);
-postRoutes.get('', PostController.getAllPosts);
-
-// Ajuste a rota para usar query parameters
-postRoutes.get('/search', PostController.getPostByTitle);
-
-postRoutes.get('/:id', PostController.getPostById);
-postRoutes.put('/:id', PostController.editPost);
-postRoutes.delete('/:id', PostController.deletePost);
+postRoutes.post('/create-post', PostController.createPost);
+postRoutes.get('/get-posts', PostController.getAllPosts);
+postRoutes.get('/search-posts', PostController.getPostByTitle);
+postRoutes.get('/get-post/:id', PostController.getPostById);
+postRoutes.put('/update-post/:id', PostController.editPost);
+postRoutes.delete('/delete-post/:id', PostController.deletePost);
 
 export default postRoutes;

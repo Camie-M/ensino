@@ -1,21 +1,18 @@
-import { User } from '../../models/User';
-import Sequelize from '../../config/database'; // Importa a configuração do banco de dados
+import { PrismaClient } from '@prisma/client';
 
-jest.setTimeout(10000); // 10 segundos
+const prisma = new PrismaClient();
 
+jest.setTimeout(10000); // 10 segundos para o timeout dos testes
 
 describe('User Model', () => {
-    beforeAll(async () => {
-        try {
-            await Sequelize.authenticate();
-            console.log('Connection has been established successfully.');
-            await Sequelize.sync({ force: true }); // Sincroniza o modelo com o banco de dados
-        } catch (error) {
-            console.error('Unable to connect to the database:', error);
-            throw error; // Lança o erro para falhar o teste
-        }
+    // Limpa o banco de dados antes de cada teste
+    beforeEach(async () => {
+        await prisma.user.deleteMany(); // Limpa todos os usuários
     });
 
+    afterAll(async () => {
+        await prisma.$disconnect(); // Desconecta o Prisma ao final dos testes
+    });
 
     test('Deve criar um novo usuário', async () => {
         const userData = {
@@ -23,64 +20,90 @@ describe('User Model', () => {
             role: 'admin',
         };
 
-        const user = await User.create(userData);
+        // Testa a criação do usuário diretamente usando o Prisma
+        const user = await prisma.user.create({
+            data: userData,
+        });
 
+        // Verifica se o usuário foi criado corretamente
         expect(user.username).toBe(userData.username);
         expect(user.role).toBe(userData.role);
-        expect(user.id).toBeDefined();
+        expect(user.id).toBeDefined(); // Verifica se o ID foi gerado
     });
+
     test('Deve consultar um usuário existente pelo ID', async () => {
         const userData = {
             username: 'teste1',
             role: 'admin',
         };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
-        const user = await User.findOne({ where: { id: userId } });
 
-        if (user) {
-            expect(user).toBeDefined(); // Verifica se o usuário foi encontrado
-            expect(user.username).toBe('2cf627fd-e8e1-4737-a1ec-1d9874cf0af6'); // Verifica se o username está correto
-            expect(user.role).toBe('admin'); // Verifica se o role está correto
-        }
+        // Cria um usuário antes de consultar
+        const createdUser = await prisma.user.create({
+            data: userData,
+        });
+
+        // Busca o usuário pelo ID diretamente usando o Prisma
+        const user = await prisma.user.findUnique({
+            where: { id: createdUser.id },
+        });
+
+        // Verifica se o usuário foi encontrado e seus dados são corretos
+        expect(user).toBeDefined();
+        expect(user?.username).toBe(userData.username);
+        expect(user?.role).toBe(userData.role);
     });
+
     test('Deve atualizar um usuário existente', async () => {
         const userData = {
             username: 'teste1',
             role: 'admin',
         };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
 
+        // Cria um usuário antes de atualizar
+        const createdUser = await prisma.user.create({
+            data: userData,
+        });
+
+        // Dados atualizados
         const updatedData = {
-            username: 'teste1',
+            username: 'testeAtualizado',
             role: 'user',
         };
 
-        await User.update(updatedData, { where: { id: userId } });
-        const updatedUser = await User.findOne({ where: { id: userId } });
-        if (updatedUser) {
-            expect(updatedUser).toBeDefined();
-            expect(updatedUser.username).toBe(updatedData.username);
-            expect(updatedUser.role).toBe(updatedData.role);
-        }
+        // Atualiza o usuário diretamente usando o Prisma
+        const updatedUser = await prisma.user.update({
+            where: { id: createdUser.id },
+            data: updatedData,
+        });
 
+        // Verifica se os dados do usuário foram atualizados corretamente
+        expect(updatedUser).toBeDefined();
+        expect(updatedUser.username).toBe(updatedData.username);
+        expect(updatedUser.role).toBe(updatedData.role);
     });
+
     test('Deve deletar um usuário existente', async () => {
         const userData = {
             username: 'teste1',
             role: 'admin',
         };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
 
-        await User.destroy({ where: { id: userId } });
-        const deletedUser = await User.findOne({ where: { id: userId } });
+        // Cria um usuário antes de deletar
+        const createdUser = await prisma.user.create({
+            data: userData,
+        });
 
-        expect(deletedUser).toBeNull(); // Espera que o usuário não exista mais
+        // Deleta o usuário diretamente usando o Prisma
+        await prisma.user.delete({
+            where: { id: createdUser.id },
+        });
+
+        // Verifica se o usuário foi deletado corretamente
+        const deletedUser = await prisma.user.findUnique({
+            where: { id: createdUser.id },
+        });
+
+        // Espera que o usuário não exista mais após a exclusão
+        expect(deletedUser).toBeNull(); // O usuário deve ser null após a exclusão
     });
-});
-
-afterAll(async () => {
-    await Sequelize.close(); // Fecha a conexão com o banco de dados
 });

@@ -12,6 +12,11 @@ services:
       - "5434:5432"
     networks:
       - challenge_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   node:
     build: .
@@ -24,9 +29,14 @@ services:
       - DB_PASSWORD=tech123
       - DB_NAME=challenge2
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - challenge_network
+    volumes:
+      - .:/app
+    command: >
+      sh -c "npx prisma migrate deploy && npm run dev"
 
 networks:
   challenge_network:

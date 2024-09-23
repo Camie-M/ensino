@@ -1,49 +1,54 @@
+import { PrismaClient } from '@prisma/client';
 import { UserEntity } from '../entities/UserEntity';
-import { User } from '../models/User';
+
+const prisma = new PrismaClient();
 
 export class UserRepository {
-    async findAll(): Promise<UserEntity[]> {
-        const users = await User.findAll();
-        return users.map(user => new UserEntity(user.username, user.role, user.id));
+  async findAll(): Promise<UserEntity[]> {
+    const users = await prisma.user.findMany(); // Pega todos os usuários do banco de dados
+    const userEntities: UserEntity[] = [];
+
+    // Itera sobre todos os usuários e converte para UserEntity
+    for (const user of users) {
+      userEntities.push(this.toUserEntity(user));
     }
 
-    async findById(id: string): Promise<UserEntity | null> {
-        const user = await User.findByPk(id);
-        if (user) {
-            return new UserEntity(user.username, user.role, user.id);
-        }
-        return null;
-    }
+    return userEntities;
+  }
 
-    async create(username: string, role: string): Promise<UserEntity> {
-        const user = await User.create({ username, role });
-        return new UserEntity(user.username, user.role, user.id);
-    }
+  async findById(id: string): Promise<UserEntity | null> {
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) return null;
+    return this.toUserEntity(user);
+  }
 
+  async create(username: string, role: string): Promise<UserEntity> {
+    const user = await prisma.user.create({
+      data: {
+        username,
+        role,
+      },
+    });
+    return this.toUserEntity(user);
+  }
 
-    async update(id: string, updatedFields: { username: string; role: string }): Promise<UserEntity | null> {
-        try {
-            const user = await User.findByPk(id);
-            if (user) {
-                const updatedUser = await user.update(updatedFields);
-                return new UserEntity(updatedUser.username, updatedUser.role, updatedUser.id);
-            }
-            return null;
-        } catch (error) {
-            throw new Error(`Não foi possível atualizar o usuário: ${error}`);
-        }
-    }
+  async update(id: string, updatedFields: { username: string; role: string }): Promise<UserEntity | null> {
+    const user = await prisma.user.update({
+      where: { id },
+      data: updatedFields,
+    });
+    if (!user) return null;
+    return this.toUserEntity(user);
+  }
 
-    async delete(id: string): Promise<UserEntity | null> {
-        try {
-            const user = await User.findByPk(id);
-            if (user) {
-                await user.destroy();
-                return new UserEntity(user.username, user.role, user.id);
-            }
-            return null;
-        } catch (error) {
-            throw new Error(`Não foi possível deletar o usuário: ${error}`);
-        }
-    }
+  async delete(id: string): Promise<UserEntity | null> {
+    const user = await prisma.user.delete({ where: { id } });
+    if (!user) return null;
+    return this.toUserEntity(user);
+  }
+
+  // Converte os dados do Prisma para uma entidade UserEntity
+  private toUserEntity(user: { id: string; username: string; role: string }): UserEntity {
+    return new UserEntity(user.username, user.role, user.id);
+  }
 }
