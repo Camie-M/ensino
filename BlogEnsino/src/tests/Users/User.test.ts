@@ -19,7 +19,7 @@ describe('User Model', () => {
 
     test('Deve criar um novo usuário', async () => {
         const userData = {
-            username: 'teste10',
+            username: 'teste11',
             role: 'admin',
         };
 
@@ -30,8 +30,14 @@ describe('User Model', () => {
         expect(user.id).toBeDefined();
     });
     test('Deve consultar um usuário existente pelo ID', async () => {
-        let UserId = "2cf627fd-e8e1-4737-a1ec-1d9874cf0af6"
-        const user = await User.findOne({ where: { id: UserId } });
+        const userData = {
+            username: 'teste1',
+            role: 'admin',
+        };
+        const createdUser = await User.create(userData); // Cria um novo usuário no banco
+        const userId = createdUser.id; // Pega o ID gerado
+        const user = await User.findOne({ where: { id: userId } });
+
         if (user) {
             expect(user).toBeDefined(); // Verifica se o usuário foi encontrado
             expect(user.username).toBe('2cf627fd-e8e1-4737-a1ec-1d9874cf0af6'); // Verifica se o username está correto
@@ -39,20 +45,39 @@ describe('User Model', () => {
         }
     });
     test('Deve atualizar um usuário existente', async () => {
-        let UserId = "2cf627fd-e8e1-4737-a1ec-1d9874cf0af6"
+        const userData = {
+            username: 'teste1',
+            role: 'admin',
+        };
+        const createdUser = await User.create(userData); // Cria um novo usuário no banco
+        const userId = createdUser.id; // Pega o ID gerado
+
         const updatedData = {
             username: 'teste1',
             role: 'user',
         };
 
-        await User.update(updatedData, { where: { id: UserId } });
-        const updatedUser = await User.findOne({ where: { id: UserId } });
+        await User.update(updatedData, { where: { id: userId } });
+        const updatedUser = await User.findOne({ where: { id: userId } });
         if (updatedUser) {
             expect(updatedUser).toBeDefined();
             expect(updatedUser.username).toBe(updatedData.username);
             expect(updatedUser.role).toBe(updatedData.role);
         }
 
+    });
+    test('Deve deletar um usuário existente', async () => {
+        const userData = {
+            username: 'teste1',
+            role: 'admin',
+        };
+        const createdUser = await User.create(userData); // Cria um novo usuário no banco
+        const userId = createdUser.id; // Pega o ID gerado
+
+        await User.destroy({ where: { id: userId } });
+        const deletedUser = await User.findOne({ where: { id: userId } });
+
+        expect(deletedUser).toBeNull(); // Espera que o usuário não exista mais
     });
 });
 
