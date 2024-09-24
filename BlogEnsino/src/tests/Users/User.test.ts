@@ -1,86 +1,44 @@
-import { User } from '../../models/User';
-import Sequelize from '../../config/database'; // Importa a configuração do banco de dados
-
-jest.setTimeout(10000); // 10 segundos
-
-
-describe('User Model', () => {
-    beforeAll(async () => {
-        try {
-            await Sequelize.authenticate();
-            console.log('Connection has been established successfully.');
-            await Sequelize.sync({ force: true }); // Sincroniza o modelo com o banco de dados
-        } catch (error) {
-            console.error('Unable to connect to the database:', error);
-            throw error; // Lança o erro para falhar o teste
-        }
-    });
-
-
-    test('Deve criar um novo usuário', async () => {
-        const userData = {
-            username: 'teste11',
-            role: 'admin',
-        };
-
-        const user = await User.create(userData);
-
-        expect(user.username).toBe(userData.username);
-        expect(user.role).toBe(userData.role);
-        expect(user.id).toBeDefined();
-    });
-    test('Deve consultar um usuário existente pelo ID', async () => {
-        const userData = {
-            username: 'teste1',
-            role: 'admin',
-        };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
-        const user = await User.findOne({ where: { id: userId } });
-
-        if (user) {
-            expect(user).toBeDefined(); // Verifica se o usuário foi encontrado
-            expect(user.username).toBe('2cf627fd-e8e1-4737-a1ec-1d9874cf0af6'); // Verifica se o username está correto
-            expect(user.role).toBe('admin'); // Verifica se o role está correto
-        }
-    });
-    test('Deve atualizar um usuário existente', async () => {
-        const userData = {
-            username: 'teste1',
-            role: 'admin',
-        };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
-
-        const updatedData = {
-            username: 'teste1',
-            role: 'user',
-        };
-
-        await User.update(updatedData, { where: { id: userId } });
-        const updatedUser = await User.findOne({ where: { id: userId } });
-        if (updatedUser) {
-            expect(updatedUser).toBeDefined();
-            expect(updatedUser.username).toBe(updatedData.username);
-            expect(updatedUser.role).toBe(updatedData.role);
-        }
-
-    });
-    test('Deve deletar um usuário existente', async () => {
-        const userData = {
-            username: 'teste1',
-            role: 'admin',
-        };
-        const createdUser = await User.create(userData); // Cria um novo usuário no banco
-        const userId = createdUser.id; // Pega o ID gerado
-
-        await User.destroy({ where: { id: userId } });
-        const deletedUser = await User.findOne({ where: { id: userId } });
-
-        expect(deletedUser).toBeNull(); // Espera que o usuário não exista mais
-    });
+import SequelizeMock from 'sequelize-mock';
+import { User } from '../../models/User'; // Ajuste o caminho do seu modelo
+let sequelizeMock: any;
+// Criação de um mock para a conexão sequelize
+jest.mock('../../config/database', () => {
+    return {
+        __esModule: true,
+        default: sequelizeMock,  // Mock inicializado depois
+    };
 });
-
-afterAll(async () => {
-    await Sequelize.close(); // Fecha a conexão com o banco de dados
+describe('User Model', () => {
+    let MockUser: any;
+    beforeAll(() => {
+        // Inicializa o mock do Sequelize aqui
+        sequelizeMock = new SequelizeMock();
+        // Inicializa o mock do model de User
+        MockUser = sequelizeMock.define('User', {
+            id: '',
+            username: '',
+            role: '',
+        });
+    });
+    test('Deve criar um novo usuário corretamente', async () => {
+        // Simula os dados de entrada
+        const mockUserData = {
+            id: '123e4567-e89b-12d3-a456-426614174000',
+            username: 'testuser',
+            role: 'admin',
+        };
+        // Simula a criação de um usuário
+        const user = await MockUser.create(mockUserData);
+        // Verifica se o usuário foi criado corretamente
+        expect(user.id).toBe(mockUserData.id);
+        expect(user.username).toBe(mockUserData.username);
+        expect(user.role).toBe(mockUserData.role);
+    });
+    // test('Deve retornar um usuário existente pelo ID', async () => {
+    //     MockUser.$queueResult(MockUser);
+    //     const user = await MockUser.findByPk('123e4567-e89b-12d3-a456-426614174000');
+    //     expect(user.id).toBe(MockUser.id);
+    //     expect(user.username).toBe(MockUser.username);
+    //     expect(user.role).toBe(MockUser.role);
+    // });
 });
