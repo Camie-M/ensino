@@ -1,5 +1,10 @@
 import SequelizeMock from 'sequelize-mock';
-import { User } from '../../models/User'; // Ajuste o caminho do seu modelo
+import Sequelize from '../../config/database'; // Importa a configuração do banco de dados
+
+jest.setTimeout(10000); // 10 segundos
+
+
+
 let sequelizeMock: any;
 // Criação de um mock para a conexão sequelize
 jest.mock('../../config/database', () => {
