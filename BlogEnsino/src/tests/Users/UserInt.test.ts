@@ -29,6 +29,7 @@ describe('User Model', () => {
         expect(user.role).toBe(userData.role);
         expect(user.id).toBeDefined();
     });
+
     test('Deve consultar um usuário existente pelo ID', async () => {
         const userData = {
             username: 'teste1',
@@ -44,6 +45,7 @@ describe('User Model', () => {
             expect(user.role).toBe('admin'); // Verifica se o role está correto
         }
     });
+
     test('Deve atualizar um usuário existente', async () => {
         const userData = {
             username: 'teste1',
