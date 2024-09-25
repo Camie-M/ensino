@@ -1,4 +1,4 @@
-export class PostEntity {
+export class PostResource {
     public id: string;
     public title: string;
     public text: string;

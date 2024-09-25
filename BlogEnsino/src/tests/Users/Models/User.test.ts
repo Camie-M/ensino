@@ -1,5 +1,4 @@
 import SequelizeMock from 'sequelize-mock';
-import Sequelize from '../../config/database'; // Importa a configuração do banco de dados
 
 jest.setTimeout(10000); // 10 segundos
 

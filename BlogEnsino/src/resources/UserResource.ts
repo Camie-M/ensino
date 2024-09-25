@@ -1,4 +1,4 @@
-export class UserEntity {
+export class UserResource {
     public id: string;
     public username: string;
     public role: string;
