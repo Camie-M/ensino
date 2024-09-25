@@ -27,6 +27,17 @@ export class UserService {
         }
     }
 
+    async findById(id: string): Promise<UserResource> {
+        try {
+            const user = await this.findUserById(id)
+            return UserMapper.mapToResource(user)
+
+        } catch (error) {
+            throw new Error(`Não foi possível encontrar o usuário: ${error}`);
+        }
+    }
+
+
     async update(id: string, updatedFields: { username: string; role: string }): Promise<UserResource | null> {
         try {
             const user = await this.findUserById(id);

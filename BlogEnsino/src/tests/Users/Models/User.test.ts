@@ -1,10 +1,11 @@
 import SequelizeMock from 'sequelize-mock';
+import Sequelize from '../../../config/database'; // Importa a configuração do banco de dados
 
 jest.setTimeout(10000); // 10 segundos
 
 let sequelizeMock: any;
 // Criação de um mock para a conexão sequelize
-jest.mock('../../config/database', () => {
+jest.mock('../../../config/database', () => {
     return {
         __esModule: true,
         default: sequelizeMock,  // Mock inicializado depois
