@@ -3,6 +3,8 @@ import { User } from './User';
 import { Post } from './Post';
 import sequelize from '../config/database';
 
+// testando
+
 const db: { [key: string]: any } = {
     User,
     Post,
