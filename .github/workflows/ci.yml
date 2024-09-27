@@ -36,14 +36,11 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Navigate to BlogEnsino directory
-      run: cd BlogEnsino # Altere para a pasta onde está o package.json
-
     - name: Install dependencies
-      run: npm install
+      run: npm install --prefix BlogEnsino
 
     - name: Build the project
-      run: npm run build
+      run: npm run build --prefix BlogEnsino
 
     - name: Run tests
       env:
@@ -51,10 +48,10 @@ jobs:
         DB_USER: postgres
         DB_PASSWORD: tech123
         DB_NAME: challenge2
-      run: npm run test
+      run: npm run test --prefix BlogEnsino
 
     - name: Upload coverage report
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
-        path: ./coverage
+        path: BlogEnsino/coverage
