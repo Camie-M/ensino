@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { PostRepository } from "../repositories/PostRepository";
+import { PostService } from "../services/PostService";
 
-const postRepository = new PostRepository();
+const postService = new PostService();
 
 export class PostController {
   static async createPost(req: Request, res: Response): Promise<void> {
     try {
       const { title, text, user_id } = req.body;
-      const post = await postRepository.create(title, text, user_id);
+      const post = await postService.create(title, text, user_id);
       res.status(201).json(post);
       console.log({ title, text, user_id });
     } catch (error) {
@@ -18,7 +18,7 @@ export class PostController {
 
   static async getAllPosts(req: Request, res: Response): Promise<void> {
     try {
-      const posts = await postRepository.findAll();
+      const posts = await postService.findAll();
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json({ message: "Falha ao Buscar os Posts", error });
@@ -28,7 +28,7 @@ export class PostController {
 
   static async getPostById(req: Request, res: Response): Promise<void> {
     try {
-      const post = await postRepository.findById(req.params.id);
+      const post = await postService.findById(req.params.id);
       if (post) {
         res.status(200).json(post);
       } else {
@@ -43,11 +43,7 @@ export class PostController {
   static async getPostByTitle(req: Request, res: Response): Promise<void> {
     try {
       const title = req.query.title as string
-      if (!title) {
-        res.status(400).json({ message: "Título é necessário" });
-        return;
-      }
-      const posts = await postRepository.findByTitle(title);
+      const posts = await postService.findByTitle(title);
       if (posts.length > 0) {
         res.status(200).json(posts);
       } else {
@@ -61,7 +57,7 @@ export class PostController {
 
   static async editPost(req: Request, res: Response): Promise<void> {
     try {
-      const updatedPost = await postRepository.update(req.params.id, req.body);
+      const updatedPost = await postService.update(req.params.id, req.body);
       if (updatedPost) {
         res.status(200).json(updatedPost);
       } else {
@@ -75,15 +71,20 @@ export class PostController {
 
   static async deletePost(req: Request, res: Response): Promise<void> {
     try {
-      const success = await postRepository.delete(req.params.id);
-      if (success) {
-        res.status(200).json({ message: "Post Deletado com sucesso" });
-      } else {
-        res.status(404).json({ message: "Falha ao deletar o post" });
-      }
+      await postService.delete(req.params.id);
+      res.status(200).json({ message: 'Post deletado com sucesso' });
     } catch (error) {
-      res.status(500).json({ message: "Falha ao deletar o post", error });
-      throw new Error(`Falha ao deletar o post", ${error}`)
+      console.error('Erro ao deletar post:', error);
+
+      if (error instanceof Error) {
+        if (error.message.includes('Post não encontrado')) {
+          res.status(404).json({ message: 'Post não encontrado' });
+        } else {
+          res.status(500).json({ message: 'Erro ao deletar Post', error: error.message });
+        }
+      } else {
+        res.status(500).json({ message: 'Erro desconhecido ao deletar Post' });
+      }
     }
   }
 }

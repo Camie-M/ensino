@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { UserRepository } from '../repositories/UserRepository';
+import { UserService } from '../services/UserService';
 
-const userRepository = new UserRepository();
+const userService = new UserService();
 
 export class UserController {
     static async createUser(req: Request, res: Response): Promise<void> {
         try {
             const { username, role } = req.body;
-            const user = await userRepository.create(username, role);
+            const user = await userService.create(username, role);
             res.status(201).json(user);
         } catch (error) {
             console.error('Erro ao criar o usuario:', error);
@@ -17,7 +17,7 @@ export class UserController {
 
     static async getAllUsers(req: Request, res: Response): Promise<void> {
         try {
-            const users = await userRepository.findAll();
+            const users = await userService.findAll();
             res.status(200).json(users);
         } catch (error) {
             console.error('Erro Buscar por Usuarios:', error);
@@ -27,7 +27,7 @@ export class UserController {
 
     static async getUserById(req: Request, res: Response): Promise<void> {
         try {
-            const user = await userRepository.findById(req.params.id);
+            const user = await userService.findById(req.params.id);
             if (user) {
                 res.status(200).json(user);
             } else {
@@ -41,7 +41,7 @@ export class UserController {
 
     static async editUser(req: Request, res: Response): Promise<void> {
         try {
-            const updatedUser = await userRepository.update(req.params.id, req.body);
+            const updatedUser = await userService.update(req.params.id, req.body);
             if (updatedUser) {
                 res.status(200).json(updatedUser);
             } else {
@@ -55,15 +55,22 @@ export class UserController {
 
     static async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const success = await userRepository.delete(req.params.id);
-            if (success) {
-                res.status(200).json({ message: 'Usuario deletado com sucesso' });
-            } else {
-                res.status(404).json({ message: 'Usuario não encontrado' });
-            }
+            await userService.delete(req.params.id);
+            res.status(200).json({ message: 'Usuário deletado com sucesso' });
         } catch (error) {
-            console.error('Erro ao deletar usuario:', error);
-            res.status(500).json({ message: 'Erro ao deletar usuario:', error: error });
+            console.error('Erro ao deletar usuário:', error);
+
+            if (error instanceof Error) {
+                if (error.message.includes('Usuário não encontrado')) {
+                    res.status(404).json({ message: 'Usuário não encontrado' });
+                } else {
+                    res.status(500).json({ message: 'Erro ao deletar usuário', error: error.message });
+                }
+            } else {
+                res.status(500).json({ message: 'Erro desconhecido ao deletar usuário' });
+            }
         }
     }
+
+
 }

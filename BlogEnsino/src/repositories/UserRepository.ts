@@ -1,49 +1,29 @@
-import { UserEntity } from '../entities/UserEntity';
+import { UserResource } from '../resources/UserResource';
 import { User } from '../models/User';
+import { Op } from 'sequelize';
 
 export class UserRepository {
-    async findAll(): Promise<UserEntity[]> {
-        const users = await User.findAll();
-        return users.map(user => new UserEntity(user.username, user.role, user.id));
+    findAll(): Promise<User[]> {
+        return User.findAll();
     }
 
-    async findById(id: string): Promise<UserEntity | null> {
-        const user = await User.findByPk(id);
-        if (user) {
-            return new UserEntity(user.username, user.role, user.id);
-        }
-        return null;
+    findById(id: string): Promise<User | null> {
+        return User.findByPk(id);
     }
 
-    async create(username: string, role: string): Promise<UserEntity> {
-        const user = await User.create({ username, role });
-        return new UserEntity(user.username, user.role, user.id);
+    findByUsername(username: string): Promise<User | null> {
+        return User.findOne({ where: { username: username } })
     }
 
-
-    async update(id: string, updatedFields: { username: string; role: string }): Promise<UserEntity | null> {
-        try {
-            const user = await User.findByPk(id);
-            if (user) {
-                const updatedUser = await user.update(updatedFields);
-                return new UserEntity(updatedUser.username, updatedUser.role, updatedUser.id);
-            }
-            return null;
-        } catch (error) {
-            throw new Error(`Não foi possível atualizar o usuário: ${error}`);
-        }
+    create(username: string, role: string): Promise<User> {
+        return User.create({ username, role })
     }
 
-    async delete(id: string): Promise<UserEntity | null> {
-        try {
-            const user = await User.findByPk(id);
-            if (user) {
-                await user.destroy();
-                return new UserEntity(user.username, user.role, user.id);
-            }
-            return null;
-        } catch (error) {
-            throw new Error(`Não foi possível deletar o usuário: ${error}`);
-        }
+    update(user: User, fields: { username: string; role: string }): Promise<User> {
+        return user.update(fields)
+    }
+
+    delete(user: User): Promise<void> {
+        return user.destroy()
     }
 }
