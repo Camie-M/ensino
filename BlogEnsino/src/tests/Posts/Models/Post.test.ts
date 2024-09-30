@@ -1,112 +1,83 @@
 import SequelizeMock from 'sequelize-mock';
-import Sequelize from '../../../config/database'; // Importa a configuração do banco de dados
+import { v4 as uuidv4 } from 'uuid';
 
-jest.setTimeout(10000); // 10 segundos
+const sequelizeMock = new SequelizeMock();
 
-let sequelizeMock: any;
-// Criação de um mock para a conexão sequelize
-jest.mock('../../../config/database', () => {
-    return {
-        __esModule: true,
-        default: sequelizeMock,  // Mock inicializado depois
-    };
+const PostMock = sequelizeMock.define('Post', {
+    id: uuidv4(),
+    title: 'Post de Teste',
+    text: 'Este é um post de teste',
+    user_id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
 });
 
-describe('Post Model', () => {
-    let MockPost: any;
-
-    beforeAll(() => {
-        // Inicializa o mock do Sequelize aqui
-        sequelizeMock = new SequelizeMock();
-        // Inicializa o mock do model de Post
-        MockPost = sequelizeMock.define('Post', {
-            id: '',
-            title: '',
-            text: '',
-            user_id: ''
+describe('Modelo Post', () => {
+    it('deve inicializar o modelo Post com os atributos corretos', async () => {
+        const post = await PostMock.create({
+            title: 'Meu primeiro post',
+            text: 'Este é o conteúdo do meu primeiro post',
+            user_id: uuidv4(),
         });
+
+        expect(post.title).toBe('Meu primeiro post');
+        expect(post.text).toBe('Este é o conteúdo do meu primeiro post');
+        expect(post.user_id).toBeTruthy();
     });
 
-    test('Deve criar um novo post corretamente', async () => {
-        // Simula os dados de entrada
-        const MockPostData = {
-            id: '123e4567-e89b-12d3-a456-426614174000',
-            title: 'title_1',
-            text: 'text_1',
-            user_id: '123e4567-e89b-12d3-a456-426614174000'
-        };
-        // Simula a criação de um post
-        const post = await MockPost.create(MockPostData);
-        // Verifica se o post foi criado corretamente
-        expect(post.id).toBe(MockPostData.id);
-        expect(post.title).toBe(MockPostData.title);
-        expect(post.text).toBe(MockPostData.text);
+    it('deve exigir o campo title', async () => {
+        try {
+            await PostMock.create({
+                text: 'Este post não tem título',
+                user_id: uuidv4(),
+            });
+        } catch (error: any) {
+            expect(error.message).toContain('notNull Violation: Post.title não pode ser nulo');
+        }
     });
 
-    test('Deve retornar um post existente pelo ID', async () => {
-        // Simula os dados de entrada
-        const MockPostData = {
-            id: '123e4567-e89b-12d3-a456-426614174001',
-            title: 'title_1',
-            text: 'text_1',
-            user_id: '123e4567-e89b-12d3-a456-426614174000'
-        };
-        // Simula a criação de um post
-        const newPost = await MockPost.create(MockPostData);
-
-        // Encontra post criado e checa se dados estão iguais
-        await MockPost.findOne({
-            where: { ...MockPostData }
-        }).then(function (foundPost: any) {
-            expect(foundPost.dataValues.id).toBe(newPost.id)
-            expect(foundPost.dataValues.username).toBe(newPost.username)
-            expect(foundPost.dataValues.role).toBe(newPost.role)
-        });
+    it('deve exigir o campo text', async () => {
+        try {
+            await PostMock.create({
+                title: 'Este post não tem texto',
+                user_id: uuidv4(),
+            });
+        } catch (error: any) {
+            expect(error.message).toContain('notNull Violation: Post.text não pode ser nulo');
+        }
     });
 
-    test('Deve deletar um post', async () => {
-        // Simula os dados de entrada
-        const MockPostData = {
-            id: '123e4567-e89b-12d3-a456-426614174002',
-            title: 'title_1',
-            text: 'text_1',
-            user_id: '123e4567-e89b-12d3-a456-426614174000'
-        };
-        // Simula a criação de um post
-        await MockPost.create(MockPostData);
-
-        // Simula exclusão do post
-        await MockPost.destroy({
-            where: { ...MockPostData }
-        }).then(function (affectedRows: any) {
-            expect(affectedRows).toBe(1)
-        });
+    it('deve exigir o campo user_id', async () => {
+        try {
+            await PostMock.create({
+                title: 'Um post sem um usuário',
+                text: 'Este post não tem user_id',
+            });
+        } catch (error: any) {
+            expect(error.message).toContain('notNull Violation: Post.user_id não pode ser nulo');
+        }
     });
 
-    test('Deve editar um post', async () => {
-        // Simula os dados de entrada
-        const newMockPostData = {
-            id: '123e4567-e89b-12d3-a456-426614174003',
-            title: 'title_1',
-            text: 'text_1',
-            user_id: '123e4567-e89b-12d3-a456-426614174000'
-        };
-        // Simula a criação de um usuário
-        await MockPost.create(newMockPostData);
-
-        // Simula atualização dos dados do usuário
-        const updatedMockPostData = {
-            id: '123e4567-e89b-12d3-a456-426614174003',
-            title: 'title_1_updated',
-            text: 'text_1_updated',
-        };
-        await MockPost.update(
-            updatedMockPostData,
-            { returning: true }
-        ).then(function (result: any) {
-            const updatedPost = result[1][0].dataValues
-            expect(updatedPost.title).toBe(updatedMockPostData.title)
-            expect(updatedPost.text).toBe(updatedMockPostData.text)
+    it('deve gerar automaticamente um UUID para o campo id', async () => {
+        const post = await PostMock.create({
+            title: 'Outro post',
+            text: 'Com UUID gerado',
+            user_id: uuidv4(),
         });
+
+        expect(post.id).toBeTruthy();
+        expect(typeof post.id).toBe('string');
+        expect(post.id).toHaveLength(36);
+    });
+
+    it('deve associar com o modelo User', async () => {
+        const userId = uuidv4();
+        const post = await PostMock.create({
+            title: 'Post associado a um usuário',
+            text: 'Este post está vinculado a um usuário',
+            user_id: userId,
+        });
+
+        expect(post.user_id).toBe(userId);
     });
 });

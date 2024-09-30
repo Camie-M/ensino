@@ -16,6 +16,9 @@ export class UserRepository {
     }
 
     create(username: string, role: string): Promise<User> {
+        if (!role || !username) {
+            return Promise.reject(new Error('Role and Username são necessarios'));
+        }
         return User.create({ username, role })
     }
 
