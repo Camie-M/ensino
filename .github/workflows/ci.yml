@@ -17,8 +17,8 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+          POSTGRES_PASSWORD: tech123
+          POSTGRES_DB: challenge2
         ports:
           - 5434:5432
         options: >-
@@ -44,11 +44,10 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_USER: ${{ secrets.DATABASE_USER }}
-        DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-        DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-        DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+        DB_HOST: localhost
+        DB_USER: postgres
+        DB_PASSWORD: tech123
+        DB_NAME: challenge2
       run: npm run test --prefix BlogEnsino
 
     - name: Upload coverage report
