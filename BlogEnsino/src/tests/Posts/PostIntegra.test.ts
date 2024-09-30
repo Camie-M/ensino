@@ -4,7 +4,7 @@ jest.setTimeout(10000);
 
 let sequelizeMock: any;
 
-jest.mock('../../../config/database', () => {
+jest.mock('../../config/database.ts', () => {
     return {
         __esModule: true,
         default: sequelizeMock,
