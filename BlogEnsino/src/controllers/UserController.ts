@@ -11,7 +11,7 @@ export class UserController {
             const user = await userService.create(username, role);
             res.status(201).json(user);
         } catch (error) {
-            console.error('Erro ao criar o usuario:', error);
+            // console.error('Erro ao criar o usuario:', error);
             res.status(500).json({ message: 'Erro ao criar o usuario:', error: error });
         }
     }
@@ -21,7 +21,7 @@ export class UserController {
             const users = await userService.findAll();
             res.status(200).json(users);
         } catch (error) {
-            console.error('Erro Buscar por Usuarios:', error);
+            // console.error('Erro Buscar por Usuarios:', error);
             res.status(500).json({ message: 'Erro Buscar por Usuarios:', error: error });
         }
     }
@@ -35,7 +35,7 @@ export class UserController {
                 res.status(404).json({ message: 'Usuario não encontrado' });
             }
         } catch (error) {
-            console.error('Erro ao buscar o usuario:', error);
+            // console.error('Erro ao buscar o usuario:', error);
             res.status(500).json({ message: 'Erro ao buscar o usuario:', error: error });
         }
     }
@@ -49,7 +49,7 @@ export class UserController {
                 res.status(404).json({ message: 'Usuario não encontrado' });
             }
         } catch (error) {
-            console.error('Erro ao buscar Usuario', error);
+            // console.error('Erro ao buscar Usuario', error);
             res.status(500).json({ message: 'Erro ao buscar Usuario', error: error });
         }
     }
@@ -59,7 +59,7 @@ export class UserController {
             await userService.delete(req.params.id);
             res.status(200).json({ message: 'Usuário deletado com sucesso' });
         } catch (error) {
-            console.error('Erro ao deletar usuário:', error);
+            // console.error('Erro ao deletar usuário:', error);
 
             if (error instanceof Error) {
                 if (error.message.includes('Usuário não encontrado')) {

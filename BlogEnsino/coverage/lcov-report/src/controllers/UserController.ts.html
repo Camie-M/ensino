@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">24.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/37</span>
+                <span class='fraction'>9/37</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>1/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">24.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/37</span>
+                <span class='fraction'>9/37</span>
             </div>
         
             
@@ -139,20 +139,22 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,19 +218,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from 'express';
-<span class="cstat-no" title="statement not covered" >import { UserService } from '../services/UserService';</span>
+import { UserService } from '../services/UserService';
 &nbsp;
-const userService = <span class="cstat-no" title="statement not covered" >new UserService();</span>
+const userService = new UserService();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class U</span>serController {
-<span class="fstat-no" title="function not covered" >    static </span>async createUser(req: Request, res: Response): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const { username, role } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-            const user = <span class="cstat-no" title="statement not covered" >await userService.create(username, role);</span>
-<span class="cstat-no" title="statement not covered" >            res.status(201).json(user);</span>
+export class UserController {
+&nbsp;
+    static async createUser(req: Request, res: Response): Promise&lt;void&gt; {
+        try {
+            const { username, role } = req.body;
+            const user = await userService.create(username, role);
+            res.status(201).json(user);
         } catch (error) {
-<span class="cstat-no" title="statement not covered" >            console.error('Erro ao criar o usuario:', error);</span>
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({ message: 'Erro ao criar o usuario:', error: error });</span>
+            console.error('Erro ao criar o usuario:', error);
+            res.status(500).json({ message: 'Erro ao criar o usuario:', error: error });
         }
     }
 &nbsp;
@@ -298,7 +301,7 @@ const userService = <span class="cstat-no" title="statement not covered" >new Us
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-30T23:32:28.591Z
+                at 2024-10-01T00:00:56.868Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
