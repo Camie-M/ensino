@@ -22,7 +22,7 @@ export class UserController {
             res.status(200).json(users);
         } catch (error) {
             // console.error('Erro Buscar por Usuarios:', error);
-            res.status(500).json({ message: 'Erro Buscar por Usuarios:', error: error });
+            res.status(500).json({ message: 'Erro ao Buscar por Usuarios:', error: error });
         }
     }
 

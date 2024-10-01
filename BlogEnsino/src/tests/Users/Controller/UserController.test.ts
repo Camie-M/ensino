@@ -1,4 +1,4 @@
-; import { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { UserController } from '../../../controllers/UserController';
 import { UserService } from '../../../services/UserService';
 import { v4 as uuidv4 } from 'uuid';
@@ -67,14 +67,14 @@ describe('Testes da UserController', () => {
     });
 
     it('deve retornar erro ao buscar todos os usuários', async () => {
-        const mockError = new Error('Erro ao criar o usuário');
+        const mockError = new Error('Erro ao buscar o usuário');
         (UserService.prototype.findAll as jest.Mock).mockRejectedValue(mockError);
 
         await UserController.getAllUsers(req as Request, res as Response);
 
         expect(UserService.prototype.findAll).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledWith(500);
-        expect(jsonMock).toHaveBeenCalledWith({ message: 'Erro Buscar por Usuarios:', error: expect.any(Error) });
+        expect(jsonMock).toHaveBeenCalledWith({ message: 'Erro ao Buscar por Usuarios:', error: expect.any(Error) });
     });
 
     it('deve retornar um usuário pelo ID', async () => {

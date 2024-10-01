@@ -12,7 +12,7 @@ export class PostController {
       console.log({ title, text, user_id });
     } catch (error) {
       res.status(500).json({ message: "Falha ao criar o Post", error });
-      throw new Error(`Falha ao criar o Post", ${error}`)
+      // throw new Error(`Falha ao criar o Post", ${error}`)
     }
   }
 
@@ -22,7 +22,7 @@ export class PostController {
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json({ message: "Falha ao Buscar os Posts", error });
-      throw new Error(`Falha ao Buscar os Posts", ${error}`)
+      // throw new Error(`Falha ao Buscar os Posts", ${error}`)
     }
   }
 
@@ -36,7 +36,7 @@ export class PostController {
       }
     } catch (error) {
       res.status(500).json({ message: "Falha ao Buscar o Post", error });
-      throw new Error(`Falha ao Buscar o Post", ${error}`)
+      // throw new Error(`Falha ao Buscar o Post", ${error}`)
     }
   }
 
@@ -51,7 +51,7 @@ export class PostController {
       }
     } catch (error) {
       res.status(500).json({ message: "Falha ao Buscar o Post title", error });
-      throw new Error(`Falha ao Buscar o Post title", ${error}`)
+      // throw new Error(`Falha ao Buscar o Post title", ${error}`)
     }
   }
 
@@ -65,7 +65,7 @@ export class PostController {
       }
     } catch (error) {
       res.status(500).json({ message: "Falha ao atualizar o Post", error });
-      throw new Error(`Falha ao atualizar o Post", ${error}`)
+      // throw new Error(`Falha ao atualizar o Post", ${error}`)
     }
   }
 
