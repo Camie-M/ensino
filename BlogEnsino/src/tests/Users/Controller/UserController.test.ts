@@ -1,7 +1,8 @@
+import { UserService } from './../../../services/UserService';
 import { Request, Response } from 'express';
 import { UserController } from '../../../controllers/UserController';
-import { UserService } from '../../../services/UserService';
 import { v4 as uuidv4 } from 'uuid';
+import { UserResource } from '../../../resources/UserResource';
 
 
 // Mock do UserService
@@ -12,24 +13,20 @@ describe('Testes da UserController', () => {
     let res: Partial<Response>;
     let jsonMock: jest.Mock;
     let statusMock: jest.Mock;
-
-    beforeEach(() => {
-        jsonMock = jest.fn();
-        statusMock = jest.fn(() => ({ json: jsonMock }));
-        req = { body: {} };
-        res = { status: statusMock } as Partial<Response>;
-
-        // Reseta o mock entre os testes
-        (UserService.prototype.create as jest.Mock).mockClear();
-    });
+    jsonMock = jest.fn();
+    statusMock = jest.fn(() => ({ json: jsonMock }));
+    req = { body: {} };
+    res = { status: statusMock } as Partial<Response>;
 
     afterEach(() => {
         jest.clearAllMocks();
     });
 
     it('deve criar um usuário com sucesso', async () => {
-        const mockUser = { id: uuidv4(), username: 'user1', role: 'admin' };
-        (UserService.prototype.create as jest.Mock).mockResolvedValue(mockUser); // Mock do método create
+        const mockUser = new UserResource(
+            'user1', 'admin', uuidv4()
+        )
+        jest.mocked(UserService.prototype.create).mockResolvedValue(mockUser)
 
         req.body = { username: 'user1', role: 'admin' };
 
