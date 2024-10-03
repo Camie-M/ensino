@@ -30,7 +30,7 @@ cd BlogEnsino
 3. Rode o docker-compose para instalar as dependências necessárias:
 
 ```bash
-docker-compose up --build
+docker-compose up
 ```
 
 4. Rode o projeto
