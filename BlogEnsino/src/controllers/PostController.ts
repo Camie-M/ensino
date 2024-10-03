@@ -9,7 +9,7 @@ export class PostController {
       const { title, text, user_id } = req.body;
       const post = await postService.create(title, text, user_id);
       res.status(201).json(post);
-      console.log({ title, text, user_id });
+      // console.log({ title, text, user_id });
     } catch (error) {
       res.status(500).json({ message: "Falha ao criar o Post", error });
       // throw new Error(`Falha ao criar o Post", ${error}`)

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PostController_1 = require("../../../controllers/PostController");
 const PostService_1 = require("../../../services/PostService");
 const uuid_1 = require("uuid");
+const PostResource_1 = require("../../../resources/PostResource");
 // Mock do PostService
 jest.mock('../../../services/PostService');
 describe('Testes da PostController', () => {
@@ -10,20 +11,16 @@ describe('Testes da PostController', () => {
     let res;
     let jsonMock;
     let statusMock;
-    beforeEach(() => {
-        jsonMock = jest.fn();
-        statusMock = jest.fn(() => ({ json: jsonMock }));
-        req = { body: {} };
-        res = { status: statusMock };
-        // Reseta o mock entre os testes
-        PostService_1.PostService.prototype.create.mockClear();
-    });
+    jsonMock = jest.fn();
+    statusMock = jest.fn(() => ({ json: jsonMock }));
+    req = { body: {} };
+    res = { status: statusMock };
     afterEach(() => {
         jest.clearAllMocks();
     });
     it('deve criar um post com sucesso', async () => {
-        const mockPost = { id: (0, uuid_1.v4)(), title: 'titulo1', text: 'texto1', user_id: (0, uuid_1.v4)() };
-        PostService_1.PostService.prototype.create.mockResolvedValue(mockPost);
+        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)());
+        jest.spyOn(PostService_1.PostService.prototype, 'create').mockResolvedValue(mockPost);
         req.body = { title: mockPost.title, text: mockPost.text, user_id: mockPost.user_id };
         await PostController_1.PostController.createPost(req, res);
         expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockPost.user_id);
@@ -31,35 +28,35 @@ describe('Testes da PostController', () => {
         expect(jsonMock).toHaveBeenCalledWith(mockPost);
     });
     it('deve retornar um erro ao falhar na criação do post', async () => {
-        const errorMessage = 'Erro na criação do post';
-        PostService_1.PostService.prototype.create.mockRejectedValue(new Error(errorMessage));
-        req.body = { title: 'titulo1', text: 'texto1', user_id: (0, uuid_1.v4)() };
+        const mockError = new Error('Falha ao criar o Post');
+        jest.spyOn(PostService_1.PostService.prototype, 'create').mockRejectedValue(mockError);
         await PostController_1.PostController.createPost(req, res);
         expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', expect.any(String));
         expect(statusMock).toHaveBeenCalledWith(500);
+        expect(jsonMock).toHaveBeenCalledWith({ message: 'Falha ao criar o Post', error: expect.any(Error) });
     });
     it('deve retornar todos os post', async () => {
-        const mockUsers = [
-            { id: (0, uuid_1.v4)(), title: 'titulo1', text: 'texto1', user_id: (0, uuid_1.v4)() },
-            { id: (0, uuid_1.v4)(), title: 'titulo2', text: 'texto2', user_id: (0, uuid_1.v4)() }
+        const mockPost = [
+            new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)()),
+            new PostResource_1.PostResource('titulo2', 'texto2', (0, uuid_1.v4)())
         ];
-        PostService_1.PostService.prototype.findAll.mockResolvedValue(mockUsers);
+        jest.spyOn(PostService_1.PostService.prototype, 'findAll').mockResolvedValue(mockPost);
         await PostController_1.PostController.getAllPosts(req, res);
         expect(PostService_1.PostService.prototype.findAll).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledWith(200);
-        expect(jsonMock).toHaveBeenCalledWith(mockUsers);
+        expect(jsonMock).toHaveBeenCalledWith(mockPost);
     });
-    it('deve retornar erro ao buscar todos os usuários', async () => {
-        const errorMessage = 'Erro ao buscar todos os posts';
-        PostService_1.PostService.prototype.findAll.mockRejectedValue(new Error(errorMessage));
+    it('deve retornar erro ao buscar todos os Posts', async () => {
+        const mockError = new Error('Não foi possível criar o post:');
+        jest.spyOn(PostService_1.PostService.prototype, 'findAll').mockRejectedValue(mockError);
         await PostController_1.PostController.getAllPosts(req, res);
         expect(PostService_1.PostService.prototype.findAll).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledWith(500);
-        expect(jsonMock).toHaveBeenCalledWith({ message: 'Falha ao Buscar os Posts', error: expect.any(Error) });
+        expect(jsonMock).toHaveBeenCalledWith({ message: "Falha ao Buscar os Posts", error: expect.any(Error) });
     });
     it('deve retornar um post pelo ID', async () => {
-        const mockPost = { id: (0, uuid_1.v4)(), title: 'titulo1', text: 'texto1', user_id: (0, uuid_1.v4)() };
-        PostService_1.PostService.prototype.findById.mockResolvedValue(mockPost);
+        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)());
+        jest.spyOn(PostService_1.PostService.prototype, 'findById').mockResolvedValue(mockPost);
         const mockId = mockPost.id;
         req.params = { id: mockId };
         await PostController_1.PostController.getPostById(req, res);
@@ -68,23 +65,24 @@ describe('Testes da PostController', () => {
         expect(jsonMock).toHaveBeenCalledWith(mockPost);
     });
     it('deve retornar erro 404 quando o id não for encontrado', async () => {
-        const mockPost = { id: (0, uuid_1.v4)(), title: 'titulo1', text: 'texto1', user_id: (0, uuid_1.v4)() };
-        PostService_1.PostService.prototype.findById.mockResolvedValue(null);
-        const mockId = mockPost.id;
+        const mockError = new Error('Post não encontrado');
+        jest.spyOn(PostService_1.PostService.prototype, 'findAll').mockRejectedValue(mockError);
+        const mockUser = { id: (0, uuid_1.v4)(), username: 'user1', role: 'admin' };
+        PostService_1.PostService.prototype.findById.mockResolvedValue(null); // Mock do método create
+        const mockId = mockUser.id;
         req.params = { id: mockId };
         await PostController_1.PostController.getPostById(req, res);
         expect(PostService_1.PostService.prototype.findById).toHaveBeenCalledWith(mockId);
         expect(statusMock).toHaveBeenCalledWith(404);
         expect(jsonMock).toHaveBeenCalledWith({ message: 'Post não encontrado' });
     });
-    // it('deve retornar um post pelo titulo', async () => {
-    //     const mockPost = { id: uuidv4(), title: 'titulo1', text: 'texto1', user_id: uuidv4() };
-    //     (PostService.prototype.findByTitle as jest.Mock).mockResolvedValue(mockPost);
-    //     const mockTitle = mockPost.title
-    //     req.params = { id: mockTitle };
-    //     await PostController.getPostByTitle(req as Request, res as Response);
-    //     expect(PostService.prototype.findByTitle).toHaveBeenCalledWith(mockTitle);
-    //     expect(statusMock).toHaveBeenCalledWith(200);
-    //     expect(jsonMock).toHaveBeenCalledWith(mockPost);
-    // });
+    it('deve retornar um post pelo titulo', async () => {
+        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)());
+        jest.spyOn(PostService_1.PostService.prototype, 'findByTitle').mockResolvedValue([mockPost]);
+        req.query = { title: mockPost.title };
+        await PostController_1.PostController.getPostByTitle(req, res);
+        expect(PostService_1.PostService.prototype.findByTitle).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledWith(200);
+        expect(jsonMock).toHaveBeenCalledWith([mockPost]);
+    });
 });

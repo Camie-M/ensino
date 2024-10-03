@@ -10,7 +10,7 @@ export class PostService {
             const createdPost = await postRepository.create(title, text, user_id)
             return PostMapper.mapToResource(createdPost)
         } catch (error) {
-            throw new Error(`Não foi possível criar o usuário: ${error}`);
+            throw new Error(`Não foi possível criar o post: ${error}`);
         }
     }
 

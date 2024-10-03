@@ -11,7 +11,7 @@ class PostService {
             return PostMapper_1.PostMapper.mapToResource(createdPost);
         }
         catch (error) {
-            throw new Error(`Não foi possível criar o usuário: ${error}`);
+            throw new Error(`Não foi possível criar o post: ${error}`);
         }
     }
     async findAll() {

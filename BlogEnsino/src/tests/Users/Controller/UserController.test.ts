@@ -137,22 +137,6 @@ describe('Testes da UserController', () => {
         expect(jsonMock).toHaveBeenCalledWith({ message: 'Usuario não encontrado' });
     });
 
-    // it('deve deletar um usuario com sucesso', async () => {
-
-    //     const mockUser = new UserResource(
-    //         'user1', 'admin', uuidv4()
-    //     )
-    //     // jest.spyOn(UserService.prototype, 'delete').mockResolvedValue(mockUser);
-
-    //     req.body = { username: 'user1', role: 'admin' };
-
-    //     await UserController.createUser(req as Request, res as Response);
-
-    //     expect(UserService.prototype.delete).toHaveBeenCalledWith('user1', 'admin');
-    //     expect(statusMock).toHaveBeenCalledWith(201);
-    //     expect(jsonMock).toHaveBeenCalledWith(mockUser);
-    // });
-
     it('deve retornar erro 404 ao deletar usuário inexistente', async () => {
         const mockError = new Error('Usuário não encontrado');
         jest.spyOn(UserService.prototype, 'delete').mockRejectedValue(mockError);
