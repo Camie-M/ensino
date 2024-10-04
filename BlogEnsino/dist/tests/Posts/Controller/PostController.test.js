@@ -4,8 +4,9 @@ const PostController_1 = require("../../../controllers/PostController");
 const PostService_1 = require("../../../services/PostService");
 const uuid_1 = require("uuid");
 const PostResource_1 = require("../../../resources/PostResource");
-// Mock do PostService
+const ValidateService_1 = require("../../../services/ValidateService");
 jest.mock('../../../services/PostService');
+const mockTeste = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1YjcxY2FhLTJhYTItNDgzYy1iNGExLTZjYzA3ODZmNDVjZCIsInVzZXJuYW1lIjoicHJvZmVzc29yIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzI4MDA5MDcwLCJleHAiOjE3MjgwOTU0NzB9.92zFUWHREZq5nNgG - sYqtDTeCrqJzY3kfjbqftidjLs";
 describe('Testes da PostController', () => {
     let req;
     let res;
@@ -19,13 +20,24 @@ describe('Testes da PostController', () => {
         jest.clearAllMocks();
     });
     it('deve criar um post com sucesso', async () => {
-        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)());
+        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', mockTeste);
         jest.spyOn(PostService_1.PostService.prototype, 'create').mockResolvedValue(mockPost);
-        req.body = { title: mockPost.title, text: mockPost.text, user_id: mockPost.user_id };
+        req.body = { title: mockPost.title, text: mockPost.text };
+        req.headers = { authorization: mockTeste }; // Usando authorization no header
         await PostController_1.PostController.createPost(req, res);
-        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockPost.user_id);
+        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockTeste);
         expect(statusMock).toHaveBeenCalledWith(201);
         expect(jsonMock).toHaveBeenCalledWith(mockPost);
+    });
+    it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
+        const mockError = new Error('Usuário sem permissão');
+        // Simulando que o serviço de validação lança um erro de permissão
+        jest.spyOn(ValidateService_1.ValidateUserService.prototype, 'validateUser').mockRejectedValue(mockError);
+        // Simula a criação do post
+        req.body = { title: 'titulo1', text: 'texto1', user_id: 'mockUserId' };
+        await PostController_1.PostController.createPost(req, res);
+        expect(statusMock).toHaveBeenCalledWith(403);
+        expect(jsonMock).toHaveBeenCalledWith({ message: 'Usuário sem permissão' });
     });
     it('deve retornar um erro ao falhar na criação do post', async () => {
         const mockError = new Error('Falha ao criar o Post');

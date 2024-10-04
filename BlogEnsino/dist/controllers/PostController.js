@@ -6,14 +6,26 @@ const postService = new PostService_1.PostService();
 class PostController {
     static async createPost(req, res) {
         try {
-            const { title, text, user_id } = req.body;
-            const post = await postService.create(title, text, user_id);
-            res.status(201).json(post);
-            // console.log({ title, text, user_id });
+            const { title, text } = req.body;
+            const token = req.headers.authorization;
+            if (token) {
+                const post = await postService.create(title, text, token);
+                res.status(201).json(post);
+            }
         }
         catch (error) {
-            res.status(500).json({ message: "Falha ao criar o Post", error });
-            // throw new Error(`Falha ao criar o Post", ${error}`)
+            if (error instanceof Error) {
+                if (error.message === "Usuário sem permissão") {
+                    res.status(403).json({ message: "Usuário sem permissão" });
+                    return;
+                }
+                else if (error.message === "Usuário não encontrado") {
+                    res.status(404).json({ message: "Usuário não encontrado" });
+                    return;
+                }
+            }
+            res.status(500).json({ message: "Falha ao criar o Post" });
+            return;
         }
     }
     static async getAllPosts(req, res) {
@@ -59,37 +71,54 @@ class PostController {
     }
     static async editPost(req, res) {
         try {
-            const updatedPost = await postService.update(req.params.id, req.body);
-            if (updatedPost) {
-                res.status(200).json(updatedPost);
+            const token = req.headers.authorization;
+            if (token) {
+                const updatedPost = await postService.update(req.params.id, token, req.body);
+                res.status(201).json(updatedPost);
             }
             else {
                 res.status(404).json({ message: "Post não encontrado" });
             }
         }
         catch (error) {
-            res.status(500).json({ message: "Falha ao atualizar o Post", error });
-            // throw new Error(`Falha ao atualizar o Post", ${error}`)
+            if (error instanceof Error) {
+                if (error.message === "Usuário sem permissão") {
+                    res.status(403).json({ message: "Usuário sem permissão" });
+                    return;
+                }
+                else if (error.message === "Usuário não encontrado") {
+                    res.status(404).json({ message: "Usuário não encontrado" });
+                    return;
+                }
+            }
+            res.status(500).json({ message: "Erro ao editar o post" });
+            return;
         }
     }
     static async deletePost(req, res) {
         try {
-            await postService.delete(req.params.id);
-            res.status(200).json({ message: 'Post deletado com sucesso' });
-        }
-        catch (error) {
-            console.error('Erro ao deletar post:', error);
-            if (error instanceof Error) {
-                if (error.message.includes('Post não encontrado')) {
-                    res.status(404).json({ message: 'Post não encontrado' });
-                }
-                else {
-                    res.status(500).json({ message: 'Erro ao deletar Post', error: error.message });
-                }
+            const token = req.headers.authorization;
+            if (token) {
+                await postService.delete(req.params.id, token);
+                res.status(200).json({ message: 'Post deletado com sucesso' });
             }
             else {
-                res.status(500).json({ message: 'Erro desconhecido ao deletar Post' });
+                res.status(404).json({ message: "Post não encontrado" });
             }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                if (error.message === "Usuário sem permissão") {
+                    res.status(403).json({ message: "Usuário sem permissão" });
+                    return;
+                }
+                else if (error.message === "Usuário não encontrado") {
+                    res.status(404).json({ message: "Usuário não encontrado" });
+                    return;
+                }
+            }
+            res.status(500).json({ message: "Erro ao deletar o post" });
+            return;
         }
     }
 }

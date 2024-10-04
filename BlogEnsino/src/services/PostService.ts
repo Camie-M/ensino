@@ -1,17 +1,19 @@
+import { AuthService } from './AuthService';
 import { PostMapper } from "../mappers/PostMapper";
 import { PostRepository } from "../repositories/PostRepository";
 import { PostResource } from "../resources/PostResource";
+import { ValidateUserService } from "./ValidateService";
 
 const postRepository = new PostRepository()
+const validateUserService = new ValidateUserService()
+const authService = new AuthService()
 
 export class PostService {
-    async create(title: string, text: string, user_id: string): Promise<PostResource> {
-        try {
-            const createdPost = await postRepository.create(title, text, user_id)
-            return PostMapper.mapToResource(createdPost)
-        } catch (error) {
-            throw new Error(`Não foi possível criar o post: ${error}`);
-        }
+    async create(title: string, text: string, token: string): Promise<PostResource | Error> {
+        await validateUserService.validateUser(token, "admin");
+        const user = await authService.decodeToken(token)
+        const createdPost = await postRepository.create(title, text, user.id);
+        return PostMapper.mapToResource(createdPost);
     }
 
     async findAll(): Promise<PostResource[]> {
@@ -44,23 +46,19 @@ export class PostService {
         }
     }
 
-    async update(id: string, updatedFields: { title: string; text: string }): Promise<PostResource | null> {
-        try {
-            const post = await this.findPostById(id);
-            const updatedPost = await postRepository.update(post, updatedFields)
-            return PostMapper.mapToResource(updatedPost)
-        } catch (error) {
-            throw new Error(`Não foi possível atualizar o Post ${error}`);
-        }
+    async update(id: string, token: string, updatedFields: { title: string; text: string }): Promise<PostResource | Error> {
+        await validateUserService.validateUser(token, "admin");
+        const post = await this.findPostById(id);
+        const updatedPost = await postRepository.update(post, updatedFields)
+
+        return PostMapper.mapToResource(updatedPost)
     }
 
-    async delete(id: string): Promise<void> {
-        try {
-            const post = await this.findPostById(id);
-            postRepository.delete(post)
-        } catch (error) {
-            throw new Error(`Não foi possível deletar o post: ${error}`);
-        }
+    async delete(id: string, token: string): Promise<void> {
+        await validateUserService.validateUser(token, "admin");
+        const post = await this.findPostById(id);
+
+        postRepository.delete(post)
     }
 
     private async findPostById(id: string) {
@@ -68,4 +66,5 @@ export class PostService {
         if (!post) throw new Error("Não encontramos nenhum post com esse titulo");
         return post;
     }
+
 }

@@ -1,18 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
+const AuthService_1 = require("./AuthService");
 const PostMapper_1 = require("../mappers/PostMapper");
 const PostRepository_1 = require("../repositories/PostRepository");
+const ValidateService_1 = require("./ValidateService");
 const postRepository = new PostRepository_1.PostRepository();
+const validateUserService = new ValidateService_1.ValidateUserService();
+const authService = new AuthService_1.AuthService();
 class PostService {
-    async create(title, text, user_id) {
-        try {
-            const createdPost = await postRepository.create(title, text, user_id);
-            return PostMapper_1.PostMapper.mapToResource(createdPost);
-        }
-        catch (error) {
-            throw new Error(`Não foi possível criar o post: ${error}`);
-        }
+    async create(title, text, token) {
+        await validateUserService.validateUser(token, "admin");
+        const user = await authService.decodeToken(token);
+        const createdPost = await postRepository.create(title, text, user.id);
+        return PostMapper_1.PostMapper.mapToResource(createdPost);
     }
     async findAll() {
         try {
@@ -44,24 +45,16 @@ class PostService {
             throw new Error(`Não foi possível encontrar o usuário: ${error}`);
         }
     }
-    async update(id, updatedFields) {
-        try {
-            const post = await this.findPostById(id);
-            const updatedPost = await postRepository.update(post, updatedFields);
-            return PostMapper_1.PostMapper.mapToResource(updatedPost);
-        }
-        catch (error) {
-            throw new Error(`Não foi possível atualizar o Post ${error}`);
-        }
+    async update(id, token, updatedFields) {
+        await validateUserService.validateUser(token, "admin");
+        const post = await this.findPostById(id);
+        const updatedPost = await postRepository.update(post, updatedFields);
+        return PostMapper_1.PostMapper.mapToResource(updatedPost);
     }
-    async delete(id) {
-        try {
-            const post = await this.findPostById(id);
-            postRepository.delete(post);
-        }
-        catch (error) {
-            throw new Error(`Não foi possível deletar o post: ${error}`);
-        }
+    async delete(id, token) {
+        await validateUserService.validateUser(token, "admin");
+        const post = await this.findPostById(id);
+        postRepository.delete(post);
     }
     async findPostById(id) {
         const post = await postRepository.findById(id);

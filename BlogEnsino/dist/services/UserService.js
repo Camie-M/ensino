@@ -36,6 +36,10 @@ class UserService {
             throw new Error(`Não foi possível encontrar o usuário: ${error}`);
         }
     }
+    async findByUsername(username) {
+        const user = await this.findUserByUsername(username);
+        return UserMapper_1.UserMapper.mapToResource(user);
+    }
     async update(id, updatedFields) {
         try {
             const user = await this.findUserById(id);
@@ -55,6 +59,12 @@ class UserService {
         catch (error) {
             throw new Error(`Não foi possível deletar o usuário: ${error}`);
         }
+    }
+    async findUserByUsername(username) {
+        const user = await userRepository.findByUsername(username);
+        if (!user)
+            throw new Error(`Usuário não encontrado por username: ${username}`);
+        return user;
     }
     async findUserById(id) {
         const user = await userRepository.findById(id);

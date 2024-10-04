@@ -37,6 +37,11 @@ export class UserService {
         }
     }
 
+    async findByUsername(username: string): Promise<UserResource> {
+        const user = await this.findUserByUsername(username)
+        return UserMapper.mapToResource(user)
+    }
+
 
     async update(id: string, updatedFields: { username: string; role: string }): Promise<UserResource | null> {
         try {
@@ -56,6 +61,12 @@ export class UserService {
         } catch (error) {
             throw new Error(`Não foi possível deletar o usuário: ${error}`);
         }
+    }
+
+    private async findUserByUsername(username: string) {
+        const user = await userRepository.findByUsername(username);
+        if (!user) throw new Error(`Usuário não encontrado por username: ${username}`);
+        return user;
     }
 
     private async findUserById(id: string) {
