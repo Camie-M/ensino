@@ -23,7 +23,7 @@ describe('Testes da PostController', () => {
         const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', mockTeste);
         jest.spyOn(PostService_1.PostService.prototype, 'create').mockResolvedValue(mockPost);
         req.body = { title: mockPost.title, text: mockPost.text };
-        req.headers = { authorization: mockTeste }; // Usando authorization no header
+        req.headers = { authorization: mockTeste };
         await PostController_1.PostController.createPost(req, res);
         expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockTeste);
         expect(statusMock).toHaveBeenCalledWith(201);

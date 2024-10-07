@@ -1,14 +1,16 @@
-import express, { Application } from 'express';
+import express from 'express';
 import router from './routes';
 import sequelize from './config/database';
-import { User } from './models/User'; // Certifique-se de importar o modelo
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger_output.json';
 
-const app: Application = express();
+const app = express();
 
 app.use(express.json());
 app.use(router);
 
-// Sincronize os modelos com o banco de dados
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 sequelize.sync({ alter: true }).then(() => {
   console.log('Models synchronized with the database');
 }).catch((error) => {
