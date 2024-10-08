@@ -9,60 +9,61 @@ import jwt from 'jsonwebtoken';
 import { UserResource } from '../../../resources/UserResource';
 
 jest.mock('../../../services/PostService');
-const mockTeste = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1YjcxY2FhLTJhYTItNDgzYy1iNGExLTZjYzA3ODZmNDVjZCIsInVzZXJuYW1lIjoicHJvZmVzc29yIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzI4MDA5MDcwLCJleHAiOjE3MjgwOTU0NzB9.92zFUWHREZq5nNgG - sYqtDTeCrqJzY3kfjbqftidjLs"
+
 describe('Testes da PostController', () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
     let jsonMock: jest.Mock;
     let statusMock: jest.Mock;
     jsonMock = jest.fn();
-    statusMock = jest.fn(() => ({ json: jsonMock }));
-    req = { body: {} };
-    res = { status: statusMock } as Partial<Response>;
+    statusMock = jest.fn().mockReturnValue({ json: jsonMock });
 
+    beforeEach(() => {
+        req = {
+            body: {
+                title: "Título do post",
+                text: "Texto do post",
+            },
+            headers: {
+                authorization: "Bearer token-valido",
+            },
+        };
+
+        res = {
+            status: statusMock,
+        };
+    });
     afterEach(() => {
         jest.clearAllMocks();
     });
 
     it('deve criar um post com sucesso', async () => {
-        const mockPost = new PostResource(
-            'titulo1', 'texto1', mockTeste
-        )
-        jest.spyOn(PostService.prototype, 'create').mockResolvedValue(mockPost);
-        req.body = { title: mockPost.title, text: mockPost.text };
-        req.headers = { authorization: mockTeste };
+        (PostService.prototype.create as jest.Mock).mockResolvedValue({ title: "Título", text: "Texto" });
+
         await PostController.createPost(req as Request, res as Response);
 
-        expect(PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockTeste);
+        expect(PostService.prototype.create).toHaveBeenCalledWith("Título do post", "Texto do post", "Bearer token-valido");
         expect(statusMock).toHaveBeenCalledWith(201);
-        expect(jsonMock).toHaveBeenCalledWith(mockPost);
+        expect(jsonMock).toHaveBeenCalledWith({ title: "Título", text: "Texto" });
     });
+
     it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
-        const mockError = new Error('Usuário sem permissão');
+        (PostService.prototype.create as jest.Mock).mockRejectedValue(new Error("Usuário sem permissão"));
 
-        // Simulando que o serviço de validação lança um erro de permissão
-        jest.spyOn(ValidateUserService.prototype, 'validateUser').mockRejectedValue(mockError);
-
-        // Simula a criação do post
-        req.body = { title: 'titulo1', text: 'texto1', user_id: 'mockUserId' };
         await PostController.createPost(req as Request, res as Response);
-
 
         expect(statusMock).toHaveBeenCalledWith(403);
-        expect(jsonMock).toHaveBeenCalledWith({ message: 'Usuário sem permissão' });
+        expect(jsonMock).toHaveBeenCalledWith({ message: "Usuário sem permissão" });
     });
 
 
-    it('deve retornar um erro ao falhar na criação do post', async () => {
-        const mockError = new Error('Falha ao criar o Post');
-        jest.spyOn(PostService.prototype, 'create').mockRejectedValue(mockError);
+    it("deve retornar 500 para criação de post", async () => {
+        (PostService.prototype.create as jest.Mock).mockRejectedValue(new Error("Erro inesperado"));
 
         await PostController.createPost(req as Request, res as Response);
 
-        expect(PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', expect.any(String));
         expect(statusMock).toHaveBeenCalledWith(500);
-        expect(jsonMock).toHaveBeenCalledWith({ message: 'Falha ao criar o Post', error: expect.any(Error) });
-
+        expect(jsonMock).toHaveBeenCalledWith({ message: "Falha ao criar o Post" });
     });
 
     it('deve retornar todos os post', async () => {

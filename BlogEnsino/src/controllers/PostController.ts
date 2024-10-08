@@ -20,11 +20,11 @@ export class PostController {
         } else if (error.message === "Usuário não encontrado") {
           res.status(404).json({ message: "Usuário não encontrado" });
           return
+        } else {
+          res.status(500).json({ message: "Falha ao criar o Post" });
+          return
         }
       }
-
-      res.status(500).json({ message: "Falha ao criar o Post" });
-      return
     }
   }
 

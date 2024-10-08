@@ -6,7 +6,7 @@ const userRepository = new UserRepository();
 
 export class UserService {
 
-    async create(username: string, role: string): Promise<UserResource> {
+    public async create(username: string, role: string): Promise<UserResource> {
         try {
             await this.validateUsername(username);
             const createdUser = await userRepository.create(username, role)
