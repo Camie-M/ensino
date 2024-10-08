@@ -18,6 +18,7 @@ describe('Testes da PostController', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+<<<<<<< HEAD
     // it('deve criar um post com sucesso', async () => {
     //     // jest.spyOn(AuthService.prototype, 'generateToken').mockImplementation()
     //     const mockPost = new PostResource(
@@ -49,6 +50,36 @@ describe('Testes da PostController', () => {
     //     expect(statusMock).toHaveBeenCalledWith(500);
     //     expect(jsonMock).toHaveBeenCalledWith({ message: 'Falha ao criar o Post', error: expect.any(Error) });
     // });
+=======
+    it('deve criar um post com sucesso', async () => {
+        const mockPost = new PostResource_1.PostResource('titulo1', 'texto1', mockTeste);
+        jest.spyOn(PostService_1.PostService.prototype, 'create').mockResolvedValue(mockPost);
+        req.body = { title: mockPost.title, text: mockPost.text };
+        req.headers = { authorization: mockTeste };
+        await PostController_1.PostController.createPost(req, res);
+        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', mockTeste);
+        expect(statusMock).toHaveBeenCalledWith(201);
+        expect(jsonMock).toHaveBeenCalledWith(mockPost);
+    });
+    it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
+        const mockError = new Error('Usuário sem permissão');
+        // Simulando que o serviço de validação lança um erro de permissão
+        jest.spyOn(ValidateService_1.ValidateUserService.prototype, 'validateUser').mockRejectedValue(mockError);
+        // Simula a criação do post
+        req.body = { title: 'titulo1', text: 'texto1', user_id: 'mockUserId' };
+        await PostController_1.PostController.createPost(req, res);
+        expect(statusMock).toHaveBeenCalledWith(403);
+        expect(jsonMock).toHaveBeenCalledWith({ message: 'Usuário sem permissão' });
+    });
+    it('deve retornar um erro ao falhar na criação do post', async () => {
+        const mockError = new Error('Falha ao criar o Post');
+        jest.spyOn(PostService_1.PostService.prototype, 'create').mockRejectedValue(mockError);
+        await PostController_1.PostController.createPost(req, res);
+        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith('titulo1', 'texto1', expect.any(String));
+        expect(statusMock).toHaveBeenCalledWith(500);
+        expect(jsonMock).toHaveBeenCalledWith({ message: 'Falha ao criar o Post', error: expect.any(Error) });
+    });
+>>>>>>> d1651c3a08e33830364c364ae028c9936aaac402
     it('deve retornar todos os post', async () => {
         const mockPost = [
             new PostResource_1.PostResource('titulo1', 'texto1', (0, uuid_1.v4)()),
