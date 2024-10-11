@@ -4,7 +4,6 @@ import { PostService } from '../../../services/PostService';
 import { AuthService } from '../../../services/AuthService';
 import { v4 as uuidv4 } from 'uuid';
 import { PostResource } from '../../../resources/PostResource';
-import { ValidateUserService } from '../../../services/ValidateService';
 import jwt from 'jsonwebtoken';
 import { UserResource } from '../../../resources/UserResource';
 
@@ -38,7 +37,7 @@ describe('Testes da PostController', () => {
     });
 
     it('deve criar um post com sucesso', async () => {
-        (PostService.prototype.create as jest.Mock).mockResolvedValue({ title: "Título", text: "Texto" });
+        PostService.prototype.create = jest.fn().mockResolvedValue({ title: "Título", text: "Texto" });
 
         await PostController.createPost(req as Request, res as Response);
 
@@ -46,6 +45,7 @@ describe('Testes da PostController', () => {
         expect(statusMock).toHaveBeenCalledWith(201);
         expect(jsonMock).toHaveBeenCalledWith({ title: "Título", text: "Texto" });
     });
+
 
     it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
         (PostService.prototype.create as jest.Mock).mockRejectedValue(new Error("Usuário sem permissão"));
