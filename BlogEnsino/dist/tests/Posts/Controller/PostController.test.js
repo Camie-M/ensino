@@ -15,8 +15,8 @@ describe('Testes da PostController', () => {
     beforeEach(() => {
         req = {
             body: {
-                title: "Título do post",
-                text: "Texto do post",
+                title: "Título",
+                text: "Texto",
             },
             headers: {
                 authorization: "Bearer token-valido",
@@ -24,6 +24,7 @@ describe('Testes da PostController', () => {
         };
         res = {
             status: statusMock,
+            json: jsonMock
         };
     });
     afterEach(() => {
@@ -32,12 +33,12 @@ describe('Testes da PostController', () => {
     it('deve criar um post com sucesso', async () => {
         PostService_1.PostService.prototype.create = jest.fn().mockResolvedValue({ title: "Título", text: "Texto" });
         await PostController_1.PostController.createPost(req, res);
-        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith("Título do post", "Texto do post", "Bearer token-valido");
+        expect(PostService_1.PostService.prototype.create).toHaveBeenCalledWith("Título", "Texto", "Bearer token-valido");
         expect(statusMock).toHaveBeenCalledWith(201);
         expect(jsonMock).toHaveBeenCalledWith({ title: "Título", text: "Texto" });
     });
     it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
-        PostService_1.PostService.prototype.create.mockRejectedValue(new Error("Usuário sem permissão"));
+        PostService_1.PostService.prototype.create = jest.fn().mockRejectedValue(new Error("Usuário sem permissão"));
         await PostController_1.PostController.createPost(req, res);
         expect(statusMock).toHaveBeenCalledWith(403);
         expect(jsonMock).toHaveBeenCalledWith({ message: "Usuário sem permissão" });

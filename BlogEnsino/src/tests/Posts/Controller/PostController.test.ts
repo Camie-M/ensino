@@ -20,8 +20,8 @@ describe('Testes da PostController', () => {
     beforeEach(() => {
         req = {
             body: {
-                title: "Título do post",
-                text: "Texto do post",
+                title: "Título",
+                text: "Texto",
             },
             headers: {
                 authorization: "Bearer token-valido",
@@ -30,6 +30,7 @@ describe('Testes da PostController', () => {
 
         res = {
             status: statusMock,
+            json: jsonMock
         };
     });
     afterEach(() => {
@@ -41,14 +42,14 @@ describe('Testes da PostController', () => {
 
         await PostController.createPost(req as Request, res as Response);
 
-        expect(PostService.prototype.create).toHaveBeenCalledWith("Título do post", "Texto do post", "Bearer token-valido");
+        expect(PostService.prototype.create).toHaveBeenCalledWith("Título", "Texto", "Bearer token-valido");
         expect(statusMock).toHaveBeenCalledWith(201);
         expect(jsonMock).toHaveBeenCalledWith({ title: "Título", text: "Texto" });
     });
 
 
     it('Deve lançar erro se role do usuário for diferente de "admin" na criação do post', async () => {
-        (PostService.prototype.create as jest.Mock).mockRejectedValue(new Error("Usuário sem permissão"));
+        PostService.prototype.create = jest.fn().mockRejectedValue(new Error("Usuário sem permissão"));
 
         await PostController.createPost(req as Request, res as Response);
 
@@ -58,7 +59,7 @@ describe('Testes da PostController', () => {
 
 
     it("deve retornar 500 para criação de post", async () => {
-        (PostService.prototype.create as jest.Mock).mockRejectedValue(new Error("Erro inesperado"));
+        PostService.prototype.create = jest.fn().mockRejectedValue(new Error("Erro inesperado"));
 
         await PostController.createPost(req as Request, res as Response);
 
