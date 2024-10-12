@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/server.ts ",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && node swagger.js",
     "swagger-autogen": "node swagger.js",
     "start": "npm run build && npm run swagger-autogen && node dist/server.js",
     "test": "jest"
