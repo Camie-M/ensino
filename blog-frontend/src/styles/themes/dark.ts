@@ -13,9 +13,11 @@ export default {
     },
 
     fontSizes: {
-        h1: "2rem",
+        header: "15rem",
+        h1: "2.5rem",
         h2: "1.5rem",
-        h3: "1.25rem",
+        h3: "1.1rem",
         p: "1rem",
+        footer: "1.2"
     },
 };
