@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
 
-
-interface PostsProps {
-    type?: string; // Definindo a prop 'type' como opcional
-}
-
-const Post: React.FC<PostsProps> = ({ type = 'column' }) => {
-    const [currentType, setCurrentType] = useState(type);
-
-    useEffect(() => {
-        setCurrentType(type); // Atualiza 'currentType' se o 'type' for passado
-    }, [type]);
+const PostColumn: React.FC = () => {
 
     return (
-        <S.Container type={currentType}>
+        <S.Container>
             <S.ContainerImg>
                 <S.img src="./imgs/teste.jpg" alt="Teste" />
             </S.ContainerImg>
@@ -33,4 +23,4 @@ const Post: React.FC<PostsProps> = ({ type = 'column' }) => {
     );
 };
 
-export default Post;
+export default PostColumn;

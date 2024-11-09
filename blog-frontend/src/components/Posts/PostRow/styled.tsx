@@ -1,19 +1,13 @@
 import styled from 'styled-components';
-interface ContainerProps {
-    type: string;
-}
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div`
     display:flex;
-    flex-direction: ${(props) => props.type === 'column' ? 'column' : 'row'};
+    flex-direction:row;
     gap:1rem;
     width:100%;
-    @media only screen and (max-width: 800px) {
-        flex-wrap:wrap;
-    }
 `;
 export const ContainerImg = styled.div`
-width:100%;
+   width:100%;
 `;
 export const ContainerText = styled.div`
     width:100%;
@@ -46,7 +40,6 @@ export const Text = styled.p`
     max-width: auto;
     overflow: hidden;
     text-overflow: ellipsis;
-
 `;
 
 
