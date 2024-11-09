@@ -10,19 +10,11 @@ declare module "styled-components" {
             titles: string;
             text: string;
             background: string;
+            authors: string;
         };
 
         fonts: {
             primary: string;
-        };
-
-        fontSizes: {
-            header: string,
-            h1: string,
-            h2: string,
-            h3: string,
-            p: string,
-            footer: string
         };
     }
 }
