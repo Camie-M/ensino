@@ -1,5 +1,5 @@
 // pages/_app.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import type { AppProps } from 'next/app';
 import usePersistedState from '@/utils/usePersistedState';
@@ -9,11 +9,9 @@ import dark from '@/styles/themes/dark';
 import GlobalStyle from '@/styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // Leitura do tema persistido (usando 'light' como fallback)
-  const [theme, setTheme] = usePersistedState("theme", light);
+  const [theme, setTheme] = useState(light);
 
   const toggleTheme = () => {
-    // Alternando entre light e dark
     setTheme(theme.theme === "light" ? dark : light);
   };
 

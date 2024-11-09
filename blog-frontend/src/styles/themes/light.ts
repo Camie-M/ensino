@@ -9,8 +9,7 @@ export default {
     },
 
     fonts: {
-        primary: 'Inter, sans-serif',
-        secondary: "'Open Sans', sans-serif",
+        primary: "Inter, sans-serif",
     },
 
     fontSizes: {

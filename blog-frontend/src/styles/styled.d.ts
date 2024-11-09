@@ -14,7 +14,6 @@ declare module "styled-components" {
 
         fonts: {
             primary: string;
-            secondary: string;
         };
 
         fontSizes: {
