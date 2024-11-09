@@ -1,14 +1,27 @@
-import "styled-components"
+// styled.d.ts
+import "styled-components";
 
 declare module "styled-components" {
 
     export interface DefaultTheme {
-        theme: string,
+        theme: string;
 
         colors: {
-            titles: string,
-            text: string,
-            background: string
-        },
+            titles: string;
+            text: string;
+            background: string;
+        };
+
+        fonts: {
+            primary: string;
+            secondary: string;
+        };
+
+        fontSizes: {
+            h1: string;
+            h2: string;
+            h3: string;
+            p: string;
+        };
     }
 }

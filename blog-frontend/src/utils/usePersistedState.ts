@@ -1,5 +1,5 @@
+// utils/usePersistedState.ts
 import { useState, useEffect } from "react";
-
 
 function usePersistedState(key: string, initialState: any) {
     const [state, setState] = useState(() => {
@@ -9,8 +9,7 @@ function usePersistedState(key: string, initialState: any) {
                 return JSON.parse(storageValue);
             }
         }
-
-        return initialState;
+        return initialState; // Retorna o valor inicial caso não tenha um valor persistido
     });
 
     useEffect(() => {
@@ -19,7 +18,7 @@ function usePersistedState(key: string, initialState: any) {
         }
     }, [key, state]);
 
-    return [state, setState]
+    return [state, setState];
 }
 
 export default usePersistedState;

@@ -1,4 +1,4 @@
-
+// styles/global.ts
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -11,14 +11,30 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${props => props.theme.colors.background};
     line-height: 1.6;
+    font-family: ${props => props.theme.fonts.primary};
   }
 
-  h1,h2,h3{
-    color:${props => props.theme.colors.titles};
+  h1, h2, h3 {
+    color: ${props => props.theme.colors.titles};
   }
-  p{
-    color:${props => props.theme.colors.text};
+
+  h1 {
+    font-size: ${props => props.theme.fontSizes.h1};
   }
+
+  h2 {
+    font-size: ${props => props.theme.fontSizes.h2};
+  }
+
+  h3 {
+    font-size: ${props => props.theme.fontSizes.h3};
+  }
+
+  p {
+    color: ${props => props.theme.colors.text};
+    font-size: ${props => props.theme.fontSizes.p};
+  }
+
   ul, ol {
     list-style: none;
   }
@@ -27,7 +43,6 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-
 `;
 
 export default GlobalStyle;
