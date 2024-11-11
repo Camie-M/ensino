@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-    display:flex;
-    flex-direction:column;
-    gap:1rem;
-    width:100%;
-`;
-export const ContainerImg = styled.div`
-width:100%;
-`;
 export const ContainerText = styled.div`
     width:100%;
     display:flex;
@@ -17,11 +8,6 @@ export const ContainerText = styled.div`
     justify-content: space-around;
 `;
 
-export const img = styled.img`
-    width: inherit;
-    height: 10rem;
-    object-fit: cover;
-`;
 
 export const Title = styled.h1`
     font-size: 1.5rem;
@@ -42,5 +28,3 @@ export const Text = styled.p`
     text-overflow: ellipsis;
 
 `;
-
-

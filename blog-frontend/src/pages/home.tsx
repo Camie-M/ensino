@@ -1,54 +1,33 @@
 // pages/index.tsx
 import React from 'react';
 import styled from 'styled-components';
-// import PostRow from '@/components/Posts/PostRow/Posts';
-// import PostColumn from '@/components/Posts/PostColumn/Posts';
 import Post from '@/components/Posts/Posts';
-interface Props {
-  toggleTheme(): void;
-}
+import ConteinerText from '@/components/Posts/ContainerText';
+import ImgContainer from '@/components/Posts/ImgContainer';
 
 export const Container = styled.div`
   width:100%;
 `;
-export const Teste = styled.div`
-   display:flex;
-   flex-direction:row;
-   gap:1rem;
-   justify-content: center;
-   @media only screen and (max-width: 800px) {
-        flex-wrap:wrap;
-    }
-`;
-export const Teste2 = styled.div`
-   display:flex;
-   flex-direction:row;
-   gap:1rem;
-   justify-content: center;
-   @media only screen and (max-width: 800px) {
-        flex-wrap:wrap;
-    }
-`;
 
-const HomePage: React.FC<Props> = ({ toggleTheme }) => {
+
+const HomePage: React.FC = () => {
   return (
     <Container>
-      <Teste>
-        <div>
-          <Post type="column" />
-        </div>
-        <div>
-          <Post type="row" />
-          <Post type="row" />
-        </div>
-      </Teste>
-      <Teste2>
-        <Post type="column" />
-        <Post type="column" />
-        <Post type="column" />
-        <Post type="column" />
-      </Teste2>
-    </Container>
+      <Post
+        type="row"
+        img="./imgs/teste.jpg"
+        alt="Descrição da imagem"
+        author="Autor Exemplo"
+        title="Título do Post"
+        text="Este é o texto do post." />
+      <Post
+        type="column"
+        img="./imgs/teste.jpg"
+        alt="Descrição da imagem"
+        author="Autor Exemplo"
+        title="Título do Post"
+        text="Este é o texto do post." />
+    </Container >
   );
 };
 

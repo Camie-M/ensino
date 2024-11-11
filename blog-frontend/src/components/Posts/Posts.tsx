@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
+import ConteinerText, { ConteinerTextProps } from './ContainerText';
+import ImgContainer, { PostImg } from './ImgContainer';
 
-
-interface PostsProps {
-    type?: string; // Definindo a prop 'type' como opcional
+interface PostsProps extends PostImg, ConteinerTextProps {
+    type?: string;
 }
 
-const Post: React.FC<PostsProps> = ({ type = 'column' }) => {
+const Post: React.FC<PostsProps> = ({ type = 'column', img, alt, author, title, text }) => {
     const [currentType, setCurrentType] = useState(type);
 
     useEffect(() => {
@@ -15,21 +16,9 @@ const Post: React.FC<PostsProps> = ({ type = 'column' }) => {
 
     return (
         <S.Container type={currentType}>
-            <S.ContainerImg>
-                <S.img src="./imgs/teste.jpg" alt="Teste" />
-            </S.ContainerImg>
-            <S.ContainerText>
-                <S.Data>
-                    Sunday, 1 jan 2023
-                </S.Data>
-                <S.Title>
-                    Grid system for better Design User Interface
-                </S.Title>
-                <S.Text>
-                    A grid system is a design tool used to arrange content on a webpage. It is a series of vertical and horizontal lines that create a matrix of intersecting points, which can be used to align and organize page elements. Grid systems are used to create a consistent look and feel across a website, and can help to make the layout more visually appealing and easier to navigate.
-                </S.Text>
-            </S.ContainerText>
-        </S.Container>
+            <ImgContainer img={img} alt={alt} />
+            <ConteinerText author={author} title={title} text={text} />
+        </S.Container >
     );
 };
 
