@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as S from './styled';
 
 const Tabela: React.FC = () => {
     return (
-        <S.Tabela>
+        <table>
             <thead>
                 <tr>
-                    <th>teste1</th>
-                    <th>teste2</th>
-                    <th>teste3</th>
-                    <th>teste4</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>a1</td>
-                    <td>a2</td>
-                    <td>a3</td>
-                    <td>a4</td>
+                    <td>Anom</td>
+                    <td>19</td>
+                    <td>Male</td>
                 </tr>
                 <tr>
-                    <td>b1</td>
-                    <td>b2</td>
-                    <td>b3</td>
-                    <td>b4</td>
+                    <td>Megha</td>
+                    <td>19</td>
+                    <td>Female</td>
+                </tr>
+                <tr>
+                    <td>Subham</td>
+                    <td>25</td>
+                    <td>Male</td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>teste</th>
-                    <td>1</td>
-                </tr>
-            </tfoot>
-        </S.Tabela>
+        </table>
     );
 };
 
