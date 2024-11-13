@@ -2,8 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Post from '@/components/Posts/Posts';
-import ConteinerText from '@/components/Posts/ContainerText';
-import ImgContainer from '@/components/Posts/ImgContainer';
+import Tabela from '@/components/Tabela/Tabela';
 
 export const Container = styled.div`
   width:100%;
@@ -27,6 +26,7 @@ const HomePage: React.FC = () => {
         author="Autor Exemplo"
         title="Título do Post"
         text="Este é o texto do post." />
+      <Tabela />
     </Container >
   );
 };
