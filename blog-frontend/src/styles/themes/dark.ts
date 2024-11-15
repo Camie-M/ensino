@@ -6,7 +6,8 @@ export default {
         titles: "#fff",
         text: "#C0C5D0",
         background: "#090d1f",
-        authors: "#6941C6"
+        authors: "#6941C6",
+        border: "#fff",
     },
 
     fonts: {

@@ -1,5 +1,5 @@
 // pages/_app.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import type { AppProps } from 'next/app';
 

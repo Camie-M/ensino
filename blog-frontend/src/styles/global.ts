@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
       font-size: 100%;
       font: inherit;
       vertical-align: baseline;
+      box-sizing: border-box;
   }
   
   article, aside, details, figcaption, figure, 
@@ -45,6 +46,10 @@ const GlobalStyle = createGlobalStyle`
   table {
       border-collapse: collapse;
       border-spacing: 0;
+  }
+  a {
+    text-decoration: none;
+    cursor: pointer;
   }
   // ========== RESET END ========== //
 
