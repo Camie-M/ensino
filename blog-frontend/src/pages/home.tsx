@@ -2,32 +2,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import Post from '@/components/Posts/Posts';
-import Tabela from '@/components/Tabela/Tabela';
+import HighLights from '@/components/ListLayouts/Highlights';
+import { postList } from '@/utils/postTypes';
 
 export const Container = styled.div`
-  width:100%;
+  width:80%;
+  margin: 0 auto;
 `;
-
 
 const HomePage: React.FC = () => {
   return (
     <Container>
-      <Post
-        type="row"
-        img="./imgs/teste.jpg"
-        alt="Descrição da imagem"
-        author="Autor Exemplo"
-        title="Título do Post"
-        text="Este é o texto do post." />
-      <Post
-        type="column"
-        img="./imgs/teste.jpg"
-        alt="Descrição da imagem"
-        author="Autor Exemplo"
-        title="Título do Post"
-        text="Este é o texto do post." />
-      <Tabela />
-    </Container >
+      <HighLights posts={postList} />
+    </Container>
+
   );
 };
 

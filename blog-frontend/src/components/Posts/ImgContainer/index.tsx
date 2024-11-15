@@ -2,14 +2,13 @@ import React, { Children, useEffect, useState } from 'react';
 import * as S from './styled';
 
 export interface PostImg {
-    img: string,
-    alt: string
+    image: string,
 }
 
-const ImgContainer: React.FC<PostImg> = ({ img, alt }) => {
+const ImgContainer: React.FC<PostImg> = ({ image }) => {
     return (
         <S.ContainerImg>
-            <S.img src={img} alt={alt} />
+            <S.img src={image} />
         </S.ContainerImg>
     );
 };

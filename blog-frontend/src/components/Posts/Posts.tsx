@@ -7,7 +7,7 @@ interface PostsProps extends PostImg, ConteinerTextProps {
     type?: string;
 }
 
-const Post: React.FC<PostsProps> = ({ type = 'column', img, alt, author, title, text }) => {
+const Post: React.FC<PostsProps> = ({ type = 'column', image, author, title, text }) => {
     const [currentType, setCurrentType] = useState(type);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Post: React.FC<PostsProps> = ({ type = 'column', img, alt, author, title, 
 
     return (
         <S.Container type={currentType}>
-            <ImgContainer img={img} alt={alt} />
+            <ImgContainer image={image} />
             <ConteinerText author={author} title={title} text={text} />
         </S.Container >
     );
