@@ -11,6 +11,7 @@ declare module "styled-components" {
             text: string;
             background: string;
             authors: string;
+            border: string;
         };
 
         fonts: {
