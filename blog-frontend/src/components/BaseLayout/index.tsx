@@ -8,14 +8,14 @@ import Footer from '../Footer';
 
 import * as S from './styled'
 
- 
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 })
 
 type Props = {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const BaseLayout: FunctionComponent<Props> = ({ children }) => {

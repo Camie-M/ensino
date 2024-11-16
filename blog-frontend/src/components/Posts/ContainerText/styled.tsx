@@ -10,15 +10,18 @@ export const ContainerText = styled.div`
 
 
 export const Title = styled.h1`
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 5vw , 2rem); 
+    /* font-size: 1.5rem; */
     color: ${(props) => props.theme.colors.titles};
 `;
 export const Data = styled.h2`
-    font-size: 0.9rem;
+    font-size: clamp(0.9rem, 5vw , 1.5rem); 
+    /* font-size: 0.9rem;    */
     color: ${(props) => props.theme.colors.authors};
 `;
 export const Text = styled.p`
-    font-size: 1rem;
+    font-size: clamp(1rem, 5vw , 1.2rem); 
+    /* font-size: 1rem; */
     color: ${(props) => props.theme.colors.text};
     display: -webkit-box;
     -webkit-line-clamp: 3;
