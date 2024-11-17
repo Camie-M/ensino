@@ -5,14 +5,12 @@ import HighLights from '@/components/Highlights/';
 import BaseLayout from '@/components/BaseLayout';
 
 import { postList } from '@/utils/postTypes';
-import styled from 'styled-components';
 import Post from '@/components/Posts/Posts';
 import PaginationList from '@/components/ListLayouts';
 
 
 const HomePage: React.FC = () => {
-  const [size, setSize] = useState("6");
-
+  const [size, /* setSize */] = useState("6");
 
   return (
     <BaseLayout>

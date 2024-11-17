@@ -4,6 +4,7 @@ interface ToggleThemeProps {
 }
 export const ToggleTheme = styled.div`
     background-color: ${props => props.theme.colors.titles};
+    border: 1px solid ${props => props.theme.colors.background};
     padding: 0.5rem 1rem;
     border-radius: 30px;
     display: flex;
