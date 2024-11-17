@@ -22,18 +22,55 @@ export const Header = styled.header`
         align-items: center;
 
         > ol {
-        display: flex;
-        gap: 1.375rem;
+            display: flex;
+            gap: 1.375rem;
 
-        li {
-            font-size: 20px;
-            font-weight: 400;
-            text-transform: none;
-            
-            a {
-                color: ${props => props.theme.colors.titles};
+            li {
+                font-size: 20px;
+                font-weight: 400;
+                text-transform: none;
+                
+                a {
+                    color: ${props => props.theme.colors.titles};
+                }
+            }
+        }
+
+        @media (max-width: 580px) {
+            flex-direction: column;
+            justify-content: center;
+
+            ol {
+                flex-direction: column;
+
+                li > a {
+                    color: ${props => props.theme.colors.background};
+                }
             }
         }
     }
+    
+    #desktop-menu {
+        @media (max-width: 580px) {
+            display: none;
+        }
+    }
+
+
+    #mobile-menu,
+    #mobile-btn {
+        @media (min-width: 580px) {
+            display: none;
+        }
+    }
+
+    #mobile-menu {
+        position: absolute;
+        background-color: ${props => props.theme.colors.titles};
+        color: ${props => props.theme.colors.background};
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
     }
 `
