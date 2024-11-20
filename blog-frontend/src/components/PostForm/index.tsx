@@ -27,29 +27,29 @@ const PostForm: FunctionComponent<Props> = ({
     const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data)
 
     return (
-        <S.Form onSubmit={handleSubmit(onSubmit)}>
-            <TextInput
-                label="Título do post"
-                id="title"
-                placeholder="Insira título do post"
-                register={register}
-                defaultValue={defaultValueTitle ? defaultValueTitle : ''}
-                required
-            />
-            {errors.title && <span>Esse campo é obrigatório</span>}
+            <S.Form onSubmit={handleSubmit(onSubmit)}>
+                <TextInput
+                    label="Título do post"
+                    id="title"
+                    placeholder="Insira título do post"
+                    register={register}
+                    defaultValue={defaultValueTitle ? defaultValueTitle : ''}
+                    required
+                />
+                {errors.title && <span>Esse campo é obrigatório</span>}
 
-            <TextareaInput
-                label="Texto do post"
-                id="text"
-                placeholder="Insira texto do post"
-                register={register}
-                defaultValue={defaultValueText ? defaultValueText : ''}
-                required
-            />
-            {errors.text && <span>Esse campo é obrigatório</span>}
+                <TextareaInput
+                    label="Texto do post"
+                    id="text"
+                    placeholder="Insira texto do post"
+                    register={register}
+                    defaultValue={defaultValueText ? defaultValueText : ''}
+                    required
+                />
+                {errors.text && <span>Esse campo é obrigatório</span>}
 
-            <Button label={isEdit ? "Editar" : "Criar"} type="submit" />
-        </S.Form>
+                <Button label={isEdit ? "Editar" : "Criar"} type="submit" />
+            </S.Form>
     )
 }
 
