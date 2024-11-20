@@ -20,7 +20,6 @@ const HomePage: React.FC = () => {
           <Post key={index} {...post} type="column" />
         ))}
       </PaginationList>
-
     </BaseLayout>
 
   );

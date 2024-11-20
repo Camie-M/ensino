@@ -8,4 +8,12 @@ export const BaseLayout = styled.main`
     width: 85%;
     margin: 0 auto;
   }
+
+  .smallTitle {
+    color: ${props => props.theme.colors.titles};
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+  }
 `

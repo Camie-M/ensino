@@ -16,13 +16,14 @@ const inter = Inter({
 
 type Props = {
   children: React.ReactNode;
+  showHero?: boolean
 }
 
-const BaseLayout: FunctionComponent<Props> = ({ children }) => {
+const BaseLayout: FunctionComponent<Props> = ({ children, showHero = true }) => {
   return (
     <S.BaseLayout className={inter.className}>
       <Header />
-      <Hero />
+      {showHero && <Hero />}
       {children}
       <Footer />
     </S.BaseLayout>

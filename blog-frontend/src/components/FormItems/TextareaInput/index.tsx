@@ -23,13 +23,13 @@ const TextareaInput: FunctionComponent<Props> = ({
     return (
         <S.TextareaInput>
             <label htmlFor={id}>{label}</label>
-            <input
-                type="text"
+            <textarea
                 {...register(id, { required: required })}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
                 required={required}
                 id={id}
+                rows={33}
             />
         </S.TextareaInput>
     )
