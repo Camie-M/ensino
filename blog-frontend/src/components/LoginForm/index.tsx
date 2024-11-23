@@ -1,24 +1,45 @@
-import type { FunctionComponent } from "react";
+import type { FormEvent, FunctionComponent } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as S from "./styled"
 import TextInput from "../FormItems/TextInput";
+import { useRouter } from "next/router";
 
 
 type Props = {
     isEdit: boolean;
 }
 
-const LoginForm: FunctionComponent<Props> = ({
-    isEdit,
-}) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<FieldValues>()
+const LoginForm: FunctionComponent<Props> = () => {
+    const router = useRouter();
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data)
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        try {
+            const userResponse = await fetch('http://localhost:3001/users', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: data.usuario }),
+            });
+            if (!userResponse.ok) {
+                alert("Usuário não encontrado ou credenciais inválidas.");
+                return;
+            }
+            const jsonData = JSON.stringify(data);
+            const base64Data = btoa(jsonData);
 
+            const tokenResponse = await fetch('http://localhost:3001/auth/token', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(base64Data),
+            });
+            if (!tokenResponse.ok) {
+                alert("Erro ao gerar o token de sessáo");
+                return;
+            }
+        } catch (error) {
+            alert("Ocorreu um erro inesperado. Tente novamente.");
+        }
+    };
     return (
         <S.div>
             <S.Title>
@@ -29,9 +50,9 @@ const LoginForm: FunctionComponent<Props> = ({
             </S.Aviso>
             <S.Form onSubmit={handleSubmit(onSubmit)}>
                 <TextInput
-                    label="Usúario"
-                    id="title"
-                    placeholder="Insira o nome de usuario"
+                    label="Usuário"
+                    id="usuario"
+                    placeholder="Insira o nome de usuário"
                     register={register}
                     required
                 />
@@ -39,13 +60,13 @@ const LoginForm: FunctionComponent<Props> = ({
 
                 <TextInput
                     label="Senha"
-                    id="password"
+                    id="senha"
                     placeholder="Insira sua senha"
                     register={register}
                     required
                 />
                 {errors.title && <span>Esse campo é obrigatório</span>}
-                <S.Button>Logar</S.Button>
+                <S.Button type="submit">Logar</S.Button>
             </S.Form>
         </S.div>
 

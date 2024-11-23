@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import LoginForm from '@/components/LoginForm';
 import styled from 'styled-components'
 import { postList } from '@/utils/postTypes';
 import ImgContainer from '@/components/Posts/ImgContainer';
+import { useRouter } from 'next/router';
 export const LoginContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -21,7 +22,6 @@ export const ImageContainer = styled.div`
   width: 50vw; /* Largura completa da tela */
   height: 100vh; /* Altura completa da tela */
 `;
-
 export const Img = styled.img`
   width: 100%;
   height: 100%;
@@ -29,6 +29,7 @@ export const Img = styled.img`
 `;
 
 const LoginPage: React.FC = () => {
+
   return (
     <LoginContainer>
       <FormContainer>
