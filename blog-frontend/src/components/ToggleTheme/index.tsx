@@ -4,15 +4,11 @@ import Image from 'next/image';
 import * as S from './styled';
 
 interface ToggleProps {
-  isActive?: boolean;
+  isactive?: boolean;
 }
 
-const ToggleTheme: React.FC<ToggleProps> = ({ isActive: initialIsActive }) => {
-  const [isActive, setIsActive] = useState(initialIsActive || false);
-
-  useEffect(() => {
-    setIsActive(initialIsActive || false);
-  }, [initialIsActive]);
+const ToggleTheme: React.FC<ToggleProps> = ({ isactive }) => {
+  const [isActive, setIsActive] = useState(isactive || false);
 
   const handleToggle = () => {
     setIsActive(!isActive);

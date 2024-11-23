@@ -21,4 +21,4 @@ export const ToggleButton = styled.div<ToggleThemeProps>`
     right: ${props => (props.isActive ? '41%' : '81px')};
     transform: translateX(100%);
     transition: right 0.3s ease;
-`
+`;
