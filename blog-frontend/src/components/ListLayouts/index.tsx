@@ -1,15 +1,12 @@
 // pages/index.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as S from "./styled"
 
 interface PaginationProps {
     children: React.ReactNode;
-
 }
 
-const PaginationList: React.FC<PaginationProps> = ({ children, }) => {
-
-
+const PaginationList: React.FC<PaginationProps> = ({ children }) => {
     return (
         <S.Container >
             {children}

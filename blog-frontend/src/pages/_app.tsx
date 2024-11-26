@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import light from '@/styles/themes/light';
 import dark from '@/styles/themes/dark';
 import GlobalStyle from '@/styles/global';
+import { UserContext } from '@/context/UserContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(light);
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
+      <UserContext.Provider value={null} />
       <GlobalStyle />
       <Component {...pageProps} toggleTheme={toggleTheme} />
     </ThemeProvider>

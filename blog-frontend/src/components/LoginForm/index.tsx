@@ -1,24 +1,20 @@
-import type { FormEvent, FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as S from "./styled"
 import TextInput from "../FormItems/TextInput";
-import { useRouter } from "next/router";
-
 
 type Props = {
     isEdit: boolean;
 }
 
 const LoginForm: FunctionComponent<Props> = () => {
-    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             const userResponse = await fetch('http://localhost:3001/users', {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: data.usuario }),
+                headers: { 'Content-Type': 'application/json' }
             });
             if (!userResponse.ok) {
                 alert("Usuário não encontrado ou credenciais inválidas.");
@@ -38,6 +34,7 @@ const LoginForm: FunctionComponent<Props> = () => {
             }
         } catch (error) {
             alert("Ocorreu um erro inesperado. Tente novamente.");
+            console.log(error);
         }
     };
     return (
