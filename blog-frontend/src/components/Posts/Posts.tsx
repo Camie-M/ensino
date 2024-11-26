@@ -3,8 +3,8 @@ import * as S from './styled';
 import ConteinerText, { ConteinerTextProps } from './ContainerText';
 import ImgContainer, { PostImg } from './ImgContainer';
 
-interface PostsProps extends PostImg, ConteinerTextProps {
-    type?: string;
+export interface PostsProps extends PostImg, ConteinerTextProps {
+    type?: 'column' | 'row';
 }
 
 const Post: React.FC<PostsProps> = ({ type = 'column', image, author, title, text }) => {

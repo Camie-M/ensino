@@ -6,7 +6,6 @@ const SearchPage: React.FC = () => {
     <BaseLayout>
         <p>Create posta page</p>
     </BaseLayout>
-
   );
 };
 

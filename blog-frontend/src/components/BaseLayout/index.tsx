@@ -3,11 +3,9 @@ import type { FunctionComponent } from "react";
 import { Inter } from 'next/font/google'
 
 import Header from '../Header';
-import Hero from '../Hero';
 import Footer from '../Footer';
 
 import * as S from './styled'
-
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,14 +14,12 @@ const inter = Inter({
 
 type Props = {
   children: React.ReactNode;
-  showHero?: boolean
 }
 
-const BaseLayout: FunctionComponent<Props> = ({ children, showHero = true }) => {
+const BaseLayout: FunctionComponent<Props> = ({ children }) => {
   return (
     <S.BaseLayout className={inter.className}>
       <Header />
-      {showHero && <Hero />}
       {children}
       <Footer />
     </S.BaseLayout>

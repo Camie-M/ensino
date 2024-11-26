@@ -8,7 +8,6 @@ import { postList } from '@/utils/postTypes';
 import Post from '@/components/Posts/Posts';
 import PaginationList from '@/components/ListLayouts';
 
-
 const HomePage: React.FC = () => {
   const [size, /* setSize */] = useState("6");
 
@@ -21,7 +20,6 @@ const HomePage: React.FC = () => {
         ))}
       </PaginationList>
     </BaseLayout>
-
   );
 };
 

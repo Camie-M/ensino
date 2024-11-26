@@ -4,7 +4,7 @@ import PostForm from '@/components/PostForm';
 
 const CreatePostPage: React.FC = () => {
   return (
-    <BaseLayout showHero={false}>
+    <BaseLayout>
       <h1 className='smallTitle'>Criar post</h1>
       <PostForm isEdit={false} />
     </BaseLayout>
