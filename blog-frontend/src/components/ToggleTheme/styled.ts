@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 interface ToggleThemeProps {
-    isActive: boolean;
+    $isactive: boolean;
 }
 export const ToggleTheme = styled.div`
     background-color: ${props => props.theme.colors.titles};
@@ -18,7 +18,7 @@ export const ToggleButton = styled.div<ToggleThemeProps>`
     background-color: ${props => props.theme.colors.background};
     border-radius: 50%;
     position: absolute;
-    right: ${props => (props.isActive ? '41%' : '81px')};
+    right: ${props => (props.$isactive ? '41%' : '81px')};
     transform: translateX(100%);
     transition: right 0.3s ease;
 `;

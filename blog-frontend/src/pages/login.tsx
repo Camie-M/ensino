@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
   return (
     <LoginContainer>
       <FormContainer>
-        <LoginForm isEdit={false} />
+        <LoginForm />
       </FormContainer>
       <ImageContainer>
         <Img src={postList[0].image} />

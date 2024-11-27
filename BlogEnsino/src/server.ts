@@ -5,9 +5,6 @@ import router from './routes';
 import sequelize from './config/database';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger_output.json';
-import { v4 as uuidv4 } from 'uuid';
-import { UserService } from './services/UserService';
-import { UserRepository } from './repositories/UserRepository';
 
 const cors = require('cors');
 const app = express();
@@ -40,8 +37,7 @@ app.listen(3001, () => {
 });
 
 const creatMockUser = async () => {
-  const User = sequelize.models.User
-  await User.bulkCreate([
+  await sequelize.models.User.bulkCreate([
     {
       username: "Breno",
       role: "admin"
@@ -60,7 +56,6 @@ const creatMockUser = async () => {
     },
 
   ])
-
 }
 const creatMockPost = async () => {
   const Post = sequelize.models.Post
@@ -70,21 +65,29 @@ const creatMockPost = async () => {
       {
         title: "titulo1",
         text: "texto1",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "titulo2",
         text: "texto2",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "titulo3",
         text: "texto3",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "titulo4",
         text: "texto4",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
     ])

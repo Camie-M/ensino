@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { PostController } from '../controllers/PostController';
+import { PostController, uploadMiddleware } from '../controllers/PostController';
 
 const postRoutes: Router = Router();
 
-postRoutes.post('/', PostController.createPost);
+postRoutes.post('/', uploadMiddleware, PostController.createPost);
 postRoutes.get('/', PostController.getAllPosts);
 postRoutes.get('/search', PostController.getPostByTitle);
 postRoutes.get('/:id', PostController.getPostById);

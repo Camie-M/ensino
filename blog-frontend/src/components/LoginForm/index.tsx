@@ -3,11 +3,8 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as S from "./styled"
 import TextInput from "../FormItems/TextInput";
 
-type Props = {
-    isEdit: boolean;
-}
 
-const LoginForm: FunctionComponent<Props> = () => {
+const LoginForm: FunctionComponent = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {

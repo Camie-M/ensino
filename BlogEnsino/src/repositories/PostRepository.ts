@@ -4,8 +4,8 @@ import { PostResource } from '../resources/PostResource'; // Importa a entidade
 
 export class PostRepository {
     // Cria um post e retorna PostResource
-    create(title: string, text: string, user_id: string): Promise<Post> {
-        return Post.create({ title, text, user_id })
+    create(title: string, text: string, author: string, image_url: string, user_id: string): Promise<Post> {
+        return Post.create({ title, text, author, image_url, user_id })
     }
 
     // Retorna uma lista de PostEntities
