@@ -7,12 +7,12 @@ interface PaginationProps {
 
 export const Container = styled.div<PaginationProps>`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); /* Colunas flexíveis */
+  grid-template-columns: repeat(auto-fill, minmax(15%, 1fr)); /* Colunas flexíveis */
   gap: 1rem;
 
   /* Quando a tela for maior que 1024px (telas grandes) */
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); /* Colunas menores em telas médias */
+  @media (max-width: 2048px) {
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); /* Colunas menores em telas médias */
   }
 
   /* Quando a tela for menor que 600px (telas pequenas) */
