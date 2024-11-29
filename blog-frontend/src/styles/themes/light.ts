@@ -5,7 +5,9 @@ export default {
     colors: {
         titles: "#1A1A1A",
         text: "#667085",
-        background: "#fff",
+        background: "#F6F6F6",
+        backgroundTableHeader: "#FCFBFC",
+        backgroundTableBody: "#fff",
         authors: "#6941C6",
         border: "#a8a8a8",
     },

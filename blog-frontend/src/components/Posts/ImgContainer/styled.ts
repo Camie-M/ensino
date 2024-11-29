@@ -4,8 +4,9 @@ export const ContainerImg = styled.div`
     width:100%;
 `;
 
-export const img = styled.img`
-    width: inherit;
-    height: 10rem;
-    object-fit: cover;
-`;
+// export const img = styled.img`
+//     width: inherit;
+//     height: 15rem;
+//     width:100%;
+//     object-fit: cover;
+// `;

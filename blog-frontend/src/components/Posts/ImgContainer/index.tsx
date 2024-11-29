@@ -14,9 +14,9 @@ const ImgContainer: React.FC<PostImg> = ({ image }) => {
                 width={400}
                 height={200}
                 style={{
-                    maxWidth: "100%",
-                    height: "10rem",
-                    // object- fit: "cover",
+                    width: "100%",
+                    height: "18rem",
+                    objectFit: "cover",
                 }}
             // placeholder="blur"
             />

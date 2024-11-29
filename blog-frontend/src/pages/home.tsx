@@ -3,48 +3,46 @@ import HighLights from '@/components/Highlights/';
 import BaseLayout from '@/components/BaseLayout';
 import Post from '@/components/Posts/Posts';
 import PaginationList from '@/components/ListLayouts';
+import ImageUploadField from '@/components/FileUpload';
+import TabelaPost from '@/components/TabelaPosts';
+
+import PostFetch from '@/utils/fetchPosts';
 
 interface PostData {
   id: string;
+  createdAt: string;
   title: string;
   text: string;
   author: string;
   image: string;
+  // PostFetch: () => void;
 }
 
 const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
 
-  const onLoad = async () => {
-    try {
-      const postResponse = await fetch('http://localhost:3001/posts/', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (!postResponse.ok) {
-        alert('Posts não encontrados ou credenciais inválidas.');
-        return;
-      }
-      const postsData = await postResponse.json();
-      console.log(postsData);
-      setPosts(postsData);
-    } catch (error) {
-      alert('Ocorreu um erro inesperado. Tente novamente.');
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    onLoad();
+    const fetchPosts = async () => {
+      const data = await PostFetch();
+      if (data) {
+        setPosts(data);
+      }
+    };
+    fetchPosts();
+
   }, []);
 
   return (
     <BaseLayout>
-      <PaginationList>
+      {/* <HighLights posts={posts} /> */}
+      <ImageUploadField />
+      {/* <PaginationList>
         {posts.map((post, index) => (
           <Post key={index} {...post} type="column" />
         ))}
-      </PaginationList>
+      </PaginationList> */}
+
+      {/* <TabelaPost /> */}
     </BaseLayout>
   );
 };

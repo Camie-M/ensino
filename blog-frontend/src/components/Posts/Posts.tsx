@@ -7,7 +7,7 @@ export interface PostsProps extends PostImg, ConteinerTextProps {
     type?: 'column' | 'row';
 }
 
-const Post: React.FC<PostsProps> = ({ type = 'column', image, author, title, text }) => {
+const Post: React.FC<PostsProps> = ({ type = 'column', createdAt, image, author, title, text }) => {
     const [currentType, setCurrentType] = useState(type);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Post: React.FC<PostsProps> = ({ type = 'column', image, author, title, tex
     return (
         <S.Container type={currentType}>
             <ImgContainer image={image} />
-            <ConteinerText author={author} title={title} text={text} />
+            <ConteinerText createdAt={createdAt} author={author} title={title} text={text} />
         </S.Container >
     );
 };

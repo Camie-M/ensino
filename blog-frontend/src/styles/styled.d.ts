@@ -10,6 +10,8 @@ declare module "styled-components" {
             titles: string;
             text: string;
             background: string;
+            backgroundTableHeader: string;
+            backgroundTableBody: string;
             authors: string;
             border: string;
         };
