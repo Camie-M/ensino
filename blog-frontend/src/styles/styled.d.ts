@@ -12,6 +12,7 @@ declare module "styled-components" {
             background: string;
             backgroundTableHeader: string;
             backgroundTableBody: string;
+            hoverAnchor: string;
             authors: string;
             border: string;
         };

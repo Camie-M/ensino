@@ -40,6 +40,16 @@ export const Td = styled.td`
     padding: 1rem;
     color: ${(props) => props.theme.colors.text};
 `;
+export const Anchor = styled.a`
+    text-align: center;
+    color: ${(props) => props.theme.colors.text};
+    font-size: clamp(1rem, 5vw, 1.2rem); 
+    padding: 1rem;
+    cursor: pointer;
+    &:hover {
+        color: ${(props) => props.theme.colors.hoverAnchor};
+    }
+`;
 
 
 

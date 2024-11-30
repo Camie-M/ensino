@@ -35,14 +35,14 @@ const HomePage: React.FC = () => {
   return (
     <BaseLayout>
       {/* <HighLights posts={posts} /> */}
-      <ImageUploadField />
+      {/* <ImageUploadField /> */}
       {/* <PaginationList>
         {posts.map((post, index) => (
           <Post key={index} {...post} type="column" />
         ))}
       </PaginationList> */}
 
-      {/* <TabelaPost /> */}
+      <TabelaPost />
     </BaseLayout>
   );
 };

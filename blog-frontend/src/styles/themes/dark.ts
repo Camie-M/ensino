@@ -7,6 +7,7 @@ export default {
         background: "#F6F6F6",
         backgroundTableHeader: "#FCFBFC",
         backgroundTableBody: "#fff",
+        hoverAnchor: "#669df9",
         authors: "#6941C6",
         border: "#fff",
     },
