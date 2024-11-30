@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image';
 
@@ -8,7 +8,13 @@ import * as S from './styled'
 
 const Header = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false)
-
+  useEffect(() => {
+    if (openMobileMenu) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [openMobileMenu])
   return (
     <S.Header>
       <p>Your name</p>

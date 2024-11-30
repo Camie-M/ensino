@@ -65,7 +65,7 @@ export const Header = styled.header`
     }
 
     #mobile-menu {
-        position: absolute;
+        position: fixed;
         background-color: ${props => props.theme.colors.titles};
         color: ${props => props.theme.colors.background};
         top: 0;

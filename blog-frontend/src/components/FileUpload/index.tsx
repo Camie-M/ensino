@@ -52,10 +52,9 @@ const ImageUploadField: React.FC = () => {
                 {/* Passa a função setImage ao filho */}
                 <ButtonDropFile
                     setImage={(file) => {
-                        setImage(file); // Atualiza o estado do pai
-                        console.log('[ImageUploadField] Estado atualizado com arquivo do filho:', file); // Log ao receber arquivo do filho
+                        setImage(file);
                     }}
-                    createImagePreview={createImagePreview} // Passa a lógica de pré-visualização
+                    createImagePreview={createImagePreview}
                 />
             </S.dropDownField>
 

@@ -5,21 +5,9 @@ import Post from '@/components/Posts/Posts';
 import PaginationList from '@/components/ListLayouts';
 import ImageUploadField from '@/components/FileUpload';
 import TabelaPost from '@/components/TabelaPosts';
-
-import PostFetch from '@/utils/fetchPosts';
-
-interface PostData {
-  id: string;
-  createdAt: string;
-  title: string;
-  text: string;
-  author: string;
-  image: string;
-  // PostFetch: () => void;
-}
-
+import PostFetch, { PostDataProp } from '@/utils/fetchPosts';
 const HomePage: React.FC = () => {
-  const [posts, setPosts] = useState<PostData[]>([]);
+  const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,20 +17,19 @@ const HomePage: React.FC = () => {
       }
     };
     fetchPosts();
-
   }, []);
 
   return (
     <BaseLayout>
       {/* <HighLights posts={posts} /> */}
-      {/* <ImageUploadField /> */}
-      {/* <PaginationList>
+      <ImageUploadField />
+      <PaginationList>
         {posts.map((post, index) => (
           <Post key={index} {...post} type="column" />
         ))}
-      </PaginationList> */}
+      </PaginationList>
 
-      <TabelaPost />
+      {/* <TabelaPost /> */}
     </BaseLayout>
   );
 };
