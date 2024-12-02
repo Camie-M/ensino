@@ -57,7 +57,7 @@ const PostPage: React.FC = () => {
   }, []);
 
   return (
-    <BaseLayout>
+    <BaseLayout banner={false}>
       <GridContainer>
         <LeftGrid>
           {post && (

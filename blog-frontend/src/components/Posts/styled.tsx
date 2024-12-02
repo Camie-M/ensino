@@ -9,6 +9,8 @@ export const ContainerAnchor = styled.a<ContainerProps>`
     gap:2rem;
     width:100%;
     cursor: pointer;
+    border-radius:0.8rem;
+    padding:1rem;
     &:hover{
         background-color:${(props) => props.theme.colors.backgroundTableBody};
     }
@@ -16,6 +18,7 @@ export const ContainerAnchor = styled.a<ContainerProps>`
 
     @media (max-width: 800px) {
         flex-wrap:wrap;
+        padding:0rem;
         /* gap:1r:; */
     }
 `;
