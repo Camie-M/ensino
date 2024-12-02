@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { FaBeer } from 'react-icons/fa';
 
 export const Container = styled.div`
     display: flex;

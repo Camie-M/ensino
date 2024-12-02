@@ -12,7 +12,7 @@ interface PropContentPost {
 }
 
 const PostPageLayout: React.FC<PropContentPost> = ({ title, text, author, image, date }) => {
-  const [postDate, setPostDate] = useState<String>();
+  const [postDate, setPostDate] = useState<string>(date);
   useEffect(() => {
     const DateFix = async () => {
       const data = await DataFormat(date);

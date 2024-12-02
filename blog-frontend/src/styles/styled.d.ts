@@ -1,8 +1,7 @@
-// styled.d.ts
 import "styled-components";
 
+// Extensão da interface padrão do styled-components
 declare module "styled-components" {
-
     export interface DefaultTheme {
         theme: string;
 

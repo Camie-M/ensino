@@ -5,7 +5,6 @@ import PaginationList from '@/components/ListLayouts';
 import Post from '@/components/Posts/Posts';
 import { PostFetch, PostFetchById, PostDataProp } from '@/utils/fetchPosts';
 import PostPageLayout from '@/components/PostPageLayout';
-import DataFormat from '@/utils/dataformat';
 
 export const GridContainer = styled.div`
   display: flex;

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as S from './styled';
 import Post from '@/components/Posts/Posts';
-import { PostFetch, PostDataProp } from '@/utils/fetchPosts';
 
 interface HighLightsProps {
     posts: Array<{
+        id: string;
         image: string;
         author: string;
         title: string;

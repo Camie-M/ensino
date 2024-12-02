@@ -1,4 +1,5 @@
-export default {
+import { DefaultTheme } from "styled-components";
+const darkTheme: DefaultTheme = {
     theme: "dark",
 
     colors: {
@@ -16,3 +17,5 @@ export default {
         primary: "Inter, sans-serif",
     },
 };
+
+export default darkTheme;

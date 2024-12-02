@@ -30,7 +30,7 @@ const ButtonDropFile: React.FC<ButtonDropFileProps> = ({ setImage, createImagePr
                 accept="image/png, image/jpeg, image/svg, image/jpg"
                 onChange={handleFileChange} // Chama handleFileChange ao selecionar um arquivo
             />
-            {/* <S.FileName>{fileName}</S.FileName> */}
+            <S.FileName>{fileName}</S.FileName>
         </S.Container>
     );
 };
