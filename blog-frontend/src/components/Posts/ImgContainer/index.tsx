@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as S from './styled';
-import Image from 'next/image'
+import Image from 'next/image';
+
 export interface PostImg {
-    image: string,
+    image: string;
 }
 
 const ImgContainer: React.FC<PostImg> = ({ image }) => {
+    if (!image) return
+
     return (
         <S.ContainerImg>
             <Image
@@ -14,15 +17,15 @@ const ImgContainer: React.FC<PostImg> = ({ image }) => {
                 width={400}
                 height={200}
                 style={{
-                    width: "100%",
-                    height: "18rem",
-                    objectFit: "cover",
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '18rem',
                 }}
-            // placeholder="blur"
+                priority
             />
-            {/* <S.img src={image} /> */}
         </S.ContainerImg>
     );
 };
+
 
 export default ImgContainer;

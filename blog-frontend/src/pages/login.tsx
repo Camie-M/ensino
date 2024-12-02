@@ -1,9 +1,7 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import LoginForm from '@/components/LoginForm';
 import styled from 'styled-components'
 import { postList } from '@/utils/postTypes';
-import ImgContainer from '@/components/Posts/ImgContainer';
-import { useRouter } from 'next/router';
 export const LoginContainer = styled.div`
     display: flex;
     flex-direction: row;

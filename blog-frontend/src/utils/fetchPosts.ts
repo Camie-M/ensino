@@ -1,4 +1,4 @@
-const PostFetch = async (): Promise<PostDataProp[] | null> => {
+export const PostFetch = async (): Promise<PostDataProp[] | null> => {
     try {
         const postResponse = await fetch('http://localhost:3001/posts/', {
             method: 'GET',
@@ -13,11 +13,31 @@ const PostFetch = async (): Promise<PostDataProp[] | null> => {
         }
 
         const postsData: PostDataProp[] = await postResponse.json();
-        console.log('Posts recebidos:', postsData); // Log para depuração
         return postsData;
     } catch (error) {
         console.error('Erro ao buscar posts:', error);
-        alert('Ocorreu um erro inesperado. Tente novamente.');
+        return null;
+    }
+};
+
+export const PostFetchById = async (id: string): Promise<PostDataProp | null> => {
+    try {
+        const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        // Verificando se a resposta é OK
+        if (!postResponse.ok) {
+            console.error('Erro ao buscar post:', postResponse.status, postResponse.statusText);
+            alert('Post não encontrado ou credenciais inválidas.');
+            return null;
+        }
+
+        const postData: PostDataProp = await postResponse.json();
+        return postData;
+    } catch (error) {
+        console.error('Erro ao buscar post:', error);
         return null;
     }
 };
@@ -30,6 +50,4 @@ export type PostDataProp = {
     text: string;
     author: string;
     image: string;
-}
-
-export default PostFetch;
+};

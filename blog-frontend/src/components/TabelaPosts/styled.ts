@@ -18,6 +18,7 @@ export const Tfoot = styled.tfoot`
   
 `;
 export const Tr = styled.tr`
+    
 `;
 
 export const Th = styled.th`

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './styled';
 import Post from '@/components/Posts/Posts';
+import { PostFetch, PostDataProp } from '@/utils/fetchPosts';
 
 interface HighLightsProps {
     posts: Array<{
@@ -8,11 +9,11 @@ interface HighLightsProps {
         author: string;
         title: string;
         text: string;
+        createdAt: string;
     }>;
 }
 
 const HighLights: React.FC<HighLightsProps> = ({ posts }) => {
-    if (!posts || posts.length === 0) return null;
 
     return (
         <S.Container>

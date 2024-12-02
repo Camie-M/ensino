@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
-import PostFetch, { PostDataProp } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
+import { PostFetch, PostDataProp } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
 
 const TabelaPost: React.FC = () => {
     const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
@@ -38,7 +38,7 @@ const TabelaPost: React.FC = () => {
                             <S.Span>{post.role}</S.Span>
                         </S.Td> */}
                         <S.Td>
-                            <S.Anchor href={"post/" + post.id}>Editar</S.Anchor>
+                            <S.Anchor href={"link para pagina de edição de post"}>Editar</S.Anchor>
                         </S.Td>
                     </S.Tr>
                 ))}

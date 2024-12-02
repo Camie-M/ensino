@@ -5,9 +5,9 @@ import Post from '@/components/Posts/Posts';
 import PaginationList from '@/components/ListLayouts';
 import ImageUploadField from '@/components/FileUpload';
 import TabelaPost from '@/components/TabelaPosts';
-import PostFetch, { PostDataProp } from '@/utils/fetchPosts';
+import { PostFetch, PostDataProp } from '@/utils/fetchPosts';
 const HomePage: React.FC = () => {
-  const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
+  const [posts, setPosts] = useState<PostDataProp[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -21,15 +21,21 @@ const HomePage: React.FC = () => {
 
   return (
     <BaseLayout>
-      {/* <HighLights posts={posts} /> */}
-      <ImageUploadField />
-      <PaginationList>
-        {posts.map((post, index) => (
-          <Post key={index} {...post} type="column" />
-        ))}
-      </PaginationList>
+      {posts ?
+        <>
+          <HighLights posts={posts} />
+          {/* <ImageUploadField /> */}
+          <PaginationList>
+            {posts.map((post, index) => (
+              <Post key={index} {...post} type="column" />
+            ))}
+          </PaginationList>
 
-      {/* <TabelaPost /> */}
+          <TabelaPost />
+        </>
+        : ""
+      }
+
     </BaseLayout>
   );
 };
