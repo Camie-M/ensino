@@ -1,10 +1,11 @@
 import React from 'react';
 import BaseLayout from '@/components/BaseLayout';
+import TabelaPost from '@/components/TabelaPosts';
 
 const AdminPage: React.FC = () => {
   return (
     <BaseLayout banner={false}>
-      <p>Admin page</p>
+      <TabelaPost />
     </BaseLayout>
 
   );

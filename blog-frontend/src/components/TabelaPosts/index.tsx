@@ -38,7 +38,7 @@ const TabelaPost: React.FC = () => {
                             <S.Span>{post.role}</S.Span>
                         </S.Td> */}
                         <S.Td>
-                            <S.Anchor href={"link para pagina de edição de post"}>Editar</S.Anchor>
+                            <S.Anchor href={`/admin/${post.id}`}>Editar</S.Anchor>
                         </S.Td>
                     </S.Tr>
                 ))}

@@ -1,15 +1,15 @@
 services:
-  front:
-    build:
-      context: ../blog-frontend
-      dockerfile: Dockerfile
-    container_name: challenge2-front
-    ports:
-      - "3000:3000"
-    depends_on:
-      - node
-    networks:
-      - challenge_network
+  # front:
+  #   build:
+  #     context: ../blog-frontend
+  #     dockerfile: Dockerfile
+  #   container_name: challenge2-front
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - node
+  #   networks:
+  #     - challenge_network
 
   postgres:
     image: postgres:latest
