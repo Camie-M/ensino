@@ -5,6 +5,7 @@ import * as S from "./styled"
 
 import TextInput from "../FormItems/TextInput";
 import TextareaInput from "../FormItems/TextareaInput";
+import ImageUploadField from "../FileUpload";
 import Button from "../FormItems/Button";
 
 type Props = {
@@ -47,6 +48,8 @@ const PostForm: FunctionComponent<Props> = ({
                     required
                 />
                 {errors.text && <span>Esse campo é obrigatório</span>}
+
+                <ImageUploadField />
 
                 <Button label={isEdit ? "Editar" : "Criar"} type="submit" />
             </S.Form>
