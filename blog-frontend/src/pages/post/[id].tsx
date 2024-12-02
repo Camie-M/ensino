@@ -1,70 +1,85 @@
-// pages/post/[id].tsx
-import React from "react";
-import { GetStaticProps, GetStaticPaths } from "next";
-import BaseLayout from "@/components/BaseLayout";
-import { postList } from "@/utils/postTypes";
-import Image from "next/image";
-import { Container, Title, Text, Author, ImageWrapper } from "./styled";
+import React, { useEffect, useState } from 'react';
+import BaseLayout from '@/components/BaseLayout';
+import styled from 'styled-components';
+import PaginationList from '@/components/ListLayouts';
+import Post from '@/components/Posts/Posts';
+import { PostFetch, PostFetchById, PostDataProp } from '@/utils/fetchPosts';
+import PostPageLayout from '@/components/PostPageLayout';
 
-interface PostProps {
-  post: {
-    title: string;
-    text: string;
-    author: string;
-    image: string;
-  };
-}
+export const GridContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  @media (max-width:1280px) {
+      flex-wrap:wrap-reverse;
+  }
+`;
 
-const PostPage: React.FC<PostProps> = ({ post }) => {
+export const LeftGrid = styled.div`
+  width: 30%;
+  @media (max-width:1280px) {
+    width: 100%;
+  }
+`;
+
+export const RightGrid = styled.div`
+  width: 80%;
+  @media (max-width:1280px) {
+    width: 100%;
+  }
+`;
+
+const PostPage: React.FC = () => {
+  const [posts, setPosts] = useState<PostDataProp[]>([]);
+  const [post, setPost] = useState<PostDataProp | null>(null);
+
+
+  useEffect(() => {
+    const urlPath = window.location.pathname;
+    const postId = urlPath.split('/').pop();
+
+    const fetchPosts = async () => {
+      const data = await PostFetch();
+      if (data) {
+        setPosts(data);
+      }
+    };
+    const fetchPostById = async () => {
+      if (postId) {
+        const data = await PostFetchById(postId);
+        if (data) {
+          setPost(data);
+        }
+      }
+    };
+    fetchPosts();
+    fetchPostById();
+  }, []);
+
   return (
-    <BaseLayout>
-      <Container>
-        <Title>{post.title}</Title>
-        <Text>{post.text}</Text>
-        <Author>Author: {post.author}</Author>
-        <ImageWrapper>
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={800}
-            height={600}
-            priority={true}
-          />
-        </ImageWrapper>
-      </Container>
+    <BaseLayout banner={false}>
+      <GridContainer>
+        <LeftGrid>
+          {post && (
+            <PaginationList>
+              {posts.slice(0, 5).map((post, index) => (
+                <Post key={index} {...post} type="column" />
+              ))}
+            </PaginationList>
+          )}
+        </LeftGrid>
+        <RightGrid>
+          {post && (
+            <PostPageLayout
+              title={post.title}
+              text={post.text}
+              author={post.author}
+              image={post.image}
+              date={post.createdAt} />
+          )}
+        </RightGrid>
+      </GridContainer>
     </BaseLayout>
   );
 };
 
 export default PostPage;
-
-// Gera os caminhos das páginas estáticas
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = postList.map((_, index) => ({
-    params: { id: index.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false, // Define fallback como false para gerar apenas as páginas existentes
-  };
-};
-
-// Busca os dados do post com base no ID
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params!;
-  const post = postList[Number(id)];
-
-  // Verifica se o post existe
-  if (!post) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      post,
-    },
-  };
-};

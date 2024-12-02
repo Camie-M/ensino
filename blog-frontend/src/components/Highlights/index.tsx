@@ -4,15 +4,16 @@ import Post from '@/components/Posts/Posts';
 
 interface HighLightsProps {
     posts: Array<{
+        id: string;
         image: string;
         author: string;
         title: string;
         text: string;
+        createdAt: string;
     }>;
 }
 
 const HighLights: React.FC<HighLightsProps> = ({ posts }) => {
-    if (!posts || posts.length === 0) return null;
 
     return (
         <S.Container>

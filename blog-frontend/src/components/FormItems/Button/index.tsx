@@ -1,5 +1,4 @@
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
 
 import * as S from "./styled"
 
@@ -9,12 +8,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = ({ label, ...props }) => {
-    const {
-        formState: { isSubmitting }
-    } = useFormContext();
-
     return (
-        <S.Button {...props} disabled={isSubmitting}>
+        <S.Button {...props}>
             {label}
         </S.Button>
     )

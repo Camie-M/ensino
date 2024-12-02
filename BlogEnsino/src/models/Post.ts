@@ -5,6 +5,8 @@ interface PostAttributes {
     id: CreationOptional<string>;
     title: string;
     text: string;
+    author: string;
+    image_url: string;
     user_id: string;
     createdAt?: CreationOptional<Date>;
     updatedAt?: CreationOptional<Date>;
@@ -15,6 +17,8 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
     public id!: CreationOptional<string>;
     public title!: string;
     public text!: string;
+    public author!: string;
+    public image_url!: string;
     public user_id!: string;
 
     static initModel() {
@@ -31,6 +35,14 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: false,
                 },
                 text: {
+                    type: DataTypes.TEXT,
+                    allowNull: false,
+                },
+                author: {
+                    type: DataTypes.TEXT,
+                    allowNull: false,
+                },
+                image_url: {
                     type: DataTypes.TEXT,
                     allowNull: false,
                 },

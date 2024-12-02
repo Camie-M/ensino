@@ -69,8 +69,8 @@ describe('Testes da PostController', () => {
 
     it('deve retornar todos os post', async () => {
         const mockPost = [
-            new PostResource('titulo1', 'texto1', uuidv4()),
-            new PostResource('titulo2', 'texto2', uuidv4())
+            new PostResource('titulo1', 'texto1', "Breno", "link", uuidv4()),
+            new PostResource('titulo2', 'texto2', "Breno", "link", uuidv4())
         ];
         jest.spyOn(PostService.prototype, 'findAll').mockResolvedValue(mockPost);
 
@@ -94,7 +94,7 @@ describe('Testes da PostController', () => {
 
     it('deve retornar um post pelo ID', async () => {
         const mockPost = new PostResource(
-            'titulo1', 'texto1', uuidv4()
+            'titulo1', 'texto1', "Breno", "link", uuidv4()
         )
         jest.spyOn(PostService.prototype, 'findById').mockResolvedValue(mockPost);
         const mockId = mockPost.id
@@ -126,7 +126,7 @@ describe('Testes da PostController', () => {
 
     it('deve retornar um post pelo titulo', async () => {
         const mockPost = new PostResource(
-            'titulo1', 'texto1', uuidv4()
+            'titulo1', 'texto1', "Breno", "link", uuidv4()
         )
         jest.spyOn(PostService.prototype, 'findByTitle').mockResolvedValue([mockPost]);
         req.query = { title: mockPost.title };

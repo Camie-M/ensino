@@ -40,6 +40,20 @@ export class UserController {
         }
     }
 
+    static async getUserUserName(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await userService.findByUsername(req.params.username);
+            if (user) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({ message: 'Usuario não encontrado' });
+            }
+        } catch (error) {
+            // console.error('Erro ao buscar o usuario:', error);
+            res.status(500).json({ message: 'Erro ao buscar o usuario:', error: error });
+        }
+    }
+
     static async editUser(req: Request, res: Response): Promise<void> {
         try {
             const updatedUser = await userService.update(req.params.id, req.body);

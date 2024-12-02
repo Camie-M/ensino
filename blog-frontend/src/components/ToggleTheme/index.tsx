@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 import * as S from './styled';
 
 interface ToggleProps {
-  isActive?: boolean;
+  $isactive?: boolean;
 }
 
-const ToggleTheme: React.FC<ToggleProps> = ({ isActive: initialIsActive }) => {
-  const [isActive, setIsActive] = useState(initialIsActive || false);
-
-  useEffect(() => {
-    setIsActive(initialIsActive || false);
-  }, [initialIsActive]);
+const ToggleTheme: React.FC<ToggleProps> = ({ $isactive }) => {
+  const [isActive, setIsActive] = useState($isactive || false);
 
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -22,7 +18,7 @@ const ToggleTheme: React.FC<ToggleProps> = ({ isActive: initialIsActive }) => {
     <S.ToggleTheme onClick={handleToggle}>
       <Image src={`/sun.svg`} alt={"Mudar tema"} width="24" height="24" />
       <Image src={`/sun.svg`} alt={"Mudar tema"} width="24" height="24" />
-      <S.ToggleButton isActive={isActive} />
+      <S.ToggleButton $isactive={isActive} />
     </S.ToggleTheme>
   );
 };
