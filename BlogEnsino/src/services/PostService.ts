@@ -48,10 +48,16 @@ export class PostService {
         }
     }
 
-    async update(id: string, token: string, updatedFields: { title: string; text: string }): Promise<PostResource | Error> {
+    async update(id: string, token: string, title: string, text: string, image: Buffer | null | undefined): Promise<PostResource | Error> {
+        let updatedPost;
         await authService.validateUser(token, "admin");
         const post = await this.findPostById(id);
-        const updatedPost = await postRepository.update(post, updatedFields)
+        if (image && image.length > 0) {
+            const image_url = await awsS3Service.uploadFileToAws(uuidv4(), image)
+            updatedPost = await postRepository.updateWithImage(post, { title, text, image_url })
+        } else {
+            updatedPost = await postRepository.update(post, { title, text })
+        }
 
         return PostMapper.mapToResource(updatedPost)
     }

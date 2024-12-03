@@ -11,33 +11,30 @@ export class PostController {
   static async createPost(req: Request, res: Response): Promise<void> {
     try {
       const { title, text } = req.body;
-      const token = req.headers.authorization;
       const image = req.file?.buffer;
-
+      const token = req.headers.authorization
       if (!token) {
         res.status(400).json({ message: "Token faltando" });
         return;
       }
       if (!image) {
         res.status(400).json({ message: "imagem faltando" });
-        return;
+        return
       }
-
       const post = await postService.create(title, text, image, token);
       res.status(201).json(post);
-    } catch (error) {
 
+    } catch (error) {
       if (error instanceof Error) {
-        switch (error.message) {
-          case "Usuário sem permissão":
-            res.status(403).json({ message: error.message });
-            return;
-          case "Usuário não encontrado":
-            res.status(404).json({ message: error.message });
-            return;
-          default:
-            res.status(500).json({ message: error.message });
-            return;
+        if (error.message === "Usuário sem permissão") {
+          res.status(403).json({ message: "Usuário sem permissão" });
+          return
+        } else if (error.message === "Usuário não encontrado") {
+          res.status(404).json({ message: "Usuário não encontrado" });
+          return
+        } else {
+          res.status(500).json({ message: "Falha ao criar o Post" });
+          return
         }
       }
     }
@@ -84,13 +81,17 @@ export class PostController {
 
   static async editPost(req: Request, res: Response): Promise<void> {
     try {
+      const { title, text } = req.body;
+      const image = req.file?.buffer;
       const token = req.headers.authorization
-      if (token) {
-        const updatedPost = await postService.update(req.params.id, token, req.body,);
-        res.status(201).json(updatedPost);
-      } else {
-        res.status(404).json({ message: "Post não encontrado" });
+      if (!token) {
+        res.status(400).json({ message: "Token faltando" });
+        return;
       }
+      const updatedPost = await postService.update(req.params.id, token, title, text, image);
+
+      res.status(201).json(updatedPost);
+
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === "Usuário sem permissão") {
@@ -99,10 +100,11 @@ export class PostController {
         } else if (error.message === "Usuário não encontrado") {
           res.status(404).json({ message: "Usuário não encontrado" });
           return
+        } else {
+          res.status(500).json({ message: "Falha ao atualizar o Post" });
+          return
         }
       }
-      res.status(500).json({ message: "Erro ao editar o post" });
-      return
     }
   }
 

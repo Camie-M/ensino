@@ -7,7 +7,7 @@ postRoutes.post('/', uploadMiddleware, PostController.createPost);
 postRoutes.get('/', PostController.getAllPosts);
 postRoutes.get('/search', PostController.getPostByTitle);
 postRoutes.get('/:id', PostController.getPostById);
-postRoutes.put('/:id', PostController.editPost);
+postRoutes.put('/:id', uploadMiddleware, PostController.editPost);
 postRoutes.delete('/:id', PostController.deletePost);
 
 export default postRoutes;
