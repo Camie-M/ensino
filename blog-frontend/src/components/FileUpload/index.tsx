@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './styled';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFileUpload } from 'react-icons/md';
 import ImgContainer from '../Posts/ImgContainer';
 import ButtonDropFile from './ButtonDropFile';
+import { generateImageUrl } from '@/utils/fetchPosts';
 
-const ImageUploadField: React.FC = () => {
+type ImageUploadFieldProps = {
+    onImageUrlChange: (url: string) => void;  // nova prop para o callback
+};
+
+const ImageUploadField: React.FC<ImageUploadFieldProps> = ({ onImageUrlChange }) => {
     const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string>("");
     const [preview, setPreview] = useState<string | null>(null);
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -31,6 +37,17 @@ const ImageUploadField: React.FC = () => {
         reader.readAsDataURL(file);
     };
 
+    useEffect(() => {
+        if (image) {
+            const fetchImageUrl = async () => {
+                const data = await generateImageUrl(image);
+                // setImageUrl(data);
+                onImageUrlChange(data);
+            };
+            fetchImageUrl();
+        }
+    }, [image, onImageUrlChange]);
+
     return (
         <S.Container>
             <S.dropDownField onDragOver={handleDragOver} onDrop={handleDrop}>
@@ -49,7 +66,6 @@ const ImageUploadField: React.FC = () => {
                     {image ? 'Imagem carregada' : 'Arraste uma imagem ou clique para selecionar um arquivo'}
                 </S.Title>
 
-                {/* Passa a função setImage ao filho */}
                 <ButtonDropFile
                     setImage={(file) => {
                         setImage(file);

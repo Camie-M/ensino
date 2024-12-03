@@ -6,7 +6,7 @@ export const RecentPostsContainer = styled.div`
   gap: 0.5rem;
   padding: 0 1rem;
   height: 53.875rem;
-  width: 100%.
+  width: 100%;
 
   @media (max-width: 768px) {
     gap: 0.5rem;
