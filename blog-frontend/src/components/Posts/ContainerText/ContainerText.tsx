@@ -3,9 +3,9 @@ import * as S from './styled';
 import DataFormat from '@/utils/dataformat';
 
 export interface ConteinerTextProps {
-    author: string;
     title: string;
     text: string;
+    author: string;
     createdAt: string;
 }
 

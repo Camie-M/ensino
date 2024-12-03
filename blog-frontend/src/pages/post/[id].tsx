@@ -1,85 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import BaseLayout from '@/components/BaseLayout';
-import styled from 'styled-components';
-import PaginationList from '@/components/ListLayouts';
-import Post from '@/components/Posts/Posts';
-import { PostFetch, PostFetchById, PostDataProp } from '@/utils/fetchPosts';
-import PostPageLayout from '@/components/PostPageLayout';
+import React from "react";
+import BaseLayout from "@/components/BaseLayout";
+import Post from "@/components/Posts/Posts";
+import PostPageLayout from "@/components/PostPageLayout/PostPageLayout";
+import * as S from "./styled";
+import { PostDataProp } from "@/utils/fetchPosts";
+import styled from "styled-components";
 
-export const GridContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  @media (max-width:1280px) {
-      flex-wrap:wrap-reverse;
-  }
+const Title = styled.h1`
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.titles};
+  margin-top: 1rem;
 `;
 
-export const LeftGrid = styled.div`
-  width: 30%;
-  @media (max-width:1280px) {
-    width: 100%;
-  }
-`;
+interface PostPageProps {
+  post: PostDataProp;
+  relatedPosts: PostDataProp[] | null;
+}
 
-export const RightGrid = styled.div`
-  width: 80%;
-  @media (max-width:1280px) {
-    width: 100%;
-  }
-`;
-
-const PostPage: React.FC = () => {
-  const [posts, setPosts] = useState<PostDataProp[]>([]);
-  const [post, setPost] = useState<PostDataProp | null>(null);
-
-
-  useEffect(() => {
-    const urlPath = window.location.pathname;
-    const postId = urlPath.split('/').pop();
-
-    const fetchPosts = async () => {
-      const data = await PostFetch();
-      if (data) {
-        setPosts(data);
-      }
-    };
-    const fetchPostById = async () => {
-      if (postId) {
-        const data = await PostFetchById(postId);
-        if (data) {
-          setPost(data);
-        }
-      }
-    };
-    fetchPosts();
-    fetchPostById();
-  }, []);
+const PostPage: React.FC<PostPageProps> = ({ post, relatedPosts }) => {
+  const displayedPosts = relatedPosts?.slice(0, 4);
 
   return (
     <BaseLayout banner={false}>
-      <GridContainer>
-        <LeftGrid>
-          {post && (
-            <PaginationList>
-              {posts.slice(0, 5).map((post, index) => (
-                <Post key={index} {...post} type="column" />
-              ))}
-            </PaginationList>
+      <S.GridContainer>
+        <S.LeftGrid>
+          <Title>Posts Recentes</Title>
+          {displayedPosts && displayedPosts.length > 0 ? (
+            displayedPosts.map((relatedPost) => (
+              <Post key={relatedPost.id} {...relatedPost} type="column" />
+            ))
+          ) : (
+            <p>Nenhum post relacionado encontrado.</p>
           )}
-        </LeftGrid>
-        <RightGrid>
-          {post && (
-            <PostPageLayout
-              title={post.title}
-              text={post.text}
-              author={post.author}
-              image={post.image}
-              date={post.createdAt} />
-          )}
-        </RightGrid>
-      </GridContainer>
+        </S.LeftGrid>
+        <S.RightGrid>
+          <PostPageLayout
+            title={post.title}
+            text={post.text}
+            author={post.author}
+            image={post.image}
+            date={post.createdAt}
+          />
+        </S.RightGrid>
+      </S.GridContainer>
     </BaseLayout>
   );
+};
+
+
+export const getServerSideProps = async ({ params }: { params: { id: string } }) => {
+  const mockPosts = (await import("@/mocks/posts.json")).default.posts;
+
+  const postId = params.id;
+  const post = mockPosts.find((p: PostDataProp) => p.id === postId) || null;
+  const relatedPosts = post
+    ? mockPosts.filter((p: PostDataProp) => p.id !== postId).slice(0, 5)
+    : null;
+
+  return {
+    props: {
+      post,
+      relatedPosts,
+    },
+  };
 };
 
 export default PostPage;

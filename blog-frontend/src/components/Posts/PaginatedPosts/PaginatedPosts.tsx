@@ -1,52 +1,50 @@
 import React, { useState } from "react";
 import * as S from "./styled";
-import PostCentral from "../PostCentral/postCentral";
+import Post from "../Posts";
 
-interface Post {
+interface PostData {
+  id: string;
   title: string;
   text: string;
   author: string;
   image: string;
-  date: string;
+  createdAt: string;
 }
 
 interface PaginatedPostsProps {
-  posts: Post[];
+  posts: PostData[];
 }
 
 const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
-  const postsPerPage = 6; // Mostra 6 posts por página (2 linhas de 3)
+  const postsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(posts.length / postsPerPage);
-
   const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
+  const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
+  const handlePrevious = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleNext = () =>
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
 
   return (
     <S.PaginatedPostsContainer>
       <S.PostsGrid>
-        {currentPosts.map((post, index) => (
-          <PostCentral key={index} {...post} />
+        {currentPosts.map((post) => (
+          <div key={post.id}>
+            <Post {...post} type="column" />
+          </div>
         ))}
       </S.PostsGrid>
       <S.PaginationControls>
-        <button onClick={handlePrevious} className={currentPage === 1 ? "disabled" : ""}>
+        <button onClick={handlePrevious} disabled={currentPage === 1}>
           &lt; Anterior
         </button>
         <span>
           Página {currentPage} de {totalPages}
         </span>
-        <button onClick={handleNext} className={currentPage === totalPages ? "disabled" : ""}>
+        <button onClick={handleNext} disabled={currentPage === totalPages}>
           Próxima &gt;
         </button>
       </S.PaginationControls>

@@ -11,13 +11,13 @@ const Title = styled.h1`
   font-size: clamp(1.2rem, 5vw, 1.5rem);
   font-weight: 500;
   color: ${(props) => props.theme.colors.titles};
-  margin: 3rem auto;
+  margin-top: 1rem;
 `;
 
 const HomePage: React.FC = () => {
   const [posts] = useState(
     mockPosts.posts.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
   );
 

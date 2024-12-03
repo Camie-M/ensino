@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from './styled';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFileUpload } from 'react-icons/md';
-import ImgContainer from '../Posts/ImgContainer';
+import ImgContainer from '../Posts/ImgContainer/ImgContainer';
 import ButtonDropFile from './ButtonDropFile';
 
 const ImageUploadField: React.FC = () => {

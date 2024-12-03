@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const ContainerText = styled.div`
-    width:100%;
+    width: 100%;
+    height: 100%;
     display:flex;
     flex-direction:column;
-    gap:1.2rem;
+    gap:0.5rem;
     justify-content: space-around;
 `;
 
@@ -27,7 +28,7 @@ export const Text = styled.p`
     /* font-size: 1rem; */
     color: ${(props) => props.theme.colors.text};
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     max-width: 100%;
     line-height:1.4rem;
