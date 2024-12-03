@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import * as S from "./styled"
-import ImgContainer from '../Posts/ImgContainer';
-import DataFormat from '@/utils/dataformat';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import * as S from "./styled";
+import DataFormat from "@/utils/dataformat";
+import ImgContainer from "../Posts/ImgContainer/ImgContainer";
 
 interface PropContentPost {
   title: string;
@@ -11,7 +12,13 @@ interface PropContentPost {
   date: string;
 }
 
-const PostPageLayout: React.FC<PropContentPost> = ({ title, text, author, image, date }) => {
+const PostPageLayout: React.FC<PropContentPost> = ({
+  title,
+  text,
+  author,
+  image,
+  date,
+}) => {
   const [postDate, setPostDate] = useState<string>(date);
   useEffect(() => {
     const DateFix = async () => {
@@ -25,10 +32,11 @@ const PostPageLayout: React.FC<PropContentPost> = ({ title, text, author, image,
 
   return (
     <S.Container>
-      <S.Data> {author} • {postDate}</S.Data>
+      <S.Data>{postDate}</S.Data>
       <S.Title>{title}</S.Title>
       <ImgContainer image={image} />
       <S.Content>{text}</S.Content>
+      <S.Author>Escrito por: {author}</S.Author>
     </S.Container>
   );
 };

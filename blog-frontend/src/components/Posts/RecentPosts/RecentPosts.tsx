@@ -1,14 +1,14 @@
 import React from "react";
 import * as S from "./styled";
-import PostCentral from "../PostCentral/postCentral";
-import PostRight from "../PostRight/postRight";
+import Post from "../Posts";
 
 interface Post {
+  id: string;
   title: string;
   text: string;
   author: string;
   image: string;
-  date: string;
+  createdAt: string;
 }
 
 interface RecentPostsProps {
@@ -16,23 +16,21 @@ interface RecentPostsProps {
 }
 
 const RecentPosts: React.FC<RecentPostsProps> = ({ posts }) => {
-  if (posts.length < 4) return null; // Garante que há posts suficientes
-
-  const [latest, second, third, fourth] = posts;
+  if (posts.length < 4) return null;
 
   return (
     <S.RecentPostsContainer>
       <S.TopRow>
         <S.LastPost>
-          <PostCentral {...latest} />
+          <Post {...posts[0]} type="column" />
         </S.LastPost>
-        <div>
-          <PostRight {...second} />
-          <PostRight {...third} />
-        </div>
+        <S.SidePosts>
+          <Post {...posts[1]} type="row" />
+          <Post {...posts[2]} type="row" />
+        </S.SidePosts>
       </S.TopRow>
       <S.FullWidthPost>
-        <PostRight {...fourth} />
+        <Post {...posts[3]} type="column" />
       </S.FullWidthPost>
     </S.RecentPostsContainer>
   );

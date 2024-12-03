@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as S from './styled';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFileUpload } from 'react-icons/md';
-import ImgContainer from '../Posts/ImgContainer';
+import ImgContainer from '../Posts/ImgContainer/ImgContainer';
 import ButtonDropFile from './ButtonDropFile';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 

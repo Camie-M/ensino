@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import BaseLayout from '@/components/BaseLayout';
-import styled from 'styled-components';
-import PaginationList from '@/components/ListLayouts';
-import Post from '@/components/Posts/Posts';
-import { PostFetch, PostFetchById, PostDataProp } from '@/utils/fetchPosts';
-import PostPageLayout from '@/components/PostPageLayout';
+import React, { useEffect, useState } from "react";
+import BaseLayout from "@/components/BaseLayout";
+import Post from "@/components/Posts/Posts";
+import PostPageLayout from "@/components/PostPageLayout/PostPageLayout";
+import * as S from "./styled";
+import { PostDataProp, PostFetch, PostFetchById } from "@/utils/fetchPosts";
+import styled from "styled-components";
+import PaginationList from "@/components/ListLayouts";
 
-export const GridContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  @media (max-width:1280px) {
-      flex-wrap:wrap-reverse;
-  }
+const Title = styled.h1`
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.titles};
+  margin-top: 1rem;
 `;
 
-export const LeftGrid = styled.div`
-  width: 30%;
-  @media (max-width:1280px) {
-    width: 100%;
-  }
-`;
+interface PostPageProps {
+  post: PostDataProp;
+  relatedPosts: PostDataProp[] | null;
+}
 
-export const RightGrid = styled.div`
-  width: 80%;
-  @media (max-width:1280px) {
-    width: 100%;
-  }
-`;
-
-const PostPage: React.FC = () => {
+const PostPage: React.FC<PostPageProps> = () => {
+  // const displayedPosts = relatedPosts?.slice(0, 4);
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [post, setPost] = useState<PostDataProp | null>(null);
-
 
   useEffect(() => {
     const urlPath = window.location.pathname;
@@ -57,27 +48,30 @@ const PostPage: React.FC = () => {
 
   return (
     <BaseLayout banner={false}>
-      <GridContainer>
-        <LeftGrid>
+      <S.GridContainer>
+        <S.LeftGrid>
+          <Title>Posts Recentes</Title>
           {post && (
             <PaginationList>
-              {posts.slice(0, 5).map((post, index) => (
+              {posts.slice(0, 3).map((post, index) => (
                 <Post key={index} {...post} type="column" />
               ))}
             </PaginationList>
           )}
-        </LeftGrid>
-        <RightGrid>
-          {post && (
+        </S.LeftGrid>
+        <S.RightGrid>
+          {post ?
             <PostPageLayout
               title={post.title}
               text={post.text}
               author={post.author}
               image={post.image}
-              date={post.createdAt} />
-          )}
-        </RightGrid>
-      </GridContainer>
+              date={post.createdAt}
+            /> : "Post indisponivel"
+          }
+
+        </S.RightGrid>
+      </S.GridContainer>
     </BaseLayout>
   );
 };

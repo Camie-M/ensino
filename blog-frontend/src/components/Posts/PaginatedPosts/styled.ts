@@ -3,22 +3,17 @@ import styled from "styled-components";
 export const PaginatedPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 0 1rem;
-  height: 70.188rem;
+  gap:3rem;
 `;
 
 export const PostsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Três colunas */
-  gap: 2rem;
+ display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); /* Ajusta dinamicamente com base no espaço disponível */
+  gap: 3rem 2rem;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); /* Duas colunas para telas médias */
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* Uma coluna para telas pequenas */
+  /* Garante que, em espaços muito pequenos, apenas uma coluna seja exibida */
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -42,10 +37,10 @@ export const PaginationControls = styled.div`
       background: ${(props) => props.theme.colors.hoverAnchor};
       color: #fff;
     }
-  }
 
-  .disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
   }
 `;

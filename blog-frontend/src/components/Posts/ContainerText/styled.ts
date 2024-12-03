@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const ContainerText = styled.div`
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:1.2rem;
-    justify-content: space-around;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
 `;
 
 

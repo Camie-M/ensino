@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
-import ConteinerText, { ConteinerTextProps } from './ContainerText';
-import ImgContainer, { PostImg } from './ImgContainer';
+import ConteinerText, { ConteinerTextProps } from './ContainerText/ContainerText';
+import ImgContainer, { PostImg } from './ImgContainer/ImgContainer';
 import { PostDataProp } from '@/utils/fetchPosts';
+import { useRouter } from 'next/router';
 
 export interface PostsProps extends PostImg, ConteinerTextProps, PostDataProp {
-    type?: 'column' | 'row';
+  type?: 'column' | 'row';
 }
 
-const Post: React.FC<PostsProps> = ({ type = 'column', createdAt, image, author, title, text, id }) => {
-    const [currentType, setCurrentType] = useState(type);
-    useEffect(() => {
-        setCurrentType(type); // Atualiza 'currentType' se o 'type' for passado
-    }, [type]);
+const Post: React.FC<PostsProps> = ({ type = 'column', ...props }) => {
+  const [currentType, setCurrentType] = useState(type);
+  const router = useRouter();
+  useEffect(() => {
+    setCurrentType(type); // Atualiza 'currentType' se o 'type' for passado
+  }, [type]);
 
-    return (
-        <S.ContainerAnchor type={currentType} href={"post/" + id}>
-            <ImgContainer image={image} />
-            <ConteinerText createdAt={createdAt} author={author} title={title} text={text} />
-        </S.ContainerAnchor >
-    );
+
+
+  const handleNavigation = () => {
+    router.push(`/post/${props.id}`);
+  };
+
+  return (
+    <S.ContainerAnchor type={currentType} onClick={handleNavigation}>
+      <ImgContainer image={props.image} />
+      <ConteinerText createdAt={props.createdAt} author={props.author} title={props.title} text={props.text} />
+    </S.ContainerAnchor >
+  );
 };
 
 export default Post;

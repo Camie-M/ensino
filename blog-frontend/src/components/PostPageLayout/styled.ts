@@ -1,26 +1,50 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Container = styled.div`
-   width:100%;
-`
-export const Title = styled.h1`
-     font-size: clamp(1.2rem, 5vw, 1.3rem); 
-    font-weight:500;
-    /* font-size: 1.5rem; */
-    color: ${(props) => props.theme.colors.titles};
-`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+`;
+
 export const Data = styled.p`
-    font-size: clamp(0.5rem, 5vw , 0.9rem); 
-    font-weight:600;
-    /* margin-top:0.8rem; */
-    /* font-size: 0.9rem;    */
-    color: ${(props) => props.theme.colors.authors};
-`
-export const imgContainer = styled.div`
-   
-`
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.authors};
+`;
+
+export const Title = styled.h1`
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.titles};
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+export const ImageWrapper = styled.div`
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+`;
+
 export const Content = styled.p`
-   font-size: clamp(1rem,5vw , 1.1rem); 
-    /* font-size: 1rem; */
-    color: ${(props) => props.theme.colors.text};
-`
+  font-size: 16px;
+  line-height: 1.8;
+  color: ${(props) => props.theme.colors.text};
+`;
+
+export const Author = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.authors};
+  margin-top: 1rem;
+`;
