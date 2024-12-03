@@ -1,35 +1,77 @@
 import type { FunctionComponent } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
-import * as S from "./styled"
+import * as S from "./styled";
 
 import TextInput from "../FormItems/TextInput";
 import TextareaInput from "../FormItems/TextareaInput";
 import ImageUploadField from "../FileUpload";
 import Button from "../FormItems/Button";
+import { getToken } from "@/utils/fetchPosts";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 type Props = {
     isEdit: boolean;
     defaultValueTitle?: string;
     defaultValueText?: string;
-}
+    defaultValueImage?: string
+};
 
 const PostForm: FunctionComponent<Props> = ({
     isEdit,
     defaultValueTitle,
-    defaultValueText
+    defaultValueText,
+    defaultValueImage
 }) => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
         setValue,
-    } = useForm<FieldValues>()
+        formState: { errors },
+    } = useForm<FieldValues>();
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data)
+    const UpdateForm = async (data: FieldValues) => {
+        const token = await getToken();
+        const path = window.location.pathname;
+        const pathParts = path.split('/');
+        const id = pathParts[pathParts.length - 1];
 
-    const handleImageUrlChange = (url: string) => {
-        setValue("image_url", url);
+        if (token) {
+            try {
+                const formData = new FormData();
+                formData.append('title', data.title);
+                formData.append('text', data.text);
+                if (data.image instanceof File) {
+                    formData.append('image', data.image);
+                }
+
+                const response = await fetch(`http://localhost:3001/posts/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        'Authorization': `${token}`,
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    console.error(response);
+                    throw new Error("Falha ao enviar o post");
+                }
+
+                const result = await response.json();
+                console.log("Post enviado com sucesso:", result);
+            } catch (error) {
+                console.error("Erro ao enviar o post:", error);
+            }
+        } else {
+            console.error("Falha ao obter o token");
+        }
+    };
+
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        UpdateForm(data)
     };
 
     return (
@@ -54,19 +96,18 @@ const PostForm: FunctionComponent<Props> = ({
             />
             {errors.text && <span>Esse campo é obrigatório</span>}
 
-            <ImageUploadField onImageUrlChange={handleImageUrlChange} />
-
-            <TextInput
-                label="Link da imagem Gerada"
-                id="image_url"
-                placeholder="Link da imagem Gerada"
+            <ImageUploadField
+                id="image"
                 register={register}
-                defaultValue={defaultValueTitle ? defaultValueTitle : ''}
-                required
+                setValue={setValue}
+                defaultValue={defaultValueImage ? defaultValueImage : ''}
+                required={true}
             />
+
+
             <Button label={isEdit ? "Editar" : "Criar"} type="submit" />
         </S.Form>
-    )
-}
+    );
+};
 
 export default PostForm;

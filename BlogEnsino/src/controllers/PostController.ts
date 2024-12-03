@@ -83,7 +83,8 @@ export class PostController {
     try {
       const { title, text } = req.body;
       const image = req.file?.buffer;
-      const token = req.headers.authorization
+      const token = req.headers.authorization;
+
       if (!token) {
         res.status(400).json({ message: "Token faltando" });
         return;
@@ -95,15 +96,14 @@ export class PostController {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === "Usuário sem permissão") {
-          res.status(403).json({ message: "Usuário sem permissão" });
-          return
+          res.status(403).json({ message: `Usuário sem permissão: ${error.message}` });
         } else if (error.message === "Usuário não encontrado") {
-          res.status(404).json({ message: "Usuário não encontrado" });
-          return
+          res.status(404).json({ message: `Usuário não encontrado: ${error.message}` });
         } else {
-          res.status(500).json({ message: "Falha ao atualizar o Post" });
-          return
+          res.status(500).json({ message: `Falha ao atualizar o Post: ${error.message}` });
         }
+      } else {
+        res.status(500).json({ message: "Erro desconhecido ao atualizar o post" });
       }
     }
   }

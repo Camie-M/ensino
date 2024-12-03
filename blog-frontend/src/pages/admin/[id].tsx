@@ -17,19 +17,19 @@ const EditPostPage: React.FC = () => {
     if (id) {
       const fetchPostInfo = async () => {
         const idString = id.toString()
-          const data = await PostFetchById(idString);
-          if (data) {
-            setPostInfo(data);
-          }
+        const data = await PostFetchById(idString);
+        if (data) {
+          setPostInfo(data);
+        }
       };
       fetchPostInfo();
     }
-}, [id]);
+  }, [id]);
 
   return (
     <BaseLayout banner={false}>
       <h1 className='smallTitle'>{postInfo?.title}</h1>
-      <PostForm isEdit={true} defaultValueText='Post 1' defaultValueTitle='Post 1' />
+      <PostForm isEdit={true} defaultValueText={postInfo?.text} defaultValueTitle={postInfo?.title} defaultValueImage={postInfo?.image} />
     </BaseLayout>
   );
 };

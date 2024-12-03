@@ -3,7 +3,7 @@ import { AuthController } from '../controllers/AuthController';
 
 const postRoutes: Router = Router();
 
-postRoutes.get('/token', AuthController.generateToken);
+postRoutes.post('/token', AuthController.generateToken);
 
 
 export default postRoutes;

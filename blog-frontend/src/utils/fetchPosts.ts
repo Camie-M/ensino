@@ -1,3 +1,5 @@
+import { headers } from 'next/headers'
+
 export const PostFetch = async (): Promise<PostDataProp[] | null> => {
     try {
         const postResponse = await fetch('http://localhost:3001/posts/', {
@@ -41,37 +43,60 @@ export const PostFetchById = async (id: string): Promise<PostDataProp | undefine
         return undefined;
     }
 };
-
-
-export const generateImageUrl = async (image: any) => {
+// utils/fetchPosts.ts
+export const getToken = async () => {
     try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlmZTYyOGUzLThjOGEtNGU4NS05MGRkLWRlZTdmZWY1ZmFhYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzMxOTg5NDAsImV4cCI6MTczMzI4NTM0MH0.r17bTXeVLYBvSbN2L0yvvFKLMLL9Ykz4jc5WBTJt3-8";
-
-        // Supondo que `image` seja um arquivo (File)
-        const formData = new FormData();
-        formData.append("image", image); // Adiciona o arquivo ao FormData
-
-        const response = await fetch(`http://localhost:3001/imageGeneration/`, {
+        const response = await fetch(`http://localhost:3001/auth/token`, {
             method: 'POST',
             headers: {
-                authorization: `${token}`, // Correto uso do Bearer token
+                'Authorization': "QnJlbm8=",
             },
-            body: formData, // Envia o FormData com o arquivo
         });
+        if (!response.ok) {
+            throw new Error('Falha ao obter o token');
+        }
 
-        // if (!response.ok) {
-        //     throw new Error("Erro ao gerar imagem.");
-        // }
+        const data = await response.json();
+        const token = data.token;
 
-        return await response.json();
-
-
+        return token; // Retorna o token obtido
     } catch (error) {
-        console.error("Erro:", error);
+        console.error('Erro ao buscar o token:', error);
+        return null;
     }
-
 };
-// // Usando type para a interface
+
+
+
+// export const updatePost = async (id, token): Promise<PostDataProp[] | null> => {
+//     const token = ""
+//     try {
+//         const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
+//             method: 'PUT',
+//             headers: {
+//                 authorization: `${token}`,
+//             },
+//             // body: {
+
+//             // }
+//         });
+
+//         // Verificando se a resposta é OK
+//         if (!postResponse.ok) {
+//             console.error('Erro ao buscar posts:', postResponse.status, postResponse.statusText);
+//             alert('Posts não encontrados ou credenciais inválidas.');
+//             return null;
+//         }
+
+//         const postsData: PostDataProp[] = await postResponse.json();
+//         return postsData;
+//     } catch (error) {
+//         console.error('Erro ao buscar posts:', error);
+//         return null;
+//     }
+// };
+
+
 export type PostDataProp = {
     id: string;
     createdAt: string;

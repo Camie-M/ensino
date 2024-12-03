@@ -8,7 +8,7 @@ export class AuthController {
         try {
             if (req.headers.authorization) {
                 const token = await authService.generateToken(req.headers.authorization);
-                res.status(201).setHeader("Authorization", token).json();
+                res.status(201).json({ "token": token }).json();
             }
         } catch (error) {
             res.status(500).json({ message: "Erro ao gerar o Token" });
