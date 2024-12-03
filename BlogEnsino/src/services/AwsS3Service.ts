@@ -18,10 +18,8 @@ const s3Client = new S3Client({
 const authService = new AuthService()
 export class AwsS3Service {
     // sobe a imagem para o S3
-    async uploadFileToAws(fileName: string, file: Buffer, token: string): Promise<string> {
+    async uploadFileToAws(fileName: string, file: Buffer): Promise<string> {
         try {
-            await authService.validateUser(token, "admin");
-            await authService.decodeToken(token)
             // Configure the parameters for the S3 upload
             const uploadParams: PutObjectCommandInput = {
                 Bucket: env.AWS_BUCKET_NAME,

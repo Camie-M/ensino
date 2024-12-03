@@ -33,6 +33,10 @@ export class PostRepository {
         return post.update(fields)
     }
 
+    updateWithImage(post: Post, fields: { title: string; text: string, image_url: string }): Promise<Post> {
+        return post.update(fields)
+    }
+
     // Deleta um post e retorna PostResource ou null
     delete(post: Post): Promise<void> {
         return post.destroy()
