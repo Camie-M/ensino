@@ -10,34 +10,23 @@ export class PostController {
 
   static async createPost(req: Request, res: Response): Promise<void> {
     try {
-      const { title, text } = req.body;
-      const token = req.headers.authorization;
-      const image = req.file?.buffer;
-
-      if (!token) {
-        res.status(400).json({ message: "Token faltando" });
-        return;
+      const { title, text, image } = req.body;
+      const token = req.headers.authorization
+      if (token) {
+        const post = await postService.create(title, text, image, token);
+        res.status(201).json(post);
       }
-      if (!image) {
-        res.status(400).json({ message: "imagem faltando" });
-        return;
-      }
-
-      const post = await postService.create(title, text, image, token);
-      res.status(201).json(post);
     } catch (error) {
-
       if (error instanceof Error) {
-        switch (error.message) {
-          case "Usuário sem permissão":
-            res.status(403).json({ message: error.message });
-            return;
-          case "Usuário não encontrado":
-            res.status(404).json({ message: error.message });
-            return;
-          default:
-            res.status(500).json({ message: error.message });
-            return;
+        if (error.message === "Usuário sem permissão") {
+          res.status(403).json({ message: "Usuário sem permissão" });
+          return
+        } else if (error.message === "Usuário não encontrado") {
+          res.status(404).json({ message: "Usuário não encontrado" });
+          return
+        } else {
+          res.status(500).json({ message: "Falha ao criar o Post" });
+          return
         }
       }
     }

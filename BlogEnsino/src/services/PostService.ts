@@ -10,11 +10,12 @@ const authService = new AuthService()
 const awsS3Service = new AwsS3Service()
 
 export class PostService {
-    async create(title: string, text: string, image: Buffer, token: string): Promise<PostResource | Error> {
+    // async create(title: string, text: string, image: Buffer, token: string): Promise<PostResource | Error> {
+    async create(title: string, text: string, image: string, token: string): Promise<PostResource | Error> {
         await authService.validateUser(token, "admin");
         const user = await authService.decodeToken(token)
-        const imageUrl = await awsS3Service.uploadFileToAws(uuidv4(), image)
-        const createdPost = await postRepository.create(title, text, user.username, imageUrl, user.id);
+        // const imageUrl = await awsS3Service.uploadFileToAws(uuidv4(), image, token)
+        const createdPost = await postRepository.create(title, text, user.username, image, user.id);
         return PostMapper.mapToResource(createdPost);
     }
 

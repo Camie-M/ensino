@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from '../env';
+import { AuthService } from "./AuthService";
 // Initialize an S3 client
 const s3Client = new S3Client({
     region: env.AWS_REGION, // AWS region
@@ -13,10 +14,14 @@ const s3Client = new S3Client({
         secretAccessKey: env.AWS_SECRET_KEY // Secret access key
     }
 });
+
+const authService = new AuthService()
 export class AwsS3Service {
     // sobe a imagem para o S3
-    async uploadFileToAws(fileName: string, file: Buffer): Promise<string> {
+    async uploadFileToAws(fileName: string, file: Buffer, token: string): Promise<string> {
         try {
+            await authService.validateUser(token, "admin");
+            await authService.decodeToken(token)
             // Configure the parameters for the S3 upload
             const uploadParams: PutObjectCommandInput = {
                 Bucket: env.AWS_BUCKET_NAME,

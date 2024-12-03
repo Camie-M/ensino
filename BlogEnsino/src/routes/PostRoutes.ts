@@ -3,7 +3,8 @@ import { PostController, uploadMiddleware } from '../controllers/PostController'
 
 const postRoutes: Router = Router();
 
-postRoutes.post('/', uploadMiddleware, PostController.createPost);
+// postRoutes.post('/', uploadMiddleware, PostController.createPost);
+postRoutes.post('/', PostController.createPost);
 postRoutes.get('/', PostController.getAllPosts);
 postRoutes.get('/search', PostController.getPostByTitle);
 postRoutes.get('/:id', PostController.getPostById);
