@@ -7,7 +7,7 @@ export const Hero = styled.div`
 `
 export const Title = styled.h1`
     color: ${props => props.theme.colors.titles};
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: clamp(4rem, 15vw , 20rem); 
     font-weight: 700;
     text-transform: uppercase;

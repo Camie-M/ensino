@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
 import { PostFetch, PostDataProp } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
+import { useRouter } from 'next/router';
 
 const TabelaPost: React.FC = () => {
     const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
-
+    const router = useRouter();
     useEffect(() => {
         const fetchPosts = async () => {
             const data = await PostFetch();
@@ -14,6 +15,10 @@ const TabelaPost: React.FC = () => {
         };
         fetchPosts();
     }, []);
+
+    const handleNavigation = (id: string) => {
+        router.push(`/admin/${id}`);
+    };
 
     return (
         <S.Tabela>
@@ -38,12 +43,12 @@ const TabelaPost: React.FC = () => {
                             <S.Span>{post.role}</S.Span>
                         </S.Td> */}
                         <S.Td>
-                            <S.Anchor href={`/admin/${post.id}`}>Editar</S.Anchor>
+                            <S.Anchor onClick={() => handleNavigation(post.id)}>Editar</S.Anchor>
                         </S.Td>
                     </S.Tr>
                 ))}
             </S.Tbody>
-        </S.Tabela>
+        </S.Tabela >
     );
 };
 

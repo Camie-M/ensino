@@ -64,131 +64,146 @@ const creatMockPost = async () => {
     await Post.bulkCreate([
       {
         title: "JavaScript: O guia essencial para iniciantes",
-        text: "Entenda os conceitos básicos de JavaScript e como começar a programar com esta linguagem versátil.",
+        text: "JavaScript é uma das linguagens de programação mais populares do mundo. [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "A importância do Design Responsivo",
-        text: "Saiba como garantir que seu site seja acessível em todos os dispositivos, proporcionando uma experiência de qualidade.",
+        text: "O design responsivo é um dos pilares do desenvolvimento moderno de websites. [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Explorando as novidades do ECMAScript 2024",
-        text: "Veja o que há de novo na última versão do padrão JavaScript e como essas mudanças podem impactar seu código.",
+        text: "Com o ECMAScript 2024, novas funcionalidades foram introduzidas para [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "10 bibliotecas essenciais para desenvolvedores front-end",
-        text: "Confira uma lista com as melhores bibliotecas para agilizar o desenvolvimento front-end em 2024.",
+        text: "O desenvolvimento front-end evolui constantemente, e bibliotecas desempenham [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "React vs Angular: Qual escolher?",
-        text: "Uma análise das principais diferenças entre React e Angular para ajudar você a decidir a melhor opção para seus projetos.",
+        text: "React e Angular são dois dos frameworks mais populares no desenvolvimento [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Introdução ao Docker para desenvolvedores",
-        text: "Aprenda os fundamentos do Docker e como ele pode ajudar a criar ambientes de desenvolvimento consistentes.",
+        text: "Docker revolucionou a forma como desenvolvedores criam e gerenciam [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Como otimizar consultas SQL",
-        text: "Descubra técnicas práticas para melhorar o desempenho de suas consultas em bancos de dados SQL.",
+        text: "Otimizar consultas SQL é uma habilidade essencial para desenvolvedores [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Testes automatizados: Por onde começar?",
-        text: "Saiba como introduzir testes automatizados em seu fluxo de trabalho para aumentar a qualidade do código.",
+        text: "Testes automatizados são fundamentais para garantir a qualidade de software [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Aprendendo TypeScript: Por onde começar",
-        text: "Descubra como o TypeScript pode melhorar a qualidade do seu código JavaScript e como dar os primeiros passos.",
+        text: "TypeScript é uma extensão do JavaScript que adiciona tipos estáticos [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "A evolução do desenvolvimento front-end",
-        text: "Uma análise das mudanças mais significativas no desenvolvimento front-end nos últimos 10 anos.",
+        text: "O desenvolvimento front-end passou por transformações significativas [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Benefícios de adotar a metodologia Scrum",
-        text: "Entenda como a metodologia ágil Scrum pode ajudar a aumentar a produtividade da sua equipe.",
+        text: "Scrum é uma das metodologias ágeis mais utilizadas para gerenciar projetos [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Como construir uma API REST com Node.js",
-        text: "Veja um guia prático para criar APIs robustas e escaláveis usando Node.js e Express.",
+        text: "APIs REST são um componente central na comunicação entre sistemas modernos [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Melhores práticas para código limpo",
-        text: "Saiba como aplicar técnicas de Clean Code para escrever códigos mais legíveis e fáceis de manter.",
+        text: "Escrever código limpo não é apenas uma boa prática, mas um hábito crucial [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Entendendo o ciclo de vida de componentes React",
-        text: "Uma explicação detalhada sobre o ciclo de vida de componentes em React, incluindo hooks modernos.",
+        text: "O ciclo de vida dos componentes é uma parte essencial do desenvolvimento [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Introdução ao GraphQL",
-        text: "Descubra como o GraphQL pode ser uma alternativa ao REST para criar APIs mais flexíveis.",
+        text: "GraphQL oferece uma abordagem alternativa ao REST, permitindo consultas [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Por que investir em testes de software?",
-        text: "Saiba como os testes automatizados podem evitar problemas em produção e melhorar a qualidade do seu produto.",
+        text: "Testes de software são uma parte crucial do ciclo de vida de desenvolvimento [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Como implementar autenticação JWT",
-        text: "Aprenda a configurar autenticação baseada em tokens JWT para proteger suas APIs.",
+        text: "JWT (JSON Web Token) é uma forma segura e prática de autenticação e [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       },
       {
         title: "Os fundamentos do UX Design",
-        text: "Entenda os princípios básicos de UX Design para criar interfaces mais intuitivas e agradáveis.",
+        text: "UX Design é o processo de criação de produtos que oferecem experiências [...]",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
+        user_id: userAdmin.id
+      },
+      {
+        title: "Dominando o uso de Hooks no React",
+        text: "Hooks são funções que permitem que você use recursos do React como estado [...]",
+        author: userAdmin.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
+        user_id: userAdmin.id
+      },
+      {
+        title: "O impacto da acessibilidade digital",
+        text: "A acessibilidade digital garante que pessoas com deficiência possam usar [...]",
         author: userAdmin.username,
         image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
         user_id: userAdmin.id
       }
-    ]);
+    ]
+    );
 
   }
 

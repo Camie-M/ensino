@@ -1,6 +1,7 @@
 // styles/global.ts
 import { createGlobalStyle } from 'styled-components';
-
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 const GlobalStyle = createGlobalStyle`
  // ========== RESET START ========== //
   html, body, div, span, applet, object, iframe,
@@ -55,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: ${props => props.theme.colors.background};
-    font-family: ${props => props.theme.fonts.primary};
+
   }
 `;
 

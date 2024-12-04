@@ -41,7 +41,7 @@ export const Td = styled.td`
     padding: 1rem;
     color: ${(props) => props.theme.colors.text};
 `;
-export const Anchor = styled.a`
+export const Anchor = styled.p`
     text-align: center;
     color: ${(props) => props.theme.colors.text};
     font-size: clamp(1rem, 5vw, 1.2rem); 
