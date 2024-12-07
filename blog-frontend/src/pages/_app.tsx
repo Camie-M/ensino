@@ -8,6 +8,13 @@ import lightTheme from "../styles/themes/light";
 import GlobalStyle from '@/styles/global';
 import { UserContext } from '@/context/UserContext';
 
+const defaultUser = {
+  userID: '',
+  changeUserId: () => '',
+  isAuthorized: false,
+  changeIsAuthorized: () => ''
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(lightTheme);
 
@@ -17,9 +24,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={null} />
-      <GlobalStyle />
-      <Component {...pageProps} toggleTheme={toggleTheme} />
+      <UserContext.Provider value={defaultUser}>
+        <GlobalStyle />
+        <Component {...pageProps} toggleTheme={toggleTheme} />
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

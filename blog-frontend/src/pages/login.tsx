@@ -27,7 +27,6 @@ export const Img = styled.img`
 `;
 
 const LoginPage: React.FC = () => {
-
   return (
     <LoginContainer>
       <FormContainer>

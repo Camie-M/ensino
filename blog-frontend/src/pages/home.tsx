@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import HighLights from '@/components/Highlights/';
 import BaseLayout from '@/components/BaseLayout';
-import Post from '@/components/Posts/Posts';
-import PaginationList from '@/components/ListLayouts';
 import styled from 'styled-components';
 import { PostFetch, PostDataProp } from '@/utils/fetchPosts';
 import PaginatedPosts from '@/components/Posts/PaginatedPosts/PaginatedPosts';

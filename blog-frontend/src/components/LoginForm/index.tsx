@@ -1,11 +1,13 @@
-import type { FunctionComponent } from "react";
+import { useContext, type FunctionComponent } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as S from "./styled"
 import TextInput from "../FormItems/TextInput";
-
+import { redirect } from 'next/navigation'
+import { UserContext } from "@/context/UserContext";
 
 const LoginForm: FunctionComponent = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
+    const { changeIsAuthorized } = useContext(UserContext)
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
@@ -27,10 +29,14 @@ const LoginForm: FunctionComponent = () => {
             });
             if (!tokenResponse.ok) {
                 alert("Erro ao gerar o token de sessáo");
+                changeIsAuthorized(false)
                 return;
             }
+            changeIsAuthorized(true);
+            redirect('/home');
         } catch (error) {
             alert("Ocorreu um erro inesperado. Tente novamente.");
+            changeIsAuthorized(false)
             console.log(error);
         }
     };

@@ -8,11 +8,11 @@ type Props = {
 }
 
 const Restricted: FunctionComponent<Props> = ({ children }) => {
-  const user = useContext(UserContext);
+  const { isAuthorized } = useContext(UserContext);
   const router = useRouter()
   return (
     <div>
-      {user ? (
+      {!isAuthorized ? (
         <>
             {router.push('/login')}
         </>
