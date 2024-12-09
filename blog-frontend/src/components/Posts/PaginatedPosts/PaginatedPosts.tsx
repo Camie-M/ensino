@@ -30,24 +30,33 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
 
   return (
     <S.PaginatedPostsContainer>
-      <S.PostsGrid>
-        {currentPosts.map((post) => (
-          <div key={post.id}>
-            <Post {...post} type="column" />
-          </div>
-        ))}
-      </S.PostsGrid>
-      <S.PaginationControls>
-        <button onClick={handlePrevious} disabled={currentPage === 1}>
-          &lt; Anterior
-        </button>
-        <span>
-          Página {currentPage} de {totalPages}
-        </span>
-        <button onClick={handleNext} disabled={currentPage === totalPages}>
-          Próxima &gt;
-        </button>
-      </S.PaginationControls>
+      {posts.length === 0 ? (
+        <S.EmptyMessage>
+          Nenhum post encontrado para esta pesquisa.
+        </S.EmptyMessage>
+      ) : (
+        <>
+          <S.PostsGrid>
+            {currentPosts.map((post) => (
+              <div key={post.id}>
+                <Post {...post} type="column" />
+              </div>
+            ))}
+          </S.PostsGrid>
+
+          <S.PaginationControls>
+            <button onClick={handlePrevious} disabled={currentPage === 1}>
+              &lt; Anterior
+            </button>
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+            <button onClick={handleNext} disabled={currentPage === totalPages}>
+              Próxima &gt;
+            </button>
+          </S.PaginationControls>
+        </>
+      )}
     </S.PaginatedPostsContainer>
   );
 };

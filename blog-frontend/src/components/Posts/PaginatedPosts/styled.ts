@@ -3,15 +3,14 @@ import styled from "styled-components";
 export const PaginatedPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap:3rem;
+  gap: 3rem;
 `;
 
 export const PostsGrid = styled.div`
- display: grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); /* Ajusta dinamicamente com base no espaço disponível */
   gap: 3rem 2rem;
 
-  /* Garante que, em espaços muito pequenos, apenas uma coluna seja exibida */
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
@@ -43,4 +42,12 @@ export const PaginationControls = styled.div`
       opacity: 0.5;
     }
   }
+`;
+
+export const EmptyMessage = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.text};
+  margin: 2rem 0;
 `;
