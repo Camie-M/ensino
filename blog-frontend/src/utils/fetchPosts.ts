@@ -1,4 +1,4 @@
-
+import { FieldValues } from 'react-hook-form';
 export const PostFetch = async (): Promise<PostDataProp[] | null> => {
   try {
     const postResponse = await fetch("http://localhost:3001/posts/", {
@@ -21,6 +21,8 @@ export const PostFetch = async (): Promise<PostDataProp[] | null> => {
   }
 };
 
+
+
 export const PostFetchById = async (id: string): Promise<PostDataProp | undefined> => {
   try {
     const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
@@ -42,28 +44,75 @@ export const PostFetchById = async (id: string): Promise<PostDataProp | undefine
     return undefined;
   }
 };
-// utils/fetchPosts.ts
-export const getToken = async () => {
+
+export const DeletePost = async (id:string, tokenSes:string):Promise<void> => {
   try {
+    const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Authorization': tokenSes, //mudar pelo token que estiver no header
+      },
+    });
+
+    // Verificando se a resposta é OK
+    if (!postResponse.ok) {
+      console.error('Erro ao delete o Post:', postResponse.status, postResponse.statusText);
+      alert('Post não encontrado ou credenciais inválidas');
+    }else{
+      alert('Post Deletado com sucesso');
+    }
+  } catch (error) {
+    console.error('Erro ao buscar post:', error);
+
+  }
+};
+// export const getToken = async () => {
+//   try {
+//     const response = await fetch(`http://localhost:3001/auth/token`, {
+//       method: 'GET',
+//       headers: {
+//         'Authorization': "QnJlbm8=", //mudar pelo token que estiver no header
+//       },
+//     });
+//     if (!response.ok) {
+//       throw new Error('Falha ao obter o token');
+//     }
+
+//     const data = await response.json();
+//     const token = data.token;
+
+//     return token; // Retorna o token obtido
+//   } catch (error) {
+//     console.error('Erro ao buscar o token:', error);
+//     return null;
+//   }
+// };
+export const TokenGenerator = async (data: FieldValues): Promise<string | null> => {
+  try {
+    const usernamePassword = `${btoa(`${data.usuario}:${data.senha}`)}`;
+    
     const response = await fetch(`http://localhost:3001/auth/token`, {
       method: 'POST',
       headers: {
-        'Authorization': "QnJlbm8=",
+        'Authorization': usernamePassword,
+        'Content-Type': 'application/json',
       },
     });
+
     if (!response.ok) {
-      throw new Error('Falha ao obter o token');
+      const errorMessage = `Erro ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
-    const data = await response.json();
-    const token = data.token;
-
-    return token; // Retorna o token obtido
+    const responseData = await response.json();
+    return responseData.token; // Retorna o token obtido
   } catch (error) {
     console.error('Erro ao buscar o token:', error);
-    return null;
+    return null;  // Retorna null em caso de erro
   }
 };
+
+
 
 
 

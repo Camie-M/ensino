@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
   const [filteredPosts, setFilteredPosts] = useState<PostDataProp[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+
   useEffect(() => {
     const fetchPosts = async () => {
       const data = await PostFetch();

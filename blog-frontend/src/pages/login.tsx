@@ -1,3 +1,5 @@
+"use-client"
+
 import React from 'react';
 import LoginForm from '@/components/LoginForm';
 import styled from 'styled-components'
@@ -27,7 +29,6 @@ export const Img = styled.img`
 `;
 
 const LoginPage: React.FC = () => {
-
   return (
     <LoginContainer>
       <FormContainer>

@@ -1,15 +1,19 @@
 import { UserResource } from '../resources/UserResource';
 import { UserRepository } from '../repositories/UserRepository';
 import { UserMapper } from '../mappers/UserMapper';
+import { LoginUtils } from '../utils/LoginUtils';
+import { User } from '../models/User';
+const crypto = require('crypto');
 
 const userRepository = new UserRepository();
 
 export class UserService {
 
-    public async create(username: string, role: string): Promise<UserResource> {
+    public async create(username: string, role: string, password:string): Promise<UserResource> {
         try {
             await this.validateUsername(username);
-            const createdUser = await userRepository.create(username, role)
+            const hashPassword = LoginUtils.hashGenerator(password)
+            const createdUser = await userRepository.create(username, role, hashPassword)
             return UserMapper.mapToResource(createdUser)
         } catch (error) {
             throw new Error(`Não foi possível criar o usuário: ${error}`);
@@ -41,7 +45,11 @@ export class UserService {
         const user = await this.findUserByUsername(username)
         return UserMapper.mapToResource(user)
     }
-
+    
+    async findEntityByUsername(username: string): Promise<User> {
+        return await this.findUserByUsername(username)
+    }
+    
 
     async update(id: string, updatedFields: { username: string; role: string }): Promise<UserResource | null> {
         try {

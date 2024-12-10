@@ -15,11 +15,11 @@ export class UserRepository {
         return User.findOne({ where: { username: username } })
     }
 
-    create(username: string, role: string): Promise<User> {
-        if (!role || !username) {
-            return Promise.reject(new Error('Role and Username são necessarios'));
+    create(username: string, role: string, password:string): Promise<User> {
+        if (!role || !username || !password) {
+            return Promise.reject(new Error('Role, Username e senha são necessarios'));
         }
-        return User.create({ username, role })
+        return User.create({ username, role, password})
     }
 
     update(user: User, fields: { username: string; role: string }): Promise<User> {

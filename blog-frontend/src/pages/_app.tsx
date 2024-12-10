@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app';
 import darkTheme from "../styles/themes/dark";
 import lightTheme from "../styles/themes/light";
 import GlobalStyle from '@/styles/global';
-import { UserContext } from '@/context/UserContext';
+import { UserProvider } from '@/context/UserContext'; // Importe o UserProvider aqui;
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(lightTheme);
@@ -17,9 +17,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={null} />
-      <GlobalStyle />
-      <Component {...pageProps} toggleTheme={toggleTheme} />
+      <UserProvider>
+        <GlobalStyle />
+        <Component {...pageProps} toggleTheme={toggleTheme} />
+      </UserProvider>
     </ThemeProvider>
   );
 }

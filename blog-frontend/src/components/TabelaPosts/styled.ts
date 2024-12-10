@@ -40,6 +40,10 @@ export const Td = styled.td`
     font-size: clamp(1rem, 5vw , 1.2rem); 
     padding: 1rem;
     color: ${(props) => props.theme.colors.text};
+    &:last-child{
+      display:flex;
+      gap:1rem;
+    }
 `;
 export const Anchor = styled.p`
     text-align: center;
@@ -49,6 +53,12 @@ export const Anchor = styled.p`
     cursor: pointer;
     &:hover {
         color: ${(props) => props.theme.colors.hoverAnchor};
+    }
+    &:nth-last-child(1){
+        color: red;
+        &:hover {
+            color: #900c3f;
+        }
     }
 `;
 

@@ -7,6 +7,7 @@ import Footer from '../Footer';
 
 import * as S from './styled'
 import Hero from '../Hero';
+import Restricted from '../Restricted';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,12 +27,14 @@ const BaseLayout: FunctionComponent<Props> = ({ children, banner }) => {
   }, [banner])
 
   return (
-    <S.BaseLayout className={inter.className}>
-      <Header />
-      <Hero banner={hero} />
-      {children}
-      <Footer />
-    </S.BaseLayout>
+    <Restricted>
+      <S.BaseLayout className={inter.className}>
+        <Header />
+        <Hero banner={hero} />
+        {children}
+        <Footer />
+      </S.BaseLayout>
+    </Restricted>
   )
 }
 

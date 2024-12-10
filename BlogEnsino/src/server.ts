@@ -8,7 +8,7 @@ import swaggerDocument from '../swagger_output.json';
 
 const cors = require('cors');
 const app = express();
-
+const crypto = require('crypto');
 
 app.use(cors());
 // app.use(cors({
@@ -40,22 +40,29 @@ const creatMockUser = async () => {
   await sequelize.models.User.bulkCreate([
     {
       username: "Breno",
-      role: "admin"
+      role: "admin",
+      password: hashGenerator("admin_breno_123")
     },
     {
       username: "Camila",
-      role: "user"
+      role: "user",
+      password: hashGenerator("user_camila_123")
     },
     {
       username: "Valdir",
-      role: "admin"
+      role: "admin",
+      password: hashGenerator("admin_valdir_123")
     },
     {
       username: "Matheus",
-      role: "admin"
-    },
-
+      role: "admin",
+      password: hashGenerator("admin_matheus_123")
+    }
   ])
+}
+
+function hashGenerator(password: string) {
+  return crypto.createHash('sha256').update(password).digest('hex');
 }
 const creatMockPost = async () => {
   const Post = sequelize.models.Post

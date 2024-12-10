@@ -5,6 +5,7 @@ interface UserAttributes {
     id: CreationOptional<string>;
     username: string;
     role: string;
+    password: string;
     createdAt?: CreationOptional<Date>;
     updatedAt?: CreationOptional<Date>;
 }
@@ -15,6 +16,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     public id!: CreationOptional<string>;
     public username!: string;
     public role!: string;
+    public password!: string;
 
     static initModel() {
         User.init(
@@ -31,6 +33,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                     unique: true,
                 },
                 role: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
+                password: {
                     type: DataTypes.STRING,
                     allowNull: false,
                 },
