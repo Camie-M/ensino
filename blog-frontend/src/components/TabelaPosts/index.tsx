@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
-import { PostFetch, PostDataProp } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
+import { PostFetch, PostDataProp, DeletePost } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
 import { useRouter } from 'next/router';
 
 const TabelaPost: React.FC = () => {
     const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
+    const [token, setToken] = useState<string>(""); // Ajuste para o tipo correto
     const router = useRouter();
-    useEffect(() => {
-        const fetchPosts = async () => {
-            const data = await PostFetch();
-            if (data) {
-                setPosts(data);
-            }
-        };
-        fetchPosts();
-    }, []);
+    
+    const fetchPosts = async () => {
+        const data = await PostFetch();
+        if (data) {
+            setPosts(data);
+        }
+    };
 
     const handleNavigation = (id: string) => {
         router.push(`/admin/${id}`);
     };
+
+    const handleDelete = async (id: string) => {
+        await DeletePost(id, token);
+        setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+    };
+    
+    useEffect(() => {
+        const tokenSes = localStorage.getItem("token")
+        if (tokenSes) {
+            setToken(tokenSes)
+        }
+        fetchPosts();
+    }, []);
 
     return (
         <S.Tabela>
@@ -44,11 +56,12 @@ const TabelaPost: React.FC = () => {
                         </S.Td> */}
                         <S.Td>
                             <S.Anchor onClick={() => handleNavigation(post.id)}>Editar</S.Anchor>
+                            <S.Anchor onClick={() => handleDelete(post.id)}>Excluir</S.Anchor>
                         </S.Td>
                     </S.Tr>
                 ))}
             </S.Tbody>
-        </S.Tabela >
+        </S.Tabela>
     );
 };
 

@@ -110,7 +110,6 @@ export class PostController {
 
   static async deletePost(req: Request, res: Response): Promise<void> {
     try {
-
       const token = req.headers.authorization
       if (token) {
         await postService.delete(req.params.id, token);

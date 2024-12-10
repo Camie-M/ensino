@@ -7,7 +7,6 @@ import TextInput from "../FormItems/TextInput";
 import TextareaInput from "../FormItems/TextareaInput";
 import ImageUploadField from "../FileUpload";
 import Button from "../FormItems/Button";
-import { getToken } from "@/utils/fetchPosts";
 
 type Props = {
     isEdit: boolean;
@@ -30,7 +29,7 @@ const PostForm: FunctionComponent<Props> = ({
     } = useForm<FieldValues>();
 
     const UpdateForm = async (data: FieldValues) => {
-        const token = await getToken();
+        const token = localStorage.getItem("token");
         const path = window.location.pathname;
         const pathParts = path.split('/');
         const id = pathParts[pathParts.length - 1];

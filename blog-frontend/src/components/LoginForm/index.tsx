@@ -14,16 +14,17 @@ const LoginForm: FunctionComponent = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             const token = await TokenGenerator(data);
+            console.log("Token gerado: ", token); // Adicione um console.log para verificar o token
             if (token) {
                 localStorage.setItem('token', token);
-                changeIsAuthorized(true);
+                changeIsAuthorized(true); // Atualize o estado de autorização
                 router.push('/home');
             } else {
                 alert("Falha na autenticação.");
             }
         } catch (error) {
             alert("Ocorreu um erro inesperado. Tente novamente.");
-            changeIsAuthorized(false);
+            changeIsAuthorized(false); // Garantir que o estado de autorização seja falso em caso de erro
             console.log(error);
         }
     };
