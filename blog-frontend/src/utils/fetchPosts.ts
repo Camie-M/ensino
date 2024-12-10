@@ -1,4 +1,4 @@
-
+import { FieldValues } from 'react-hook-form';
 export const PostFetch = async (): Promise<PostDataProp[] | null> => {
   try {
     const postResponse = await fetch("http://localhost:3001/posts/", {
@@ -46,9 +46,9 @@ export const PostFetchById = async (id: string): Promise<PostDataProp | undefine
 export const getToken = async () => {
   try {
     const response = await fetch(`http://localhost:3001/auth/token`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
-        'Authorization': "QnJlbm8=",
+        'Authorization': "QnJlbm8=", //mudar pelo token que estiver no header
       },
     });
     if (!response.ok) {
@@ -64,6 +64,35 @@ export const getToken = async () => {
     return null;
   }
 };
+
+
+
+export const TokenGenerator = async (data: FieldValues): Promise<string | null> => {
+  try {
+    const usernamePassword = `${btoa(`${data.usuario}:${data.senha}`)}`;
+    
+    const response = await fetch(`http://localhost:3001/auth/token`, {
+      method: 'POST',
+      headers: {
+        'Authorization': usernamePassword,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorMessage = `Erro ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData.token; // Retorna o token obtido
+  } catch (error) {
+    console.error('Erro ao buscar o token:', error);
+    return null;  // Retorna null em caso de erro
+  }
+};
+
+
 
 
 
