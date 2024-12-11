@@ -1,7 +1,7 @@
 import { UserResource } from '../resources/UserResource';
 import { UserRepository } from '../repositories/UserRepository';
 import { UserMapper } from '../mappers/UserMapper';
-import { LoginUtils } from '../utils/LoginUtils';
+import { TokenUtils } from '../utils/LoginUtils';
 import { User } from '../models/User';
 const crypto = require('crypto');
 
@@ -12,7 +12,7 @@ export class UserService {
     public async create(username: string, role: string, password:string): Promise<UserResource> {
         try {
             await this.validateUsername(username);
-            const hashPassword = LoginUtils.hashGenerator(password)
+            const hashPassword = TokenUtils.hashGenerator(password)
             const createdUser = await userRepository.create(username, role, hashPassword)
             return UserMapper.mapToResource(createdUser)
         } catch (error) {
@@ -31,16 +31,19 @@ export class UserService {
         }
     }
 
-    async findById(id: string): Promise<UserResource> {
-        try {
-            const user = await this.findUserById(id)
-            return UserMapper.mapToResource(user)
-
-        } catch (error) {
-            throw new Error(`Não foi possível encontrar o usuário: ${error}`);
+    async findById(id: string, token:string): Promise<UserResource> {
+        let user;
+        if(id == "self"){
+            user = await this.findUserByToken(token)
+        }else{
+            TokenUtils.validateUser(token, "admin");
+            user = await this.findUserById(id)
         }
+        return UserMapper.mapToResource(user)
     }
 
+    
+    
     async findByUsername(username: string): Promise<UserResource> {
         const user = await this.findUserByUsername(username)
         return UserMapper.mapToResource(user)
@@ -86,5 +89,10 @@ export class UserService {
     private async validateUsername(username: string) {
         const user = await userRepository.findByUsername(username);
         if (user) throw new Error("Usuario com este username já existe");
+    }
+    private async findUserByToken(token: string) {
+        const decoded = TokenUtils.decodeToken(token);
+        return await this.findUserById(decoded.id)
+
     }
 }

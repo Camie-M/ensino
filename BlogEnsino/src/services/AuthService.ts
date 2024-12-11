@@ -3,20 +3,15 @@ import { Buffer } from "buffer";
 import { UserService } from "./UserService";
 import { env } from '../env';
 import { UserResource } from '../resources/UserResource';
-import { LoginUtils } from '../utils/LoginUtils';
+import { TokenUtils } from '../utils/LoginUtils';
+import { DecodedToken } from '../utils/LoginUtils';
 
 const userService = new UserService();
-
-interface DecodedToken extends JwtPayload {
-    id: string;
-    username: string;
-    role: string;
-}
 
 export class AuthService {
     async generateToken(auth: string): Promise<string> {
         const { username, password } = this.decodeBase64(auth);
-        const hashedPassword = LoginUtils.hashGenerator(password);
+        const hashedPassword = TokenUtils.hashGenerator(password);
         const user = await userService.findEntityByUsername(username);
 
         if (!user) {
@@ -37,7 +32,7 @@ export class AuthService {
 
     async decodeToken(token: string): Promise<UserResource> {
         try {
-            const decoded = jwt.verify(token, env.SECRET_KEY) as DecodedToken;
+            const decoded = TokenUtils.decodeToken(token)
             return new UserResource(decoded.username, decoded.role, decoded.id);
         } catch (error) {
             throw new Error("Token inválido");

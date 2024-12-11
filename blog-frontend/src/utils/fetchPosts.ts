@@ -1,5 +1,5 @@
 import { FieldValues } from 'react-hook-form';
-export const PostFetch = async (): Promise<PostDataProp[] | null> => {
+export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
   try {
     const postResponse = await fetch("http://localhost:3001/posts/", {
       method: "GET",
@@ -21,9 +21,7 @@ export const PostFetch = async (): Promise<PostDataProp[] | null> => {
   }
 };
 
-
-
-export const PostFetchById = async (id: string): Promise<PostDataProp | undefined> => {
+export const getPostById = async (id: string): Promise<PostDataProp | undefined> => {
   try {
     const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
       method: 'GET',
@@ -45,12 +43,12 @@ export const PostFetchById = async (id: string): Promise<PostDataProp | undefine
   }
 };
 
-export const DeletePost = async (id:string, tokenSes:string):Promise<void> => {
+export const DeletePost = async (id:string, token:string):Promise<void> => {
   try {
     const postResponse = await fetch(`http://localhost:3001/posts/${id}`, {
       method: "DELETE",
       headers: {
-        'Authorization': tokenSes, //mudar pelo token que estiver no header
+        'Authorization': token, //mudar pelo token que estiver no header
       },
     });
 
@@ -66,27 +64,7 @@ export const DeletePost = async (id:string, tokenSes:string):Promise<void> => {
 
   }
 };
-// export const getToken = async () => {
-//   try {
-//     const response = await fetch(`http://localhost:3001/auth/token`, {
-//       method: 'GET',
-//       headers: {
-//         'Authorization': "QnJlbm8=", //mudar pelo token que estiver no header
-//       },
-//     });
-//     if (!response.ok) {
-//       throw new Error('Falha ao obter o token');
-//     }
 
-//     const data = await response.json();
-//     const token = data.token;
-
-//     return token; // Retorna o token obtido
-//   } catch (error) {
-//     console.error('Erro ao buscar o token:', error);
-//     return null;
-//   }
-// };
 export const TokenGenerator = async (data: FieldValues): Promise<string | null> => {
   try {
     const usernamePassword = `${btoa(`${data.usuario}:${data.senha}`)}`;
@@ -111,10 +89,6 @@ export const TokenGenerator = async (data: FieldValues): Promise<string | null> 
     return null;  // Retorna null em caso de erro
   }
 };
-
-
-
-
 
 export type PostDataProp = {
   id: string;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
-import { PostFetch, PostDataProp, DeletePost } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
+import { getAllPosts, PostDataProp, DeletePost } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
 import { useRouter } from 'next/router';
 
 const TabelaPost: React.FC = () => {
@@ -9,7 +9,7 @@ const TabelaPost: React.FC = () => {
     const router = useRouter();
     
     const fetchPosts = async () => {
-        const data = await PostFetch();
+        const data = await getAllPosts();
         if (data) {
             setPosts(data);
         }

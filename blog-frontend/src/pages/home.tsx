@@ -3,7 +3,7 @@ import HighLights from "@/components/Highlights/";
 import BaseLayout from "@/components/BaseLayout";
 import PaginatedPosts from "@/components/Posts/PaginatedPosts/PaginatedPosts";
 import styled from "styled-components";
-import { PostFetch, PostDataProp } from "@/utils/fetchPosts";
+import { getAllPosts, PostDataProp } from "@/utils/fetchPosts";
 import Search from "@/components/Search/Search";
 
 export const Title = styled.h1`
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await PostFetch();
+      const data = await getAllPosts();
       if (data) {
         setPosts(data);
         setFilteredPosts(data);

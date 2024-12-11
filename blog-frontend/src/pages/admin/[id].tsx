@@ -7,7 +7,7 @@ import BaseLayout from '@/components/BaseLayout';
 import PostForm from '@/components/PostForm';
 
 
-import { PostDataProp, PostFetchById } from '@/utils/fetchPosts';
+import { PostDataProp, getPostById } from '@/utils/fetchPosts';
 
 const EditPostPage: React.FC = () => {
   const router = useRouter()
@@ -19,7 +19,7 @@ const EditPostPage: React.FC = () => {
     if (id) {
       const fetchPostInfo = async () => {
         const idString = id.toString()
-        const data = await PostFetchById(idString);
+        const data = await getPostById(idString);
         if (data) {
           setPostInfo(data);
         }

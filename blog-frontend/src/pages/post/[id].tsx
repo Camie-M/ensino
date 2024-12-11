@@ -3,7 +3,7 @@ import BaseLayout from "@/components/BaseLayout";
 import Post from "@/components/Posts/Posts";
 import PostPageLayout from "@/components/PostPageLayout/PostPageLayout";
 import * as S from "./styled";
-import { PostDataProp, PostFetch, PostFetchById } from "@/utils/fetchPosts";
+import { PostDataProp, getAllPosts, getPostById } from "@/utils/fetchPosts";
 import styled from "styled-components";
 import PaginationList from "@/components/ListLayouts";
 
@@ -29,14 +29,14 @@ const PostPage: React.FC<PostPageProps> = () => {
     const postId = urlPath.split('/').pop();
 
     const fetchPosts = async () => {
-      const data = await PostFetch();
+      const data = await getAllPosts();
       if (data) {
         setPosts(data);
       }
     };
     const fetchPostById = async () => {
       if (postId) {
-        const data = await PostFetchById(postId);
+        const data = await getPostById(postId);
         if (data) {
           setPost(data);
         }

@@ -28,7 +28,12 @@ export class UserController {
 
     static async getUserById(req: Request, res: Response): Promise<void> {
         try {
-            const user = await userService.findById(req.params.id);
+            const token = req.headers.authorization;
+            const id = req.params.id;
+            if(!token){
+                throw new Error("Token invalido")
+            }
+            const user = await userService.findById(id, token)
             if (user) {
                 res.status(200).json(user);
             } else {
