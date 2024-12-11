@@ -10,7 +10,7 @@ const Hero: React.FC<HeroProps> = ({ banner }) => {
     banner ? (
       <S.Hero>
         <S.Title>
-          The Blog
+          BLOG ENSINO
         </S.Title>
       </S.Hero>
     ) : null

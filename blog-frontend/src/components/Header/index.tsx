@@ -42,7 +42,7 @@ const Header = () => {
             <Link href="/home">Home</Link>
           </li>
           <li>
-            <Link href="/login">Login</Link>
+            <Link href="/login">Logout</Link>
           </li>
           {user?.role === 'admin' && (
             <li>
@@ -69,7 +69,7 @@ const Header = () => {
               <Link href="/home">Home</Link>
             </li>
             <li>
-              <Link href="/login">Login</Link>
+              <Link href="/login">Logout</Link>
             </li>
             {user?.role === 'admin' && (
               <li>

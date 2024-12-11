@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { UseFormRegister, FieldValues } from "react-hook-form";
 
-import * as S from "./styled"
+import * as S from "./styled";
 
 type Props = {
     placeholder: string;
@@ -10,7 +10,8 @@ type Props = {
     required?: boolean;
     label: string;
     id: string;
-}
+    type?: string;
+};
 
 const TextInput: FunctionComponent<Props> = ({
     placeholder,
@@ -18,13 +19,14 @@ const TextInput: FunctionComponent<Props> = ({
     defaultValue,
     required,
     label,
-    id
+    id,
+    type = "text",
 }) => {
     return (
         <S.TextInput>
             <label htmlFor={id}>{label}</label>
             <input
-                type="text"
+                type={type}
                 {...register(id, { required: required })}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
@@ -32,7 +34,7 @@ const TextInput: FunctionComponent<Props> = ({
                 id={id}
             />
         </S.TextInput>
-    )
-}
+    );
+};
 
-export default TextInput
+export default TextInput;

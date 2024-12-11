@@ -14,6 +14,7 @@ export const getUserByToken = async (token:string): Promise<UserDataProps| null>
         }
 
         const postsData: UserDataProps = await userResponse.json();
+        localStorage.setItem('role', postsData.role);
         return postsData;
     } catch (error) {
         console.error('Erro ao buscar posts:', error);

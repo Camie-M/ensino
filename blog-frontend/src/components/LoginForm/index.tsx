@@ -31,7 +31,7 @@ const LoginForm: FunctionComponent = () => {
 
     return (
         <S.div>
-            <S.Title>Bem vindos ao THE BLOG</S.Title>
+            <S.Title>Bem vindos ao BLOG ENSINO</S.Title>
             <S.Aviso>Preencha os campos com os dados fornecidos por seu coordenador</S.Aviso>
             <S.Form onSubmit={handleSubmit(onSubmit)}>
                 <TextInput
@@ -49,6 +49,7 @@ const LoginForm: FunctionComponent = () => {
                     placeholder="Insira sua senha"
                     register={register}
                     required
+                    type="password"
                 />
                 {errors.senha && <span>Esse campo é obrigatório</span>}
 
