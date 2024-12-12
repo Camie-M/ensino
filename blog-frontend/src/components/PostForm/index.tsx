@@ -28,12 +28,12 @@ const PostForm: FunctionComponent<Props> = ({
         formState: { errors },
     } = useForm<FieldValues>();
 
-    const UpdateForm = async (data: FieldValues) => {
+    const handleForm = async (data: FieldValues) => {
         const token = localStorage.getItem("token");
         const path = window.location.pathname;
         const pathParts = path.split('/');
         const id = pathParts[pathParts.length - 1];
-
+        let response:Response;
         if (token) {
             try {
                 const formData = new FormData();
@@ -42,15 +42,23 @@ const PostForm: FunctionComponent<Props> = ({
                 if (data.image instanceof File) {
                     formData.append('image', data.image);
                 }
-
-                const response = await fetch(`http://localhost:3001/posts/${id}`, {
-                    method: "PUT",
-                    headers: {
-                        'Authorization': `${token}`,
-                    },
-                    body: formData,
-                });
-
+                if(isEdit){
+                    response = await fetch(`http://localhost:3001/posts/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            'Authorization': `${token}`,
+                        },
+                        body: formData,
+                    });
+                }else{
+                    response = await fetch(`http://localhost:3001/posts`, {
+                        method: "POST",
+                        headers: {
+                            'Authorization': `${token}`,
+                        },
+                        body: formData,
+                    });
+                }
                 if (!response.ok) {
                     console.error(response);
                     throw new Error("Falha ao enviar o post");
@@ -68,7 +76,7 @@ const PostForm: FunctionComponent<Props> = ({
 
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        UpdateForm(data)
+        handleForm(data) 
     };
 
     return (

@@ -8,10 +8,12 @@ export const getUserByToken = async (token:string): Promise<UserDataProps| null>
         });
 
         if (!userResponse.ok) {
-        console.error('Erro ao buscar posts:', userResponse.status, userResponse.statusText);
-        alert('Posts não encontrados ou credenciais inválidas.');
-        return null;
+            console.error('Erro ao buscar posts:', userResponse.status, userResponse.statusText);
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            return null;
         }
+        
 
         const postsData: UserDataProps = await userResponse.json();
         localStorage.setItem('role', postsData.role);

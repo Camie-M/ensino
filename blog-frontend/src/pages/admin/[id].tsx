@@ -12,10 +12,17 @@ import { PostDataProp, getPostById } from '@/utils/fetchPosts';
 const EditPostPage: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
-
+  const [isLoading, setIsLoading] = useState(true);
   const [postInfo, setPostInfo] = useState<PostDataProp>()
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userRole = localStorage.getItem('role');
+    if (!token || userRole !== 'admin') {
+      router.replace('/home');
+    } else {
+      setIsLoading(false);
+    }
     if (id) {
       const fetchPostInfo = async () => {
         const idString = id.toString()
@@ -26,7 +33,11 @@ const EditPostPage: React.FC = () => {
       };
       fetchPostInfo();
     }
-  }, [id]);
+  }, [id,router]);
+
+  if (isLoading) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <BaseLayout banner={false}>
