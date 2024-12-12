@@ -10,6 +10,12 @@ const Header = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [user, setUser] = useState<UserDataProps | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    setUser(null);
+  };
 
   useEffect(() => {
     if (openMobileMenu) {
@@ -42,7 +48,7 @@ const Header = () => {
             <Link href="/home">Home</Link>
           </li>
           <li>
-            <Link href="/login">Logout</Link>
+            <Link href="/login" onClick={handleLogout}>Logout</Link>
           </li>
           {user?.role === 'admin' && (
             <li>
@@ -69,7 +75,7 @@ const Header = () => {
               <Link href="/home">Home</Link>
             </li>
             <li>
-              <Link href="/login">Logout</Link>
+              <Link href="/login" onClick={handleLogout}>Logout</Link>
             </li>
             {user?.role === 'admin' && (
               <li>
