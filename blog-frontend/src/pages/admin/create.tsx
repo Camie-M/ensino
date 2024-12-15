@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import BaseLayout from '@/components/BaseLayout';
 import PostForm from '@/components/PostForm';
 import { useRouter } from 'next/navigation';
+import { themeInterface } from '@/styles/themes/themeInterface';
 
-const CreatePostPage: React.FC = () => {
+const CreatePostPage: React.FC<themeInterface> = ({toggleTheme}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +23,7 @@ const CreatePostPage: React.FC = () => {
     return <p>Carregando...</p>;
   }
   return (
-    <BaseLayout banner={false}>
+    <BaseLayout banner={false} toggleTheme={toggleTheme}>
       <h1 className='smallTitle'>Criar post</h1>
       <PostForm isEdit={false} />
     </BaseLayout>

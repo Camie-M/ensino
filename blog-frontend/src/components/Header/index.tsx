@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-
-import ToggleTheme from '../ToggleTheme';
+import { FaTimes,FaBars } from "react-icons/fa"; 
+import ToggleTheme from '../ToggleTheme'; // Mantendo o componente ToggleTheme
 import * as S from './styled';
 import { getUserByToken, UserDataProps } from '@/utils/fetchUsers';
 
-const Header = () => {
+type HeaderProps = {
+  toggleTheme: () => void; // Tipando a prop toggleTheme
+};
+
+const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [user, setUser] = useState<UserDataProps | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
@@ -56,18 +59,18 @@ const Header = () => {
             </li>
           )}
         </ol>
-        <ToggleTheme />
+        {/* Usando a função toggleTheme dentro do Header */}
+        <ToggleTheme toggleTheme={toggleTheme} />
       </nav>
 
       {/* Mobile */}
-      <Image
-        src="/black_menu.svg"
-        alt="Abrir menu"
-        width={24}
-        height={24}
-        id="mobile-btn"
-        onClick={() => setOpenMobileMenu(true)}
-      />
+      <FaBars
+          size={24} // Define o tamanho do ícone
+          onClick={() => setOpenMobileMenu(true)} // Atribui a função ao clique
+          style={{ cursor: "pointer" }} // Adiciona estilos opcionais
+          id="mobile-btn" // Mantém o ID original para consistência
+          aria-label="Abrir menu" // Adiciona acessibilidade
+        />
       {openMobileMenu && (
         <nav id="mobile-menu">
           <ol>
@@ -83,14 +86,14 @@ const Header = () => {
               </li>
             )}
           </ol>
-          <ToggleTheme />
-          <Image
-            src="/close_icon.svg"
-            alt="Fechar menu"
-            width={24}
-            height={24}
-            onClick={() => setOpenMobileMenu(false)}
-          />
+          {/* Usando a função toggleTheme dentro do mobile menu também */}
+          <ToggleTheme toggleTheme={toggleTheme} />
+          <FaTimes
+              size={24} // Define o tamanho do ícone
+              onClick={() => setOpenMobileMenu(false)} // Atribui a função ao clique
+              style={{ cursor: "pointer" }} // Adiciona estilos opcionais
+              aria-label="Fechar menu" // Adiciona acessibilidade
+            />
         </nav>
       )}
     </S.Header>

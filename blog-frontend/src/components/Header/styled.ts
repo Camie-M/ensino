@@ -35,6 +35,9 @@ export const Header = styled.header`
                 }
             }
         }
+        img{
+            fill: ${props => props.theme.colors.titles};
+        }
 
         @media (max-width: 580px) {
             flex-direction: column;
@@ -44,7 +47,7 @@ export const Header = styled.header`
                 flex-direction: column;
 
                 li > a {
-                    color: ${props => props.theme.colors.background};
+                    color: ${props => props.theme.colors.titles};
                 }
             }
         }
@@ -66,8 +69,8 @@ export const Header = styled.header`
 
     #mobile-menu {
         position: fixed;
-        background-color: ${props => props.theme.colors.titles};
-        color: ${props => props.theme.colors.background};
+        background-color: ${props => props.theme.colors.background};
+        color: ${props => props.theme.colors.titles};
         top: 0;
         left: 0;
         width: 100vw;

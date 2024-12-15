@@ -1,9 +1,9 @@
 import React from 'react';
 import BaseLayout from '@/components/BaseLayout';
-
-const SearchPage: React.FC = () => {
+import { themeInterface } from '@/styles/themes/themeInterface';
+const SearchPage: React.FC<themeInterface> = ({toggleTheme}) => {
   return (
-    <BaseLayout banner={false}>
+    <BaseLayout banner={false} toggleTheme={toggleTheme}>
       <p>Create posta page</p>
     </BaseLayout>
   );

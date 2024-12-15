@@ -25,7 +25,7 @@ export const TopRow = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    height: auto;
+    /* height: auto; */
     gap: 0.5rem;
 
     > div:first-child,
@@ -56,7 +56,7 @@ export const FullWidthPost = styled.div`
   margin-top: 0.5rem;
 
   @media (max-width: 768px) {
-    height: auto;
+    /* height: auto; */
     padding: 0.5rem 0;
   }
 `;

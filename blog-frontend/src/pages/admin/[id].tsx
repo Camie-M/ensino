@@ -5,11 +5,11 @@ import { useRouter } from 'next/router'
 
 import BaseLayout from '@/components/BaseLayout';
 import PostForm from '@/components/PostForm';
-
+import { themeInterface } from "@/styles/themes/themeInterface";
 
 import { PostDataProp, getPostById } from '@/utils/fetchPosts';
 
-const EditPostPage: React.FC = () => {
+const EditPostPage: React.FC<themeInterface> = ({toggleTheme}) => {
   const router = useRouter()
   const { id } = router.query
   const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +40,7 @@ const EditPostPage: React.FC = () => {
   }
 
   return (
-    <BaseLayout banner={false}>
+    <BaseLayout banner={false} toggleTheme={toggleTheme}>
       <h1 className='smallTitle'>{postInfo?.title}</h1>
       <PostForm isEdit={true} defaultValueText={postInfo?.text} defaultValueTitle={postInfo?.title} defaultValueImage={postInfo?.image} />
     </BaseLayout>

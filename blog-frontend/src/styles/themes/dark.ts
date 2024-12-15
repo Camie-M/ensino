@@ -1,16 +1,17 @@
 import { DefaultTheme } from "styled-components";
+
 const darkTheme: DefaultTheme = {
     theme: "dark",
 
     colors: {
-        titles: "#fff",
-        text: "#C0C5D0",
-        background: "#F6F6F6",
-        backgroundTableHeader: "#FCFBFC",
-        backgroundTableBody: "#fff",
-        hoverAnchor: "#669df9",
-        authors: "#6941C6",
-        border: "#fff",
+        titles: "#FFFFFF",
+        text: "#E0E0E0",
+        background: "#121212",
+        backgroundTableHeader: "#1E1E1E",
+        backgroundTableBody: "#242424",
+        hoverAnchor: "#669DF9",
+        authors: "#8C7AE6",
+        border: "#373737",
     },
 
     fonts: {

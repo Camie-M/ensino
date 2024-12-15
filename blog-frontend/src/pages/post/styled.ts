@@ -42,7 +42,7 @@ export const LeftGrid = styled.div`
 
 
 export const RightGrid = styled.div`
-  width: 70%;
+  /* width: 70%; */
   display: flex;
   flex-direction: column;
   gap: 1rem;

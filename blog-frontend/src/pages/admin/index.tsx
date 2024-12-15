@@ -4,6 +4,7 @@ import BaseLayout from '@/components/BaseLayout';
 import TabelaPost from '@/components/TabelaPosts';
 import Link from 'next/link';
 import { styled } from 'styled-components';
+import { themeInterface } from '@/styles/themes/themeInterface';
 
 const ButtonLink = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ const ButtonLink = styled.div`
   }
 `
 
-const AdminPage: React.FC = () => {
+const AdminPage: React.FC<themeInterface> = ({toggleTheme}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,7 +44,7 @@ const AdminPage: React.FC = () => {
   }
 
   return (
-    <BaseLayout banner={false}>
+    <BaseLayout banner={false} toggleTheme={toggleTheme}>
       <ButtonLink>
         <Link href={'./admin/create'}>
           Criar Post

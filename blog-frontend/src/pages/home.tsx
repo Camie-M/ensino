@@ -5,7 +5,7 @@ import PaginatedPosts from "@/components/Posts/PaginatedPosts/PaginatedPosts";
 import styled from "styled-components";
 import { getAllPosts, PostDataProp } from "@/utils/fetchPosts";
 import Search from "@/components/Search/Search";
-
+import { themeInterface } from "@/styles/themes/themeInterface";
 export const Title = styled.h1`
   font-size: clamp(1.2rem, 5vw, 1.5rem);
   font-weight: 500;
@@ -19,11 +19,11 @@ const HeaderSection = styled.div`
   align-items: center;
 `;
 
-const HomePage: React.FC = () => {
+
+const HomePage: React.FC<themeInterface> = ({ toggleTheme }) => {
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostDataProp[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -51,7 +51,7 @@ const HomePage: React.FC = () => {
   }, [searchTerm, posts]);
 
   return (
-    <BaseLayout banner={true}>
+    <BaseLayout banner={true} toggleTheme={toggleTheme}> {/* Passando toggleTheme para BaseLayout */}
       <HeaderSection>
         <Title>Posts publicados recentemente</Title>
       </HeaderSection>

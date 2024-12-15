@@ -3,7 +3,8 @@ import * as S from './styled';
 import ConteinerText, { ConteinerTextProps } from './ContainerText/ContainerText';
 import ImgContainer, { PostImg } from './ImgContainer/ImgContainer';
 import { PostDataProp } from '@/utils/fetchPosts';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+
 
 export interface PostsProps extends PostImg, ConteinerTextProps, PostDataProp {
   type?: 'column' | 'row';
@@ -14,6 +15,7 @@ const Post: React.FC<PostsProps> = ({ type = 'column', ...props }) => {
   const router = useRouter();
   useEffect(() => {
     setCurrentType(type);
+    
   }, [type]);
 
 

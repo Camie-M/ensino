@@ -51,7 +51,7 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
             <span>
               Página {currentPage} de {totalPages}
             </span>
-            <button onClick={handleNext} disabled={currentPage === totalPages}>
+            <button onClick={handleNext} disabled={currentPage === totalPages-1}>
               Próxima &gt;
             </button>
           </S.PaginationControls>

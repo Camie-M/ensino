@@ -17,9 +17,10 @@ const inter = Inter({
 type Props = {
   children: React.ReactNode;
   banner: boolean;
+  toggleTheme: () => void; // Adicione a prop toggleTheme
 }
 
-const BaseLayout: FunctionComponent<Props> = ({ children, banner }) => {
+const BaseLayout: FunctionComponent<Props> = ({ children, banner, toggleTheme }) => {
   const [hero, setHero] = useState(banner)
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const BaseLayout: FunctionComponent<Props> = ({ children, banner }) => {
   return (
     <Restricted>
       <S.BaseLayout className={inter.className}>
-        <Header />
+        <Header toggleTheme={toggleTheme} />
         <Hero banner={hero} />
         {children}
         <Footer />
@@ -38,4 +39,4 @@ const BaseLayout: FunctionComponent<Props> = ({ children, banner }) => {
   )
 }
 
-export default BaseLayout
+export default BaseLayout;

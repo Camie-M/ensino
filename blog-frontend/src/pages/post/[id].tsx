@@ -6,6 +6,8 @@ import * as S from "./styled";
 import { PostDataProp, getAllPosts, getPostById } from "@/utils/fetchPosts";
 import styled from "styled-components";
 import PaginationList from "@/components/ListLayouts";
+import { themeInterface } from "@/styles/themes/themeInterface";
+import { useRouter } from "next/router";
 
 const Title = styled.h1`
   font-size: clamp(1.2rem, 5vw, 1.5rem);
@@ -14,61 +16,57 @@ const Title = styled.h1`
   margin-top: 1rem;
 `;
 
-interface PostPageProps {
+interface PostPageProps extends themeInterface {
   post: PostDataProp;
   relatedPosts: PostDataProp[] | null;
 }
 
-const PostPage: React.FC<PostPageProps> = () => {
+const PostPage: React.FC<PostPageProps> = ({ toggleTheme }) => {
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [post, setPost] = useState<PostDataProp | null>(null);
+  const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
-    const urlPath = window.location.pathname;
-    const postId = urlPath.split('/').pop();
-
     const fetchPosts = async () => {
       const data = await getAllPosts();
-      if (data) {
-        setPosts(data);
-      }
+      if (data) setPosts(data);
     };
+
     const fetchPostById = async () => {
-      if (postId) {
-        const data = await getPostById(postId);
-        if (data) {
-          setPost(data);
-        }
+      if (id) {
+        const data = await getPostById(id as string);
+        if (data) setPost(data);
       }
     };
+
     fetchPosts();
     fetchPostById();
-  }, []);
+  }, [id]);
 
   return (
-    <BaseLayout banner={false}>
+    <BaseLayout banner={false} toggleTheme={toggleTheme}>
       <S.GridContainer>
         <S.LeftGrid>
           <Title>Posts Recentes</Title>
-          {post && (
-            <PaginationList>
-              {posts.slice(0, 3).map((post, index) => (
-                <Post key={index} {...post} type="column" />
-              ))}
-            </PaginationList>
-          )}
+          <PaginationList>
+            {posts.slice(0, 3).map((postItem) => (
+              <Post key={postItem.id} {...postItem} type="column" />
+            ))}
+          </PaginationList>
         </S.LeftGrid>
         <S.RightGrid>
-          {post ?
+          {post ? (
             <PostPageLayout
               title={post.title}
               text={post.text}
               author={post.author}
               image={post.image}
               date={post.createdAt}
-            /> : "Post indisponivel"
-          }
-
+            />
+          ) : (
+            <p>Post indisponível</p>
+          )}
         </S.RightGrid>
       </S.GridContainer>
     </BaseLayout>

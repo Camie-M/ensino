@@ -19,7 +19,7 @@ const ImgContainer: React.FC<PostImg> = ({ image }) => {
         style={{
           objectFit: 'cover',
           width: '100%',
-          height: 'auto',
+          // height: 'auto',
           maxHeight:"18rem",
           borderRadius: '0.5rem'
         }}

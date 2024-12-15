@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
-
+import { FaSun, FaMoon } from "react-icons/fa"; //
 import * as S from './styled';
 
 interface ToggleProps {
   $isactive?: boolean;
+  toggleTheme: () => void;
 }
 
-const ToggleTheme: React.FC<ToggleProps> = ({ $isactive }) => {
+const ToggleTheme: React.FC<ToggleProps> = ({ toggleTheme ,$isactive }) => {
   const [isActive, setIsActive] = useState($isactive || false);
 
   const handleToggle = () => {
     setIsActive(!isActive);
+    toggleTheme()
   };
 
   return (
     <S.ToggleTheme onClick={handleToggle}>
-      <Image src={`/sun.svg`} alt={"Mudar tema"} width="24" height="24" />
-      <Image src={`/sun.svg`} alt={"Mudar tema"} width="24" height="24" />
+      <S.IconWrapper>
+        <FaMoon size={24} title="Ativar tema escuro" />
+        <FaSun size={24} title="Ativar tema claro" />
+      </S.IconWrapper>
       <S.ToggleButton $isactive={isActive} />
     </S.ToggleTheme>
   );

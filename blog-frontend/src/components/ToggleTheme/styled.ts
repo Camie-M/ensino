@@ -13,12 +13,21 @@ export const ToggleTheme = styled.div`
     position:relative;
 `
 export const ToggleButton = styled.div<ToggleThemeProps>`
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     background-color: ${props => props.theme.colors.background};
     border-radius: 50%;
     position: absolute;
-    right: ${props => (props.$isactive ? '41%' : '81px')};
+    top:11%;
+    right: ${props => (props.$isactive ? '43%' : '85%')};
     transform: translateX(100%);
     transition: right 0.3s ease;
+`;
+export const IconWrapper = styled.div`
+    display:flex;
+    gap:1rem; 
+    & > *{
+       fill: ${props => props.theme.colors.background};
+    }
+   
 `;
