@@ -1,4 +1,3 @@
-// pages/_app.tsx
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import type { AppProps } from 'next/app';
@@ -6,7 +5,7 @@ import type { AppProps } from 'next/app';
 import darkTheme from "../styles/themes/dark";
 import lightTheme from "../styles/themes/light";
 import GlobalStyle from '@/styles/global';
-import { UserProvider } from '@/context/UserContext'; // Importe o UserProvider aqui;
+import { UserProvider } from '@/context/UserContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(lightTheme);

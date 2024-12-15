@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './styled';
-import { getAllPosts, PostDataProp, DeletePost } from '@/utils/fetchPosts';  // Certifique-se de que esse caminho esteja correto
+import { getAllPosts, PostDataProp, DeletePost } from '@/utils/fetchPosts';  
 import { useRouter } from 'next/router';
 
 const TabelaPost: React.FC = () => {
-    const [posts, setPosts] = useState<PostDataProp[]>([]); // Ajuste para o tipo correto
-    const [token, setToken] = useState<string>(""); // Ajuste para o tipo correto
+    const [posts, setPosts] = useState<PostDataProp[]>([]); 
+    const [token, setToken] = useState<string>(""); 
     const router = useRouter();
     
     const fetchPosts = async () => {

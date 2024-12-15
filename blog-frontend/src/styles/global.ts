@@ -1,9 +1,11 @@
-// styles/global.ts
+
 import { createGlobalStyle } from 'styled-components';
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
+
 const GlobalStyle = createGlobalStyle`
- // ========== RESET START ========== //
+  // ========== RESET START ========== //
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -55,8 +57,8 @@ const GlobalStyle = createGlobalStyle`
   // ========== RESET END ========== //
 
   body {
-    background-color: ${props => props.theme.colors.background};
-
+    background-color: ${(props) => props.theme.colors.background};
+    font-family: ${inter.style.fontFamily}, sans-serif;
   }
 `;
 

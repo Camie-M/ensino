@@ -34,7 +34,7 @@ const Header = () => {
           setUser(userData);
         }
       }
-      setLoading(false); // Finaliza o estado de carregamento
+      setLoading(false);
     };
     fetchUser();
   }, []);

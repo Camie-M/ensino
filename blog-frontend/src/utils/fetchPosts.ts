@@ -6,7 +6,6 @@ export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
       headers: { "Content-Type": "application/json" },
     });
 
-    // Verificando se a resposta é OK
     if (!postResponse.ok) {
       console.error('Erro ao buscar posts:', postResponse.status, postResponse.statusText);
       alert('Posts não encontrados ou credenciais inválidas.');

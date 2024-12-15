@@ -20,7 +20,6 @@ interface PostPageProps {
 }
 
 const PostPage: React.FC<PostPageProps> = () => {
-  // const displayedPosts = relatedPosts?.slice(0, 4);
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [post, setPost] = useState<PostDataProp | null>(null);
 

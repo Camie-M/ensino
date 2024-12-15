@@ -13,7 +13,7 @@ const Post: React.FC<PostsProps> = ({ type = 'column', ...props }) => {
   const [currentType, setCurrentType] = useState(type);
   const router = useRouter();
   useEffect(() => {
-    setCurrentType(type); // Atualiza 'currentType' se o 'type' for passado
+    setCurrentType(type);
   }, [type]);
 
 

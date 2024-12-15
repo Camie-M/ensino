@@ -64,8 +64,7 @@ const PostForm: FunctionComponent<Props> = ({
                     throw new Error("Falha ao enviar o post");
                 }
 
-                const result = await response.json();
-                console.log("Post enviado com sucesso:", result);
+                return await response.json();
             } catch (error) {
                 console.error("Erro ao enviar o post:", error);
             }
@@ -74,9 +73,17 @@ const PostForm: FunctionComponent<Props> = ({
         }
     };
 
+    const hadleFormMessage = (isEdit: boolean) =>{
+        if(isEdit){
+            alert("Post editado com sucesso")
+        }else{
+            alert("Post criado com sucesso")
+        }
+    }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         handleForm(data) 
+        hadleFormMessage(isEdit)
     };
 
     return (

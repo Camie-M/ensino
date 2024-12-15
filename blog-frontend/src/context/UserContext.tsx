@@ -1,4 +1,3 @@
-// context/UserContext.tsx
 import React, { createContext, useState, useEffect } from 'react';
 import type { FunctionComponent } from "react";
 

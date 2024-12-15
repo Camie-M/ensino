@@ -14,7 +14,7 @@ export class AuthController {
             const token = await authService.generateToken(req.headers.authorization);
             res.status(201).json({ token });
         } catch (error: any) {
-            // Categoriza o erro com base no tipo
+
             if (error.message === "Usuário não encontrado") {
                 res.status(404).json({ message: error.message });
             } else if (error.message === "Senha incorreta" || error.message === "Credenciais inválidas") {

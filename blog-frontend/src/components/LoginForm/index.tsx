@@ -2,30 +2,29 @@ import { useContext, type FunctionComponent } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as S from "./styled";
 import TextInput from "../FormItems/TextInput";
-import { useRouter } from "next/navigation"; // Importação do useRouter
+import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/UserContext";
 import { TokenGenerator } from "@/utils/fetchPosts";
 
 const LoginForm: FunctionComponent = () => {
-    const router = useRouter(); // Definindo o router
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
     const { changeIsAuthorized } = useContext(UserContext);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             const token = await TokenGenerator(data);
-            console.log("Token gerado: ", token); // Adicione um console.log para verificar o token
             if (token) {
                 localStorage.setItem('token', token);
-                changeIsAuthorized(true); // Atualize o estado de autorização
+                changeIsAuthorized(true); 
                 router.push('/home');
             } else {
                 alert("Falha na autenticação.");
             }
         } catch (error) {
             alert("Ocorreu um erro inesperado. Tente novamente.");
-            changeIsAuthorized(false); // Garantir que o estado de autorização seja falso em caso de erro
-            console.log(error);
+            changeIsAuthorized(false);
+            console.error('Arquivo inválido:', error);
         }
     };
 

@@ -1,4 +1,3 @@
-// components/Restricted.tsx
 import React, { useContext, useEffect, useState } from 'react';
 import type { FunctionComponent } from "react";
 import { useRouter } from 'next/navigation';

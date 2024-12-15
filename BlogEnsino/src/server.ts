@@ -11,11 +11,6 @@ const app = express();
 const crypto = require('crypto');
 
 app.use(cors());
-// app.use(cors({
-//   origin: 'http://localhost:3000', // Permite apenas esta origem
-//   methods: 'GET, POST, PUT, DELETE', // Métodos permitidos
-//   allowedHeaders: 'Content-Type, Authorization', // Cabeçalhos permitidos
-// }));
 
 app.use(express.json());
 

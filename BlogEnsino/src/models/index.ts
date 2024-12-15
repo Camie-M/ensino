@@ -3,8 +3,6 @@ import { User } from './User';
 import { Post } from './Post';
 import sequelize from '../config/database';
 
-// testando ci/cd
-
 const db: { [key: string]: any } = {
     User,
     Post,

@@ -3,9 +3,6 @@
 const DataFormat = async (createdAt: string) => {
     try {
         const dataFix = new Date(createdAt);
-        // console.log(dataFix);
-
-        // Formatar data
         let formattedDate = dataFix
             .toLocaleDateString('pt-BR', {
                 day: 'numeric',
@@ -15,7 +12,6 @@ const DataFormat = async (createdAt: string) => {
             .replace(" de ", " ")
             .replace(". de", " ");
 
-        // Capitalizar a primeira letra do mês
         return formattedDate = formattedDate
             .split(' ')
             .map((word, index) =>

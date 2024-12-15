@@ -19,4 +19,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-// https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4

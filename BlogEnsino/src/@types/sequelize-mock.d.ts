@@ -6,7 +6,6 @@ declare module 'sequelize-mock' {
         define(modelName: string, attributes: any, options?: any): any;
         mock: {
             reset: () => void;
-            // Adicione outros métodos que você precisa mockar
         };
     }
 }

@@ -17,7 +17,6 @@ type Props = {
 const ImageUploadField: React.FC<Props> = ({
     register,
     setValue,
-    required,
     defaultValue,
     id
 }) => {
@@ -55,7 +54,7 @@ const ImageUploadField: React.FC<Props> = ({
 
     useEffect(() => {
         if (!image) {
-            setValue(id, null); // Limpa o valor no formulário se a imagem for removida
+            setValue(id, null);
         }
     }, [image, id, setValue]);
 
@@ -81,6 +80,7 @@ const ImageUploadField: React.FC<Props> = ({
 
                 <ButtonDropFile
                     {...register(id)}
+                    
                     setImage={(file) => {
                         if (file instanceof File) {
                             setImage(file);
