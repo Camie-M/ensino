@@ -16,7 +16,7 @@ interface PaginatedPostsProps {
 }
 
 const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
-  const postsPerPage = 6;
+  const postsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(posts.length / postsPerPage);

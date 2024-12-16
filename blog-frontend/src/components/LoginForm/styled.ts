@@ -5,16 +5,14 @@ export const div = styled.div`
 `
 export const Title = styled.h1`
     text-align:center;
-    color: ${props => props.theme.colors.titles};
-    font-family:${props => props.theme.fonts.primary};
+    color: #000;
     font-size:2.5rem;
     font-size: clamp(1.5rem, 5vw , 2.5rem);
 `
 
 export const Aviso = styled.p`
     text-align:center;
-    color: ${props => props.theme.colors.titles};
-    font-family:${props => props.theme.fonts.primary};
+    color: #000;
     font-size: clamp(0.8rem, 5vw , 1rem);
     margin-bottom: 3rem;
 `

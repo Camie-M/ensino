@@ -6,12 +6,12 @@ export const TextInput = styled.div`
     gap: 0.5rem;
 
     label {
-        color: ${props => props.theme.colors.titles};
+        color: ${props => props.theme.colors.titles}, #000;
     }
 
     input {
         padding: 0.5rem;
-        border: 1px solid ${props => props.theme.colors.border};
+        border: 1px solid ${props => props.theme.colors.border} ;
         border-radius: 4px;
     }
 `

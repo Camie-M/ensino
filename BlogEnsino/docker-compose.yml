@@ -1,16 +1,5 @@
 services:
-  # front:
-  #   build:
-  #     context: ../blog-frontend
-  #     dockerfile: Dockerfile
-  #   container_name: challenge2-front
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - node
-  #   networks:
-  #     - challenge_network
-
+  # Postgres service
   postgres:
     image: postgres:latest
     container_name: challenge2-postgres
@@ -23,6 +12,7 @@ services:
     networks:
       - challenge_network
 
+  # Node.js service (back-end)
   node:
     build: .
     container_name: challenge2-node
@@ -37,6 +27,22 @@ services:
       - postgres
     networks:
       - challenge_network
+
+  # React service (front-end)
+  # react:
+  #   build:
+  #     context: ../blog-frontend
+  #     dockerfile: Dockerfile
+  #   container_name: challenge2-front
+  #   ports:
+  #     - "3000:3000"
+  #   stdin_open: true
+  #   depends_on:
+  #     - node
+  #   networks:
+  #     - challenge_network
+  #   volumes:
+  #     - ../blog-frontend:/app
 
 networks:
   challenge_network:

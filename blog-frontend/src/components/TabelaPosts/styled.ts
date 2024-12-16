@@ -18,7 +18,11 @@ export const Tfoot = styled.tfoot`
   
 `;
 export const Tr = styled.tr`
-    
+   cursor: pointer;
+   &:hover{
+    background-color:rgb(242, 242, 242)
+   }
+   
 `;
 
 export const Th = styled.th`

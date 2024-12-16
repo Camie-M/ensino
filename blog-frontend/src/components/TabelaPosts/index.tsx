@@ -18,6 +18,9 @@ const TabelaPost: React.FC = () => {
     const handleNavigation = (id: string) => {
         router.push(`/admin/${id}`);
     };
+    const handlePostView = (id: string) => {
+        router.push(`/post/${id}`);
+    };
 
     const handleDelete = async (id: string) => {
         await DeletePost(id, token);
@@ -45,15 +48,12 @@ const TabelaPost: React.FC = () => {
             </S.Thead>
             <S.Tbody>
                 {posts.map((post) => (
-                    <S.Tr key={post.id}>
-                        <S.Td>{post.author}</S.Td>
-                        <S.Td>{post.title}</S.Td>
-                        <S.Td>
+                    <S.Tr key={post.id} >
+                        <S.Td onClick={() => handlePostView(post.id)}>{post.author}</S.Td>
+                        <S.Td onClick={() => handlePostView(post.id)}>{post.title}</S.Td>
+                        <S.Td onClick={() => handlePostView(post.id)}>
                             <S.Span>{post.text}</S.Span>
                         </S.Td>
-                        {/* <S.Td>
-                            <S.Span>{post.role}</S.Span>
-                        </S.Td> */}
                         <S.Td>
                             <S.Anchor onClick={() => handleNavigation(post.id)}>Editar</S.Anchor>
                             <S.Anchor onClick={() => handleDelete(post.id)}>Excluir</S.Anchor>

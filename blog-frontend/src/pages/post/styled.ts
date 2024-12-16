@@ -46,6 +46,7 @@ export const RightGrid = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width:100%;
 `;
 
 export const PostData = styled.p`
