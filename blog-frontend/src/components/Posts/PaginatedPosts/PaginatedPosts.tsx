@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./styled";
 import Post from "../Posts";
 
@@ -23,8 +23,15 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages || 1);
+    }
+  }, [posts, currentPage, totalPages]);
+
   const handlePrevious = () =>
     currentPage > 1 && setCurrentPage(currentPage - 1);
+
   const handleNext = () =>
     currentPage < totalPages && setCurrentPage(currentPage + 1);
 
@@ -49,9 +56,9 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts }) => {
               &lt; Anterior
             </button>
             <span>
-              Página {currentPage} de {totalPages}
+              Página {currentPage} de {totalPages || 1}
             </span>
-            <button onClick={handleNext} disabled={currentPage === totalPages-1}>
+            <button onClick={handleNext} disabled={currentPage === totalPages}>
               Próxima &gt;
             </button>
           </S.PaginationControls>

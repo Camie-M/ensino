@@ -51,7 +51,7 @@ const HomePage: React.FC<themeInterface> = ({ toggleTheme }) => {
   }, [searchTerm, posts]);
 
   return (
-    <BaseLayout banner={true} toggleTheme={toggleTheme}> {/* Passando toggleTheme para BaseLayout */}
+    <BaseLayout banner={true} toggleTheme={toggleTheme}>
       <HeaderSection>
         <Title>Posts publicados recentemente</Title>
       </HeaderSection>

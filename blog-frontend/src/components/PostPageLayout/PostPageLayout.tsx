@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import * as S from "./styled";
 import DataFormat from "@/utils/dataformat";
 import ImgContainer from "../Posts/ImgContainer/ImgContainer";
@@ -28,7 +27,7 @@ const PostPageLayout: React.FC<PropContentPost> = ({
       }
     };
     DateFix();
-  }, []);
+  }, [date]);
 
   return (
     <S.Container>

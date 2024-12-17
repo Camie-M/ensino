@@ -12,6 +12,7 @@ const darkTheme: DefaultTheme = {
         hoverAnchor: "#669DF9",
         authors: "#8C7AE6",
         border: "#373737",
+        postShadow:"rgba(255, 255, 255, 0.2)",
     },
 
     fonts: {

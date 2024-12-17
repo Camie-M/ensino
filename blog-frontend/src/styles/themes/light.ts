@@ -11,6 +11,7 @@ const lightTheme: DefaultTheme = {
         hoverAnchor: "#669df9",
         authors: "#6941C6",
         border: "#a8a8a8",
+        postShadow:"rgba(0, 0, 0, 0.2)"
     },
     fonts: {
         primary: "Inter, sans-serif",

@@ -8,16 +8,13 @@ export const ContainerAnchor = styled.a<ContainerProps>`
     flex-direction: ${(props) => (props.type === "column" ? "column" : "row")};
     gap: 1.5rem;
     width: 100%;
-    /* height: 100%; */
     cursor: pointer;
     border-radius: 0.8rem;
     padding: 1rem;
-   &:hover{
-    background: ${(props) => props.theme.colors.background};
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-   }
-
-
+    &:hover {
+        background: ${(props) => props.theme.colors.background};
+        box-shadow: 0 2px 8px ${(props) => props.theme.colors.postShadow};
+    }
     @media (max-width: 800px) {
         flex-wrap:wrap;
         padding:1rem;

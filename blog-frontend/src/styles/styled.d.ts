@@ -12,6 +12,7 @@ declare module "styled-components" {
             hoverAnchor: string;
             authors: string;
             border: string;
+            postShadow:string;
         };
 
         fonts: {
