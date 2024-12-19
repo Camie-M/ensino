@@ -10,6 +10,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - Você tem uma máquina `<Windows / Linux / Mac>`
 - Você instalou o [Docker](https://www.docker.com/)
 - Para propósito de testes, é interessante que tenha o [Postman](https://www.postman.com/) instalado
+- Insira o arquivo .env na raiz do projeto "BlogEnsino"
 
 ## 🚀 Instalando <ensino>
 
