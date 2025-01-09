@@ -1,11 +1,11 @@
 import {View, Text} from "react-native";
 import styles from "@/app/pages/Home/styled";
   
-export default function Login({route}:any){
+export default function Admin({route}:any){
   
     return(
         <View style={styles.homeContainer}>
-          <Text>Login</Text>
+          <Text>admin</Text>
         </View>
     )
 }

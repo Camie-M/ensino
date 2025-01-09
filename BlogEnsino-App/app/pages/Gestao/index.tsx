@@ -1,11 +1,11 @@
 import {View, Text} from "react-native";
-import styles from "@/app/pages/Home/styled";
+import styles from "./styled";
   
-export default function Login({route}:any){
+export default function Gestao({route}:any){
   
     return(
         <View style={styles.homeContainer}>
-          <Text>Login</Text>
+          <Text>Gestao</Text>
         </View>
     )
 }
