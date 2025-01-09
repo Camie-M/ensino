@@ -36,6 +36,7 @@ const HomePage: React.FC<themeInterface> = ({ toggleTheme }) => {
     fetchPosts();
   }, []);
 
+
   useEffect(() => {
     if (!searchTerm) {
       setFilteredPosts(posts);
