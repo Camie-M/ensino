@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from "./styled";
 import {posts} from "./mock.json"
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '@/app/pages/Admin/interface';
+import Button from '../Button';
 interface Post {
   id:string;
   title: string;
@@ -13,22 +13,30 @@ interface Post {
 
 export default function Lista() {
   const [isLoading, setIsLoading] = useState(false)
-   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const renderItem = ({ item }: { item: Post }) => (
-    <S.PostContainer>
+    <S.PostContainer
+      style={{
+        // IOS
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 5,
+        // Android
+        elevation: 5, 
+      }}
+    >
       <S.TxtContainer>
-        <S.PostContent>{item.title}</S.PostContent>
+        <S.PostContentTitle>{item.title}</S.PostContentTitle>
         <S.PostContent numberOfLines={2} ellipsizeMode="tail">{item.text}</S.PostContent>
-        <S.PostContent>{item.author}</S.PostContent>
+        <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
-      <S.BtnContainer>
-          <S.Button onPress={() => navigation.navigate('Gestao')} color="#4CAF50">
-            <S.ButtonText>Editar Post</S.ButtonText>
-          </S.Button>
-          <S.Button onPress={() => navigation.navigate('Gestao')} color="#FF6347">
-            <S.ButtonText>Excluir Post</S.ButtonText>
-          </S.Button>
-      </S.BtnContainer>
+      <Button 
+          text={"criar novo Post"}
+          color={"#4CAF50"}
+          route={"Admin"}
+          width={"100%"}
+        />
      
     </S.PostContainer>
   );
@@ -45,8 +53,8 @@ export default function Lista() {
         backgroundColor: "#f4f4f4",
         justifyContent: "center",
         alignItems: "center",   
-        marginTop:10,
-        gap:10
+        marginTop:"10px",
+        gap:"10px"
       }}
       showsVerticalScrollIndicator={true}
       numColumns={1}
