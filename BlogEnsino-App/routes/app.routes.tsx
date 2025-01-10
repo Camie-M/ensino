@@ -10,11 +10,12 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 const HomeLabel = "Home"
 const GestaoLabel = "Gestao"
-const AdminLabel = "Gestao"
+const AdminLabel = "Admin"
 
 export function AppRoutes() {
     return (
         <Navigator
+            initialRouteName={AdminLabel}
             screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => {
@@ -24,7 +25,7 @@ export function AppRoutes() {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === AdminLabel) {
                         iconName = focused ? 'settings' : 'settings-outline';
-                    } else if (route.name === HomeLabel) {
+                    } else if (route.name === GestaoLabel) {
                         iconName = focused ? 'bar-chart' : 'bar-chart-outline'; 
                     } else {
                         iconName = 'help-circle';
