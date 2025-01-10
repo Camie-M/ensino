@@ -6,6 +6,11 @@ import Gestao from '@/app/pages/Gestao';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { Navigator, Screen } = createBottomTabNavigator();
+// nomes das paginas
+
+const HomeLabel = "Home"
+const GestaoLabel = "Gestao"
+const AdminLabel = "Gestao"
 
 export function AppRoutes() {
     return (
@@ -15,11 +20,11 @@ export function AppRoutes() {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName: string;
 
-                    if (route.name === 'Home') {
+                    if (route.name === HomeLabel) {
                         iconName = focused ? 'home' : 'home-outline';
-                    } else if (route.name === 'Admin') {
+                    } else if (route.name === AdminLabel) {
                         iconName = focused ? 'settings' : 'settings-outline';
-                    } else if (route.name === 'Gestão') {
+                    } else if (route.name === HomeLabel) {
                         iconName = focused ? 'bar-chart' : 'bar-chart-outline'; 
                     } else {
                         iconName = 'help-circle';
@@ -33,7 +38,7 @@ export function AppRoutes() {
         >
             <Screen name="Home" component={Home} />
             <Screen name="Admin" component={Admin} />
-            <Screen name="Gestão" component={Gestao} />
+            <Screen name="Gestao" component={Gestao} />
         </Navigator>
     );
 }
