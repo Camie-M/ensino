@@ -14,7 +14,7 @@ export default function Admin() {
         <Button 
           text={"criar novo Post"}
           color={"#3b9aff"}
-          route={"Admin"} 
+          route={"CreatePost"} 
           width={'80%'}        />
         <S.ListContainer>
           <S.Title>Gestão de Posts</S.Title>

@@ -47,3 +47,6 @@ export const FooterText = styled.Text`
   font-size: 16px;
   color: #888;
 `;
+
+
+export default { StyledFlatList, PostContainer, TxtContainer, BtnContainer, PostContentTitle, PostContent, PostContentAuthor, FooterText };

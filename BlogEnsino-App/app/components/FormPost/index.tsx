@@ -7,7 +7,7 @@ export default function CreatePostForm() {
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text>teste</Text>
+     <Text>teste</Text>
     </SafeAreaView>
   );
 }

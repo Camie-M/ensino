@@ -1,45 +1,71 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from '@/app/pages/Home';
 import Admin from '@/app/pages/Admin';
-import Gestao from '@/app/pages/Gestao'; 
+import Gestao from '@/app/pages/Gestao';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CreatePostForm from '@/app/pages/Admin/FormPost';
 
-const { Navigator, Screen } = createBottomTabNavigator();
-// nomes das paginas
+const Tab = createBottomTabNavigator();
+const AdminStack = createStackNavigator();
 
-const HomeLabel = "Home"
-const GestaoLabel = "Gestao"
-const AdminLabel = "Admin"
+const HomeLabel = "Home";
+const GestaoLabel = "Gestao";
+const AdminLabel = "Admin";
+
+function AdminStackNavigator() {
+  return (
+    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+      <AdminStack.Screen name="AdminHome" component={Admin} />
+      <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
+    </AdminStack.Navigator>
+  );
+}
 
 export function AppRoutes() {
-    return (
-        <Navigator
-            initialRouteName={AdminLabel}
-            screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarIcon: ({ focused, color, size }) => {
-                    let iconName: string;
+  return (
+    <Tab.Navigator
+      initialRouteName={AdminLabel}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-                    if (route.name === HomeLabel) {
-                        iconName = focused ? 'home' : 'home-outline';
-                    } else if (route.name === AdminLabel) {
-                        iconName = focused ? 'settings' : 'settings-outline';
-                    } else if (route.name === GestaoLabel) {
-                        iconName = focused ? 'bar-chart' : 'bar-chart-outline'; 
-                    } else {
-                        iconName = 'help-circle';
-                    }
+          switch (route.name) {
+            case HomeLabel:
+              iconName = focused ? 'home' : 'home-outline';
+              break;
+            case AdminLabel:
+              iconName = focused ? 'settings' : 'settings-outline';
+              break;
+            case GestaoLabel:
+              iconName = focused ? 'bar-chart' : 'bar-chart-outline';
+              break;
+            default:
+              iconName = 'help-circle';
+              break;
+          }
 
-                    return <Ionicons name={iconName} size={size} color={color} />;
-                },
-                tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor: 'gray',
-            })}
-        >
-            <Screen name="Home" component={Home} />
-            <Screen name="Admin" component={Admin} />
-            <Screen name="Gestao" component={Gestao} />
-        </Navigator>
-    );
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+        tabBarLabel: route.name,
+      })}
+    >
+      <Tab.Screen name={HomeLabel} component={Home} />
+      <Tab.Screen name={GestaoLabel} component={Gestao} />
+      <Tab.Screen
+          name={AdminLabel}
+          component={AdminStackNavigator}
+          listeners={({ navigation }) => ({
+            tabPress: e => {
+              e.preventDefault();
+              navigation.navigate('Admin', { screen: 'AdminHome' });
+            },
+          })}
+        />
+    </Tab.Navigator>
+  );
 }

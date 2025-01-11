@@ -1,10 +1,5 @@
 import styled from 'styled-components/native';
 
-interface ButtonProps {
-  color?: string; 
-}
-
-
 export const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -26,5 +21,7 @@ export const Title = styled.Text`
   color: #000;
   text-align: center;
   font-weight: bold;
-  font-size:30px
+  font-size:30px;
 `;
+
+export default {Container,ListContainer,Title}

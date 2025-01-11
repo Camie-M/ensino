@@ -9,7 +9,7 @@ interface ButtonProps {
   background-color: ${(props: { color: any; }) => props.color || '#007aff'};
   padding: 10px;
   border-radius: 5px;
-  justify-content:center
+  justify-content:center;
 `;
 
 export const ButtonText = styled.Text`
@@ -18,3 +18,5 @@ export const ButtonText = styled.Text`
   align-items:center;
   font-weight: bold;
 `;
+
+export default {Button, ButtonText}

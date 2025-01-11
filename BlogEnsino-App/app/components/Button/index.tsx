@@ -1,7 +1,7 @@
 
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as S from "./styled";
-import { RootStackParamList } from "@/app/interfaces/navigations";
+import RootStackParamList  from "@/app/interfaces/navigations";
 
 interface Button{
     text:string,

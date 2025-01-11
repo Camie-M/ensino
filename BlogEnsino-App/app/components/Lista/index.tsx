@@ -32,7 +32,7 @@ export default function Lista() {
         <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
       <S.BtnContainer>
-        <Button text="Editar Post" color="#4CAF50" route="Home" width={'100%'} />
+        <Button text="Editar Post" color="#4CAF50" route="Admin" width={'100%'} />
       </S.BtnContainer>
     </S.PostContainer>
   );
