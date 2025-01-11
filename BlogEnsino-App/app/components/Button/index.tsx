@@ -10,13 +10,12 @@ interface Button{
     width:string;
 }
 
-export default function Button({text,color,route,width}:Button) {
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+export default function Button({ text, color, route, width }: Button) {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
-    <S.BtnContainer>
-        <S.Button onPress={() => navigation.navigate(route)} color={color}>
-            <S.ButtonText>{text}</S.ButtonText>
-        </S.Button>
-    </S.BtnContainer>
+    <S.Button onPress={() => navigation.navigate(route)} color={color} width={width}>
+      <S.ButtonText>{text}</S.ButtonText>
+    </S.Button>
   );
 }
+

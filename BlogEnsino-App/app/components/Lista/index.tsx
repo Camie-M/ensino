@@ -31,13 +31,9 @@ export default function Lista() {
         <S.PostContent numberOfLines={2} ellipsizeMode="tail">{item.text}</S.PostContent>
         <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
-      <Button 
-          text={"criar novo Post"}
-          color={"#4CAF50"}
-          route={"Admin"}
-          width={"100%"}
-        />
-     
+      <S.BtnContainer>
+        <Button text="Editar Post" color="#4CAF50" route="Home" width={'100%'} />
+      </S.BtnContainer>
     </S.PostContainer>
   );
   const loadMoreItens = ()=>{
