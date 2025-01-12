@@ -5,7 +5,8 @@ import Home from '@/app/pages/Home';
 import Admin from '@/app/pages/Admin';
 import Gestao from '@/app/pages/Gestao';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CreatePostForm from '@/app/pages/Admin/FormPost';
+import CreatePostForm from '@/app/pages/Admin/CreatePost';
+import UpdatePost from '@/app/pages/Admin/UpdatePost';
 
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
@@ -19,6 +20,7 @@ function AdminStackNavigator() {
     <AdminStack.Navigator screenOptions={{ headerShown: false }}>
       <AdminStack.Screen name="AdminHome" component={Admin} />
       <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
+      <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
     </AdminStack.Navigator>
   );
 }

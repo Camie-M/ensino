@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import * as S from "./styled";
-import {posts} from "./mock.json"
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import Button from '../Button';
+import { posts } from "./mock.json"
+import { useNavigation } from '@react-navigation/native';
+import RootStackParamList from '../../interfaces/navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 interface Post {
-  id:string;
+  id: string;
   title: string;
   text: string;
   author: string;
@@ -13,6 +15,11 @@ interface Post {
 
 export default function Lista() {
   const [isLoading, setIsLoading] = useState(false)
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Home'>>();
+
+  const navigateToEditPost = (postId: string) => {
+    navigation.navigate('UpdatePost', { postId });
+  };
 
   const renderItem = ({ item }: { item: Post }) => (
     <S.PostContainer
@@ -31,9 +38,9 @@ export default function Lista() {
         <S.PostContent numberOfLines={2} ellipsizeMode="tail">{item.text}</S.PostContent>
         <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
-      <S.BtnContainer>
-        <Button text="Editar Post" color="#4CAF50" route="Admin" width={'100%'} />
-      </S.BtnContainer>
+      <S.Button onPress={() => navigateToEditPost(item.id)}>
+        <S.ButtonText route="Admin" width={'100%'}>Editar Post</S.ButtonText>
+      </S.Button>
     </S.PostContainer>
   );
   const loadMoreItens = ()=>{
