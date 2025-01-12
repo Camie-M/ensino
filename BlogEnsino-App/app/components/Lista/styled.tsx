@@ -48,5 +48,22 @@ export const FooterText = styled.Text`
   color: #888;
 `;
 
+export const Button = styled.TouchableOpacity`
+  background-color: #4CAF50;
+  border-radius: 8px;
+  padding: 12px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+`;
+
+export const ButtonText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
 
 export default { StyledFlatList, PostContainer, TxtContainer, BtnContainer, PostContentTitle, PostContent, PostContentAuthor, FooterText };
