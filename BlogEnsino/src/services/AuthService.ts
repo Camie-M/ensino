@@ -39,14 +39,14 @@ export class AuthService {
         }
     }
 
-    async validateUser(token: string, requiredRole: string): Promise<void> {
+    async validateUser(token: string, allowedRoles: string[]): Promise<void> {
         const user = await this.decodeToken(token);
 
         if (!user) {
             throw new Error("Usuário não encontrado");
         }
 
-        if (user.role !== requiredRole) {
+        if (!allowedRoles.includes(user.role)) {
             throw new Error("Usuário sem permissão");
         }
     }

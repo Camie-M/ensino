@@ -8,10 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 const postRepository = new PostRepository()
 const authService = new AuthService()
 const awsS3Service = new AwsS3Service()
-
+const allowedRoles = ["admin", "professor"]
 export class PostService {
     async create(title: string, text: string, image: Buffer, token: string): Promise<PostResource | Error> {
-        await authService.validateUser(token, "admin");
+        await authService.validateUser(token, allowedRoles);
         const user = await authService.decodeToken(token)
         const imageUrl = await awsS3Service.uploadFileToAws(uuidv4(), image)
         const createdPost = await postRepository.create(title, text, user.username, imageUrl, user.id);
@@ -50,7 +50,7 @@ export class PostService {
 
     async update(id: string, token: string, title: string, text: string, image: Buffer | null | undefined): Promise<PostResource | Error> {
         let updatedPost;
-        await authService.validateUser(token, "admin");
+        await authService.validateUser(token, allowedRoles);
         const post = await this.findPostById(id);
         if (image && image.length > 0) {
             const image_url = await awsS3Service.uploadFileToAws(uuidv4(), image)
@@ -63,7 +63,7 @@ export class PostService {
     }
 
     async delete(id: string, token: string): Promise<void> {
-        await authService.validateUser(token, "admin");
+        await authService.validateUser(token, allowedRoles);
         const post = await this.findPostById(id);
 
         postRepository.delete(post)
