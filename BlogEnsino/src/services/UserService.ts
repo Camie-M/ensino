@@ -6,11 +6,12 @@ import { User } from '../models/User';
 const crypto = require('crypto');
 
 const userRepository = new UserRepository();
-
+const allowedRoles = ["admin"]
 export class UserService {
 
-    public async create(username: string, role: string, password:string): Promise<UserResource> {
+    public async create(username: string, role: string, password:string, token:string): Promise<UserResource> {
         try {
+            TokenUtils.validateUser(token, allowedRoles);
             await this.validateUsername(username);
             const hashPassword = TokenUtils.hashGenerator(password)
             const createdUser = await userRepository.create(username, role, hashPassword)
@@ -36,7 +37,7 @@ export class UserService {
         if(id == "self"){
             user = await this.findUserByToken(token)
         }else{
-            TokenUtils.validateUser(token, "admin");
+            TokenUtils.validateUser(token, allowedRoles);
             user = await this.findUserById(id)
         }
         return UserMapper.mapToResource(user)

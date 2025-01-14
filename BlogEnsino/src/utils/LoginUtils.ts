@@ -14,16 +14,18 @@ export class TokenUtils{
     static decodeToken(token: string) {
         return jwt.verify(token, env.SECRET_KEY) as DecodedToken;
     }
-    static validateUser(token: string, requiredRole: string) {
-        const user =  this.decodeToken(token);
-
+    static validateUser(token: string, allowedRoles: string[]) {
+        const user = this.decodeToken(token);
+        console.log("passei no validate");
+        
         if (!user) {
             throw new Error("Usuário não encontrado");
         }
 
-        if (user.role !== requiredRole) {
+        if (!allowedRoles.includes(user.role)) {
             throw new Error("Usuário sem permissão");
         }
     }
+
 }
 

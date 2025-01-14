@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/UserService';
+import { AuthService } from '../services/AuthService';
 
 const userService = new UserService();
 
@@ -7,12 +8,28 @@ export class UserController {
 
     static async createUser(req: Request, res: Response): Promise<void> {
         try {
+            const token = req.headers.authorization
+            if (!token) {
+                res.status(400).json({ message: "Token faltando" });
+                return;
+            }
             const { username, role, password } = req.body;
-            const user = await userService.create(username, role, password);
+            const user = await userService.create(username, role, password,token);
             res.status(201).json(user);
         } catch (error) {
-            res.status(500).json({ message: 'Erro ao criar o usuario:', error: error });
-        }
+            if (error instanceof Error) {
+              if (error.message === "Usuário sem permissão") {
+                res.status(403).json({ message: "Usuário sem permissão" + error});
+                return
+              } else if (error.message === "Usuário não encontrado") {
+                res.status(404).json({ message: "Usuário não encontrado" + error});
+                return
+              } else {
+                res.status(500).json({ message: "Falha ao criar o Post" + error});
+                return
+              }
+            }
+          }
     }
 
     static async getAllUsers(req: Request, res: Response): Promise<void> {
