@@ -7,6 +7,6 @@ userRoutes.post('/' , UserController.createUser); //feita
 userRoutes.get('/' , UserController.getAllUsers);
 userRoutes.get('/:id' , UserController.getUserById);
 userRoutes.put('/:id' , UserController.editUser);
-userRoutes.delete('/:id' , UserController.deleteUser);
+userRoutes.delete('/:id' , UserController.deleteUser); //feita
 
 export default userRoutes;

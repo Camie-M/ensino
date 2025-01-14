@@ -55,8 +55,9 @@ export class UserService {
     }
     
 
-    async update(id: string, updatedFields: { username: string; role: string }): Promise<UserResource | null> {
+    async update(id: string, updatedFields: { username: string; role: string },token:string): Promise<UserResource | null> {
         try {
+            TokenUtils.validateUser(token, allowedRoles);
             const user = await this.findUserById(id);
             await this.validateUsername(updatedFields.username)
             const updatedUser = await userRepository.update(user, updatedFields);

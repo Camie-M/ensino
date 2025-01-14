@@ -74,7 +74,12 @@ export class UserController {
 
     static async editUser(req: Request, res: Response): Promise<void> {
         try {
-            const updatedUser = await userService.update(req.params.id, req.body);
+            const token = req.headers.authorization;
+            const id = req.params.id;
+            if(!token){
+                throw new Error("Token invalido")
+            }
+            const updatedUser = await userService.update(id, req.body,token);
             if (updatedUser) {
                 res.status(200).json(updatedUser);
             } else {
