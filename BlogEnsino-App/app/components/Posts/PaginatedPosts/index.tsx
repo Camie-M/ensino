@@ -4,11 +4,10 @@ import styles from './styled';
 import Post from '..';
 
 const PaginatedPosts: React.FC<{ posts: any[] }> = ({ posts }) => {
-  const postsPerPage = 3; // Número de posts por página
-  const totalPages = Math.ceil(posts.length / postsPerPage); // Calcula o total de páginas
+  const postsPerPage = 3;
+  const totalPages = Math.ceil(posts.length / postsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Calcula os índices dos posts na página atual
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
@@ -25,18 +24,15 @@ const PaginatedPosts: React.FC<{ posts: any[] }> = ({ posts }) => {
             style={styles.postsGrid}
           />
           <View style={styles.paginationControls}>
-            {/* Botão Anterior: desativado se estiver na primeira página */}
             <Button
               title="Anterior"
               onPress={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1} // Desabilita o botão se na primeira página
             />
             <Text>{`Página ${currentPage} de ${totalPages}`}</Text>
-            {/* Botão Próxima: desativado se estiver na última página */}
             <Button
               title="Próxima"
               onPress={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages} // Desabilita o botão se na última página
+              disabled={currentPage === totalPages}
             />
           </View>
         </>

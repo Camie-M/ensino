@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   containerAnchor: {
-    flexDirection: 'column', // Garantimos que a imagem fique acima dos textos
+    flexDirection: 'column',
     padding: 16,
     borderRadius: 8,
     backgroundColor: '#fff',
@@ -13,23 +13,23 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   imageContainer: {
-    width: '100%', // O contêiner ocupa 100% da largura
-    height: 200, // Altura fixa para a imagem
+    width: '100%',
+    height: 200,
     overflow: 'hidden',
     borderRadius: 8,
   },
   postImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover', // Ajusta a imagem proporcionalmente
-    backgroundColor: '#e0e0e0', // Cor de fundo enquanto carrega
+    resizeMode: 'cover',
+    backgroundColor: '#e0e0e0',
   },
   textContainer: {
-    marginTop: 16, // Espaçamento entre a imagem e os textos
+    marginTop: 16,
   },
   date: {
     fontSize: 12,
-    color: '#666', // Cor mais clara para a data
+    color: '#666',
     marginBottom: 8,
   },
   titleContainer: {
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    flex: 1, // Faz o título ocupar o espaço disponível
+    flex: 1,
   },
   arrowIcon: {
     fontSize: 16,
-    color: '#007AFF', // Cor do ícone (azul no exemplo)
+    color: '#007AFF',
     marginLeft: 8,
   },
   description: {

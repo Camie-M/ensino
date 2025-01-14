@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import styles from './styled';
-import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones (exemplo com Ionicons)
+import { Ionicons } from '@expo/vector-icons';
 
 interface PostProps {
   id: string;
@@ -12,14 +12,13 @@ interface PostProps {
   created_at: string;
 }
 
-// Função para formatar a data
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   return new Intl.DateTimeFormat('pt-BR', {
-    weekday: 'long', // Nome completo do dia da semana
-    day: 'numeric', // Dia do mês
-    month: 'long', // Nome completo do mês
-    year: 'numeric', // Ano com 4 dígitos
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(date);
 };
 
@@ -36,23 +35,18 @@ const Post: React.FC<PostProps> = ({
 
   return (
     <TouchableOpacity style={styles.containerAnchor} onPress={handleNavigation}>
-      {/* Imagem */}
       <View style={styles.imageContainer}>
         <Image source={{ uri: image_url }} style={styles.postImage} />
       </View>
 
-      {/* Textos */}
       <View style={styles.textContainer}>
-        {/* Data formatada */}
         <Text style={styles.date}>{formatDate(created_at)}</Text>
 
-        {/* Título com ícone */}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
           <Ionicons name="arrow-forward" style={styles.arrowIcon} />
         </View>
 
-        {/* Descrição */}
         <Text style={styles.description}>{text}</Text>
       </View>
     </TouchableOpacity>
