@@ -66,8 +66,9 @@ export class UserService {
         }
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: string, token:string): Promise<void> {
         try {
+            TokenUtils.validateUser(token, allowedRoles);
             const user = await this.findUserById(id);
             userRepository.delete(user)
         } catch (error) {

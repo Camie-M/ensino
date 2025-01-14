@@ -87,7 +87,12 @@ export class UserController {
 
     static async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            await userService.delete(req.params.id);
+            const token = req.headers.authorization
+            if (!token) {
+                res.status(400).json({ message: "Token faltando" });
+                return;
+            }
+            await userService.delete(req.params.id, token);
             res.status(200).json({ message: 'Usuário deletado com sucesso' });
         } catch (error) {
 
