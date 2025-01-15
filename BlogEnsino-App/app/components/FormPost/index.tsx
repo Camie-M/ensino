@@ -4,7 +4,7 @@ import * as S from './styled';
 
 interface Form {
   title?: string;
-  subtitle?: string;
+  author?: string;
   text?: string;
   isEditMode: boolean;
   onSubmit: (formData: FormData) => void;
@@ -12,20 +12,20 @@ interface Form {
 
 export interface FormData {
   title: string;
-  subtitle: string;
+  author: string;
   text: string;
 }
 
 export default function FormPost({
   title = '',
-  subtitle = '',
+  author = '',
   text = '',
   isEditMode,
   onSubmit,
 }: Form) {
   const [formData, setFormData] = useState<FormData>({
     title,
-    subtitle,
+    author,
     text,
   });
 
@@ -37,7 +37,7 @@ export default function FormPost({
   };
 
   const handleSubmit = () => {
-    if (!formData.title || !formData.subtitle || !formData.text) {
+    if (!formData.title || !formData.author || !formData.text) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -54,12 +54,7 @@ export default function FormPost({
         editable
         onChangeText={(text: string) => onChangeForm('title', text)}
       />
-      <S.Input
-        placeholder="Subtítulo do post"
-        value={formData.subtitle}
-        editable
-        onChangeText={(text: string) => onChangeForm('subtitle', text)}
-      />
+      
       <S.LargeInput
         placeholder="Texto do post"
         value={formData.text}
@@ -68,7 +63,12 @@ export default function FormPost({
         numberOfLines={200}
         onChangeText={(text: string) => onChangeForm('text', text)}
       />
-      
+      <S.Input
+        placeholder="autor do post"
+        value={formData.author}
+        editable
+        onChangeText={(text: string) => onChangeForm('author', text)}
+      />
       <S.SubmitButton onPress={handleSubmit}>
         <S.SubmitButtonText>
           {isEditMode ? 'Editar Post' : 'Criar post'}

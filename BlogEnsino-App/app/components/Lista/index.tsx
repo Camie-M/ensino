@@ -39,7 +39,7 @@ export default function Lista({ posts }: ListaProps) {
 
   return (
     <FlatList
-      data={posts} // Passando o array de posts
+      data={posts}
       renderItem={renderItem}
       keyExtractor={(item: PostDataProp) => item.id}
       contentContainerStyle={{
