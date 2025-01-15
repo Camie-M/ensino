@@ -25,7 +25,7 @@ export class UserController {
                 res.status(404).json({ message: "Usuário não encontrado" + error});
                 return
               } else {
-                res.status(500).json({ message: "Falha ao criar o Post" + error});
+                res.status(500).json({ message: "Falha ao criar o Usuario" + error});
                 return
               }
             }
@@ -34,7 +34,12 @@ export class UserController {
 
     static async getAllUsers(req: Request, res: Response): Promise<void> {
         try {
-            const users = await userService.findAll();
+            const token = req.headers.authorization
+            if (!token) {
+                res.status(400).json({ message: "Token faltando" });
+                return;
+            }
+            const users = await userService.findAll(token);
             res.status(200).json(users);
         } catch (error) {
             res.status(500).json({ message: 'Erro ao Buscar por Usuarios:', error: error });
@@ -61,7 +66,12 @@ export class UserController {
 
     static async getUserUserName(req: Request, res: Response): Promise<void> {
         try {
-            const user = await userService.findByUsername(req.params.username);
+            const token = req.headers.authorization;
+            const id = req.params.id;
+            if(!token){
+                throw new Error("Token invalido")
+            }
+            const user = await userService.findByUsername(req.params.username,token);
             if (user) {
                 res.status(200).json(user);
             } else {
@@ -74,7 +84,12 @@ export class UserController {
 
     static async editUser(req: Request, res: Response): Promise<void> {
         try {
-            const updatedUser = await userService.update(req.params.id, req.body);
+            const token = req.headers.authorization;
+            const id = req.params.id;
+            if(!token){
+                throw new Error("Token invalido")
+            }
+            const updatedUser = await userService.update(id, req.body,token);
             if (updatedUser) {
                 res.status(200).json(updatedUser);
             } else {
@@ -87,7 +102,12 @@ export class UserController {
 
     static async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            await userService.delete(req.params.id);
+            const token = req.headers.authorization
+            if (!token) {
+                res.status(400).json({ message: "Token faltando" });
+                return;
+            }
+            await userService.delete(req.params.id, token);
             res.status(200).json({ message: 'Usuário deletado com sucesso' });
         } catch (error) {
 

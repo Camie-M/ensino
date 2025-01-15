@@ -15,9 +15,7 @@ export class TokenUtils{
         return jwt.verify(token, env.SECRET_KEY) as DecodedToken;
     }
     static validateUser(token: string, allowedRoles: string[]) {
-        const user = this.decodeToken(token);
-        console.log("passei no validate");
-        
+        const user = this.decodeToken(token);        
         if (!user) {
             throw new Error("Usuário não encontrado");
         }
