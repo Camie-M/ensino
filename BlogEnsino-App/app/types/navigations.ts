@@ -1,4 +1,4 @@
-interface RootStackParamList  {
+export interface RootStackParamList  {
     Home:undefined;
     Admin: undefined;
     CreatePost:undefined;

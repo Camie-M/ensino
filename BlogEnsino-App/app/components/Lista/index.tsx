@@ -1,76 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from "./styled";
-import { posts } from "./mock.json"
-import { useNavigation } from '@react-navigation/native';
-import RootStackParamList from '../../interfaces/navigations';
-import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../Button';
+import { FlatList } from 'react-native';
+import { getAllPosts } from '@/app/Services/Posts/api';
+import { PostDataProp } from '@/app/types/post';
 
-interface Post {
-  id: string;
-  title: string;
-  text: string;
-  author: string;
-  image: string;
+interface ListaProps {
+  posts: PostDataProp[]; // Espera um array de posts
 }
 
-export default function Lista() {
-  const [isLoading, setIsLoading] = useState(false)
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Home'>>();
+export default function Lista({ posts }: ListaProps) {
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const navigateToEditPost = (postId: string) => {
-  //   navigation.navigate('UpdatePost', { postId });
-  // };
-
-  const renderItem = ({ item }: { item: Post }) => (
+  const renderItem = ({ item }: { item: PostDataProp }) => (
     <S.PostContainer
       style={{
-        // IOS
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 1,
         shadowRadius: 5,
-        // Android
-        elevation: 5, 
+        elevation: 5,
       }}
     >
       <S.TxtContainer>
         <S.PostContentTitle>{item.title}</S.PostContentTitle>
-        <S.PostContent numberOfLines={2} ellipsizeMode="tail">{item.text}</S.PostContent>
+        <S.PostContent numberOfLines={3}>{item.text}</S.PostContent>
         <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
       <S.BtnContainer>
-        <Button text={'Editar Post'} color={'#4CAF50'} route={`UpdatePost, ${item.id}`} width={'100%'} />
+        <Button text={'Editar Post'} color={'#4CAF50'} route={`UpdatePost, ${item.id}`} />
       </S.BtnContainer>
-
-     
-{/* 
-      <S.Button onPress={() => navigateToEditPost(item.id)}>
-        <S.ButtonText route="Admin" width={'100%'}></S.ButtonText>
-      </S.Button> */}
     </S.PostContainer>
   );
-  const loadMoreItens = ()=>{
-      // função para fazer a paginação/loading
-  }
+
+  const loadMoreItens = () => {
+    // Função para fazer a paginação/loading
+  };
 
   return (
-    <S.StyledFlatList
-      data={posts}
+    <FlatList
+      data={posts} // Passando o array de posts
       renderItem={renderItem}
-      keyExtractor={(item: Post) => item.id}
-      contentContainerStyle={{ 
+      keyExtractor={(item: PostDataProp) => item.id}
+      contentContainerStyle={{
         backgroundColor: "#f4f4f4",
         justifyContent: "center",
-        alignItems: "center",   
-        marginTop:"10px",
-        gap:"10px"
+        alignItems: "center",
+        paddingBottom: 200,
       }}
       showsVerticalScrollIndicator={true}
       numColumns={1}
       onEndReached={loadMoreItens}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={isLoading ? <S.FooterText>Loading...</S.FooterText>:null}
+      ListFooterComponent={isLoading ? <S.FooterText>Loading...</S.FooterText> : null}
     />
   );
 }

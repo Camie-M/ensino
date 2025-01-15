@@ -44,3 +44,5 @@ export const SubmitButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
+
+export default {SafeAreaView,Title,Input,LargeInput,SubmitButton,SubmitButtonText}

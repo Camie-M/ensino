@@ -1,13 +1,13 @@
 
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as S from "./styled";
-import RootStackParamList  from "@/app/interfaces/navigations";
+import RootStackParamList  from "@/app/types/navigations";
 
 interface Button{
     text:string,
     color:string;
     route:string
-    width:string;
+    width?:string;
 }
 
 export default function Button({ text, color, route, width }: Button) {

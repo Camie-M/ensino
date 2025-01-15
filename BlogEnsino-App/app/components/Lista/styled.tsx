@@ -1,45 +1,36 @@
-import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
-interface ButtonProps {
-  color?: string; // Cor opcional
-}
-
-export const StyledFlatList = styled(FlatList)`
- 
-`;
-
-export const PostContainer = styled.View`
-  width: 90%;
+export const PostContainer = styled.SafeAreaView`
   min-height:200px;
   height: auto;
-  background-color: #fff3f3;
-  border-radius: 10px;
-  gap: 30px;
-  margin-bottom: 20px;
+  width:320px;
+  background-color: #ffffff;
   align-items: left;
   justify-content: center;
   padding:10px;
+  gap: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
   
 `;
 export const TxtContainer = styled.View`
   gap:10px;
 `;
-export const BtnContainer = styled.View`
-  gap:10px;
-  align-items:center;
-`;
+
 export const PostContentTitle = styled.Text`
-  font-size: 30px;
+  font-size: 20px;
   color: #1A1A1A;
 `;
 export const PostContent = styled.Text`
-  font-size: 20px;
+  font-size: 15px;
   color: #667085;
 `;
 export const PostContentAuthor = styled.Text`
-  font-size: 16px;
+  font-size: 13px;
   color: #af93f6;
+`;
+export const BtnContainer = styled.View`
+  align-items:center;
 `;
 export const FooterText = styled.Text`
   text-align: left;
@@ -48,22 +39,7 @@ export const FooterText = styled.Text`
   color: #888;
 `;
 
-export const Button = styled.TouchableOpacity`
-  background-color: #4CAF50;
-  border-radius: 8px;
-  padding: 12px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-`;
-
-export const ButtonText = styled.Text`
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-`;
 
 
-export default { StyledFlatList, PostContainer, TxtContainer, BtnContainer, PostContentTitle, PostContent, PostContentAuthor, FooterText };
+
+export default { PostContainer, TxtContainer, BtnContainer, PostContentTitle, PostContent, PostContentAuthor, FooterText };

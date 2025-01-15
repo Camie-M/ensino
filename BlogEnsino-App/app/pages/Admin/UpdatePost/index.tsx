@@ -4,7 +4,7 @@ import { Text, SafeAreaView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import FormPost, { FormData } from '@/app/components/FormPost';
 import { RouteProp } from '@react-navigation/native';
-import RootStackParamList from '../../../interfaces/navigations';
+import RootStackParamList from '../../../types/navigations';
 
 type UpdatePostRouteProp = RouteProp<RootStackParamList, 'UpdatePost'>;
 
