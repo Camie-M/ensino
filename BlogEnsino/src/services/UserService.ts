@@ -21,8 +21,9 @@ export class UserService {
         }
     }
 
-    async findAll(): Promise<UserResource[]> {
+    async findAll(token:string): Promise<UserResource[]> {
         try {
+            TokenUtils.validateUser(token, allowedRoles);
             const users = await userRepository.findAll();
             if (users === null || users.length == 0) throw new Error("Não existe usuarios na tabela");
             const usersArray = users.map(user => UserMapper.mapToResource(user));
@@ -36,6 +37,8 @@ export class UserService {
         let user;
         if(id == "self"){
             user = await this.findUserByToken(token)
+            console.log("Passei pelo self");
+            
         }else{
             TokenUtils.validateUser(token, allowedRoles);
             user = await this.findUserById(id)
@@ -45,7 +48,8 @@ export class UserService {
 
     
     
-    async findByUsername(username: string): Promise<UserResource> {
+    async findByUsername(username: string,token:string): Promise<UserResource> {
+        TokenUtils.validateUser(token, allowedRoles);
         const user = await this.findUserByUsername(username)
         return UserMapper.mapToResource(user)
     }
@@ -95,6 +99,7 @@ export class UserService {
     }
     private async findUserByToken(token: string) {
         const decoded = TokenUtils.decodeToken(token);
+        console.log("retornando decoded");
         return await this.findUserById(decoded.id)
 
     }
