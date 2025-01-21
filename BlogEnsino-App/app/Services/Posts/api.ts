@@ -33,6 +33,8 @@ export const getPostById = async (id: string): Promise<PostDataProp | null> => {
         }
   
         const postData: PostDataProp = await postResponse.json();
+        console.log(postData);
+        
         return postData;
     } catch (error) {
         console.error('Erro ao buscar post:', error);

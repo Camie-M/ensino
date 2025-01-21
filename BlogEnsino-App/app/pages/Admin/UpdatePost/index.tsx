@@ -49,6 +49,7 @@ export default function UpdatePost() {
           title={postData.title}
           author={postData.author}
           text={postData.text}
+          image={postData.image}
         />
       ) : (
         <Text>Loading post...</Text>
