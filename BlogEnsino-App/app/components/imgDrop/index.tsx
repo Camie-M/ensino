@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Button, Image, View, StyleSheet, ActivityIndicator, Text, Alert } from 'react-native';
+import { Button, ActivityIndicator, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-
+import * as S from "./styled"
 interface ImagePickerExampleProps {
   imgUrl: string; // Expecta a URL da imagem quando for no modo de edição
 }
@@ -46,7 +46,7 @@ export default function ImagePickerExample({ imgUrl }: ImagePickerExampleProps) 
   };
 
   return (
-    <View style={styles.container}>
+    <S.Container>
       <Button
         title="Pick an image from camera roll"
         onPress={pickImage}
@@ -54,31 +54,10 @@ export default function ImagePickerExample({ imgUrl }: ImagePickerExampleProps) 
       />
       {loading && <ActivityIndicator size="large" color="#00ff00" />}
       {image ? (
-        <Image source={{ uri: image }} style={styles.image} />
+        <S.Image source={{ uri: image }}/>
       ) : (
-        <Text style={styles.placeholderText}>No image selected</Text>
+        <S.PlaceholderText>No image selected</S.PlaceholderText>
       )}
-    </View>
+    </S.Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
-    padding: 20,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: '#888',
-    marginTop: 20,
-  },
-});
