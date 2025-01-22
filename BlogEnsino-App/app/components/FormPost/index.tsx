@@ -42,11 +42,12 @@ export default function FormPost({
   };
 
   const handleSubmit = () => {
-    if (!formData.title || !formData.author || !formData.text) {
+    if (!formData.title || !formData.author || !formData.text || !formData.image) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
-
+    console.log(formData.image);
+    
     onSubmit(formData);
   };
 
@@ -75,7 +76,6 @@ export default function FormPost({
         onChangeText={(text: string) => onChangeForm('author', text)}
       />
       <DropImage imgUrl={formData.image} />
-      
       <S.SubmitButton onPress={handleSubmit}>
         <S.SubmitButtonText>
           {isEditMode ? 'Editar Post' : 'Criar post'}

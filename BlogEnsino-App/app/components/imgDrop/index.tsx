@@ -35,20 +35,26 @@ export default function ImagePickerExample({ imgUrl }: ImagePickerExampleProps) 
     if (!hasPermission) return;
     setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images', 'videos'],
+      mediaTypes: ['images'],
       allowsEditing: true,
       quality: 1,
     });
     setLoading(false);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const imageUri = result.assets[0].uri;
+      console.log("Selected image URI:", imageUri);  // Logando a imagem selecionada
+      setImage(imageUri);
+    } else {
+      console.log("Image selection was canceled or no image assets found.");
     }
+
+    
   };
 
   return (
     <S.Container>
       <Button
-        title="Pick an image from camera roll"
+        title="Escolha uma imagem do seu celular"
         onPress={pickImage}
         color="#841584"
       />

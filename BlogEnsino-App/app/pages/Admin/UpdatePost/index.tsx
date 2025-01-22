@@ -6,7 +6,7 @@ import FormPost, { FormData } from '@/app/components/FormPost';
 import { RouteProp } from '@react-navigation/native';
 import RootStackParamList from '../../../types/navigations';
 import PostDataProp from '@/app/types/post';
-import { getPostById, updatePost } from '@/app/Services/Posts/api';
+import { getPostById, updatePostbyId } from '@/app/Services/Posts/api';
 import { FlatList } from 'react-native-gesture-handler';
 
 type UpdatePostRouteProp = RouteProp<RootStackParamList, 'UpdatePost'>;
@@ -33,10 +33,8 @@ export default function UpdatePost() {
     fetchPosts();
   }, []);
 
-  const handleSave = () => {
-    if(postData){
-      updatePost(postId,postData)
-    }
+  const handleSave = (formData: FormData) => {
+    updatePostbyId(postId, formData);        
   };
 
   return (
