@@ -46,29 +46,39 @@ export const getPostById = async (id: string): Promise<PostDataProp | null> => {
 
 export const updatePostbyId = async (id: string, formData: PostDataProp): Promise<PostDataProp | null> => {
   try {
-    const token = await getToken();  // Certifique-se de aguardar a função getToken
+    const token = await getToken();
     if (!token) {
       console.error('Token não encontrado');
       return null;
     }
-    // console.log(formData);
+
+    const form = new FormData();
+    form.append('title', formData.title);
+    form.append('text', formData.text);
+    if (formData.image) {
+      form.append('image', {
+        uri: formData.image,
+        name: 'image.jpg',
+        type: 'image/jpeg',
+      } as any);
+    }
     
     const postResponse = await fetch(`http://192.168.15.18:3001/posts/${id}`, {
       method: "PUT",
       headers: {
         'Authorization': `${token}`,
-        'Content-Type': 'application/json',  // Adicione o cabeçalho Content-Type
       },
-      body: JSON.stringify(formData),  // Certifique-se de converter o formData para uma string JSON
+      body:form,
     });
-
+    console.log("postResponse", postResponse);
+    
     if (!postResponse.ok) {
       console.error('Erro ao atualizar post:', postResponse.status, postResponse.statusText);
       return null;
     }
 
     const postData: PostDataProp = await postResponse.json();
-    // console.log(postData);
+    console.log("postData", postData);
     
     return postData;
   } catch (error) {
@@ -81,7 +91,7 @@ export const updatePostbyId = async (id: string, formData: PostDataProp): Promis
 export const getToken = async () => {
     try {
         // let token = await AsyncStorage.getItem('token');
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI2MTJiOWJiLTA5YzUtNDljMS1iMzgxLTgwYjE3ODcyN2U2MCIsInVzZXJuYW1lIjoiQ2FtaWxhIiwicm9sZSI6InByb2Zlc3NvciIsImlhdCI6MTczNzUwNjgwOSwiZXhwIjoxNzM3NTkzMjA5fQ.pXx_JTIGlp55E20WO3t4dIwcRTTTBN1DMgv57qyyhM4"
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmZjZjMzMzLTlkMjMtNDY5Ni1iMTFmLWU2Y2QyZDQ3Y2UzMCIsInVzZXJuYW1lIjoiQ2FtaWxhIiwicm9sZSI6InByb2Zlc3NvciIsImlhdCI6MTczNzU5MjE0MywiZXhwIjoxNzM3Njc4NTQzfQ.421L_dIusVGQc3DZIbFiY9OSN_5fnN032pz9rL_e8No"
         return token;
     } catch (error) {
         console.error('Erro ao tentar recuperar o token', error);

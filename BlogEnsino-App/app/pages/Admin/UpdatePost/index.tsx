@@ -34,6 +34,8 @@ export default function UpdatePost() {
   }, []);
 
   const handleSave = (formData: FormData) => {
+    // console.log("formData ", formData);
+    
     updatePostbyId(postId, formData);        
   };
 

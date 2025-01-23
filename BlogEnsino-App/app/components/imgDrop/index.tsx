@@ -3,10 +3,11 @@ import { Button, ActivityIndicator, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as S from "./styled"
 interface ImagePickerExampleProps {
-  imgUrl: string; // Expecta a URL da imagem quando for no modo de edição
+  imgUrl: string;
+  onImageChange: (uri: string) => void;
 }
 
-export default function ImagePickerExample({ imgUrl }: ImagePickerExampleProps) {
+export default function ImagePickerExample({ imgUrl,onImageChange  }: ImagePickerExampleProps) {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -42,13 +43,9 @@ export default function ImagePickerExample({ imgUrl }: ImagePickerExampleProps) 
     setLoading(false);
     if (!result.canceled && result.assets && result.assets.length > 0) {
       const imageUri = result.assets[0].uri;
-      console.log("Selected image URI:", imageUri);  // Logando a imagem selecionada
       setImage(imageUri);
-    } else {
-      console.log("Image selection was canceled or no image assets found.");
+      onImageChange(imageUri);
     }
-
-    
   };
 
   return (

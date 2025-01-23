@@ -46,8 +46,7 @@ export default function FormPost({
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
-    console.log(formData.image);
-    
+    // console.log(formData);
     onSubmit(formData);
   };
 
@@ -75,7 +74,10 @@ export default function FormPost({
         editable
         onChangeText={(text: string) => onChangeForm('author', text)}
       />
-      <DropImage imgUrl={formData.image} />
+       <DropImage
+          imgUrl={formData.image}
+          onImageChange={(uri: string) => onChangeForm('image', uri)}
+        />
       <S.SubmitButton onPress={handleSubmit}>
         <S.SubmitButtonText>
           {isEditMode ? 'Editar Post' : 'Criar post'}
