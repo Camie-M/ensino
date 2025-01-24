@@ -80,6 +80,13 @@ const creatMockPost = async () => {
         user_id: userAdmin1.id
       },
       {
+        title: "aaaaaaaaaaaaaaaaaaa",
+        text: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        author: userAdmin1.username,
+        image_url: "https://postech-images.s3.us-east-1.amazonaws.com/119cb3b2-d911-47b3-b4b8-bac05e345ef4",
+        user_id: userAdmin1.id
+      },
+      {
         title: "A importância do Design Responsivo",
         text: "O design responsivo é um dos pilares do desenvolvimento moderno de websites. Em um mundo onde dispositivos móveis superam os computadores em acesso à internet, criar interfaces que se adaptam a diferentes tamanhos de tela é essencial. O design responsivo utiliza técnicas como grids flexíveis, imagens escaláveis e media queries para garantir que o conteúdo seja acessível e atraente em qualquer dispositivo. Além de melhorar a experiência do usuário, o design responsivo também tem impacto no SEO, pois mecanismos de busca como o Google priorizam sites responsivos em seus rankings. Ferramentas como frameworks CSS, incluindo Bootstrap e Tailwind CSS, tornam mais fácil implementar designs responsivos, economizando tempo e esforço para os desenvolvedores. Ao adotar práticas responsivas, empresas podem aumentar o engajamento do usuário e melhorar as taxas de conversão, pois um site que funciona bem em todos os dispositivos inspira confiança e profissionalismo. Portanto, ao planejar o design de um novo site ou reformular um existente, investir em responsividade não é mais uma opção, mas uma necessidade. Dominar essa habilidade é crucial para desenvolvedores e designers que desejam se destacar no mercado atual.",
         author: userAdmin1.username,

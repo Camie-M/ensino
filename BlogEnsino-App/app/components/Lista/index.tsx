@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as S from "./styled";
 import Button from '../Button';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControlProps } from 'react-native';
 import { getAllPosts } from '@/app/Services/Posts/api';
 import { PostDataProp } from '@/app/types/post';
 
 interface ListaProps {
-  posts: PostDataProp[]; // Espera um array de posts
+  posts: PostDataProp[];
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 }
 
-export default function Lista({ posts }: ListaProps) {
+export default function Lista({ posts, refreshControl  }: ListaProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const renderItem = ({ item }: { item: PostDataProp }) => (
@@ -41,7 +42,8 @@ export default function Lista({ posts }: ListaProps) {
     <FlatList
       data={posts}
       renderItem={renderItem}
-      keyExtractor={(item: PostDataProp) => item.id}
+      keyExtractor={(item: PostDataProp, index: number) => item.id ?? index.toString()}
+
       contentContainerStyle={{
         backgroundColor: "#f4f4f4",
         justifyContent: "center",
@@ -53,6 +55,7 @@ export default function Lista({ posts }: ListaProps) {
       onEndReached={loadMoreItens}
       onEndReachedThreshold={0.5}
       ListFooterComponent={isLoading ? <S.FooterText>Loading...</S.FooterText> : null}
+      refreshControl={refreshControl}
     />
   );
 }

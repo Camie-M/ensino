@@ -15,25 +15,9 @@ export default function ImagePickerExample({ imgUrl,onImageChange  }: ImagePicke
     if (imgUrl) {
       setImage(imgUrl);
     }
-  }, [imgUrl]); // Sempre que imgUrl mudar, a imagem será atualizada
-
-  const requestPermission = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert(
-        "Permission Required",
-        "We need permission to access your camera roll to select an image.",
-        [{ text: "OK" }]
-      );
-    }else{
-        return status === 'granted';
-    }
-    
-  };
+  }, [imgUrl]);
 
   const pickImage = async () => {
-    const hasPermission = await requestPermission();
-    if (!hasPermission) return;
     setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],

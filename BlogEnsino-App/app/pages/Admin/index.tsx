@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 
-import { SafeAreaView, Text } from 'react-native';
+import { RefreshControl, SafeAreaView, Text } from 'react-native';
 import * as S from "./styled"
 
 import Lista from '@/app/components/Lista';
@@ -11,6 +11,12 @@ import { PostDataProp } from '@/app/types/post';
 
 export default function Admin() {
     const [posts, setPosts] = useState<PostDataProp[]>([]);  
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const handleRefresh = async () => {
+      setIsRefreshing(true); // Inicia o estado de carregamento
+      await fetchPosts(); // Faz uma nova chamada para buscar o post
+      setIsRefreshing(false); // Finaliza o estado de carregamento
+    };
     const fetchPosts = async () => {
       try {
         const data = await getAllPosts();
@@ -21,9 +27,10 @@ export default function Admin() {
         console.error('Error fetching posts:', error);
       }
     };
+
     useEffect(() => {
       fetchPosts();
-    }, []);
+    },[]);
   return (
     <SafeAreaView>
       <S.Container>
@@ -34,7 +41,10 @@ export default function Admin() {
           width={'80%'}        />
       </S.Container>
       <S.Title>Gestão de Posts</S.Title>
-      <Lista posts={posts}/>
+      <Lista posts={posts} 
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+        }/>
     </SafeAreaView>
   );
 }
