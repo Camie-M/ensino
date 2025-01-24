@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '@/app/pages/Home';
@@ -7,6 +7,7 @@ import Gestao from '@/app/pages/Gestao';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
+import Login from '@/app/pages/Login';
 
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
@@ -14,6 +15,8 @@ const AdminStack = createStackNavigator();
 const HomeLabel = "Home";
 const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
+const logIn = "logIn";
+const logOut = "logOut";
 
 function AdminStackNavigator() {
   return (
@@ -26,6 +29,18 @@ function AdminStackNavigator() {
 }
 
 export function AppRoutes() {
+  const [isLoged, setIsLoged] = useState(false)
+  useEffect(()=>{
+    // codigo que verificar o localStorage pelo token 
+    console.log();
+    
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo'
+    if(token){
+      setIsLoged(true)
+    }else{
+      setIsLoged(false)
+    }
+  },[])
   return (
     <Tab.Navigator
       initialRouteName={AdminLabel}
@@ -43,6 +58,12 @@ export function AppRoutes() {
               break;
             case GestaoLabel:
               iconName = focused ? 'bar-chart' : 'bar-chart-outline';
+              break;
+            case logIn:
+              iconName = focused ? 'log-in' : 'log-in-outline';
+              break;
+            case logOut:
+              iconName = focused ? 'log-out' : 'log-out-outline';
               break;
             default:
               iconName = 'help-circle';
@@ -68,6 +89,8 @@ export function AppRoutes() {
             },
           })}
         />
+        
+        <Tab.Screen name={isLoged?logOut:logIn} component={Login} />
     </Tab.Navigator>
   );
 }
