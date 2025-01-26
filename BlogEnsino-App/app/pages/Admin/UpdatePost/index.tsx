@@ -7,14 +7,15 @@ import { RouteProp } from '@react-navigation/native';
 import RootStackParamList from '../../../types/navigations';
 import PostDataProp from '@/app/types/post';
 import { getPostById, updatePostbyId } from '@/app/Services/Posts/api';
+import Button from '@/app/components/Button';
+import GoBackButton from '@/app/components/goBackButton';
+import BaseLayout from '@/app/components/BaseLayout';
 
 type UpdatePostRouteProp = RouteProp<RootStackParamList, 'UpdatePost'>;
 
 export default function UpdatePost() {
   const route = useRoute<UpdatePostRouteProp>();
   const { postId } = route.params as { postId: string };
-
-
   const [postData, setPostData] = useState<PostDataProp>();
 
   const fetchPosts = async () => {
@@ -37,8 +38,8 @@ export default function UpdatePost() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-    <ScrollView contentContainerStyle={{ padding: 16 }}>
+    <BaseLayout>
+      <GoBackButton/>
       {postData ? (
         <FormPost
           isEditMode={true}
@@ -51,7 +52,6 @@ export default function UpdatePost() {
       ) : (
         <Text>Loading post...</Text>
       )}
-    </ScrollView>
-  </SafeAreaView>
+    </BaseLayout>
   );
 }

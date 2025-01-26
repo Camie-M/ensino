@@ -43,9 +43,7 @@ export default function Lista({ posts, refreshControl  }: ListaProps) {
       data={posts}
       renderItem={renderItem}
       keyExtractor={(item: PostDataProp, index: number) => item.id ?? index.toString()}
-
       contentContainerStyle={{
-        backgroundColor: "#f4f4f4",
         justifyContent: "center",
         alignItems: "center",
         paddingBottom: 200,

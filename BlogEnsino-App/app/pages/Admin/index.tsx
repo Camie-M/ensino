@@ -8,14 +8,15 @@ import Lista from '@/app/components/Lista';
 import Button from '@/app/components/Button';
 import { getAllPosts } from '@/app/Services/Posts/api';
 import { PostDataProp } from '@/app/types/post';
+import BaseLayout from '@/app/components/BaseLayout';
 
 export default function Admin() {
     const [posts, setPosts] = useState<PostDataProp[]>([]);  
     const [isRefreshing, setIsRefreshing] = useState(false);
     const handleRefresh = async () => {
-      setIsRefreshing(true); // Inicia o estado de carregamento
-      await fetchPosts(); // Faz uma nova chamada para buscar o post
-      setIsRefreshing(false); // Finaliza o estado de carregamento
+      setIsRefreshing(true);
+      await fetchPosts();
+      setIsRefreshing(false);
     };
     const fetchPosts = async () => {
       try {
@@ -32,7 +33,7 @@ export default function Admin() {
       fetchPosts();
     },[]);
   return (
-    <SafeAreaView>
+    <BaseLayout>
       <S.Container>
         <Button
           text={"Criar novo Post"}
@@ -41,10 +42,11 @@ export default function Admin() {
           width={'80%'}        />
       </S.Container>
       <S.Title>Gestão de Posts</S.Title>
-      <Lista posts={posts} 
+      <Lista 
+        posts={posts} 
         refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
         }/>
-    </SafeAreaView>
+    </BaseLayout>
   );
 }

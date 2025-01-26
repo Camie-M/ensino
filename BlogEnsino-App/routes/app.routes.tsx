@@ -20,13 +20,26 @@ const logOut = "logOut";
 
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
-      <AdminStack.Screen name="AdminHome" component={Admin} />
-      <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
-      <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
+    <AdminStack.Navigator>
+      <AdminStack.Screen 
+        name="AdminHome" 
+        component={Admin} 
+        options={{ headerShown: false }}
+      />
+      <AdminStack.Screen 
+        name="CreatePost" 
+        component={CreatePostForm} 
+        options={{ headerShown: false, headerTitle: '',}}
+      />
+      <AdminStack.Screen 
+        name="UpdatePost" 
+        component={UpdatePost} 
+        options={{ headerShown: false,  headerTitle: ''}} 
+      />
     </AdminStack.Navigator>
   );
 }
+
 
 export function AppRoutes() {
   const [isLoged, setIsLoged] = useState(false)

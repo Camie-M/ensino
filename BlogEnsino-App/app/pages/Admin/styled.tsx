@@ -1,9 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-
   align-items: center;
-  background-color: #f5f5f5;
   margin-top:20px;
   margin-bottom:20px;
 `;
