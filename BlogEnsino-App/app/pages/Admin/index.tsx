@@ -12,12 +12,6 @@ import BaseLayout from '@/app/components/BaseLayout';
 
 export default function Admin() {
     const [posts, setPosts] = useState<PostDataProp[]>([]);  
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const handleRefresh = async () => {
-      setIsRefreshing(true);
-      await fetchPosts();
-      setIsRefreshing(false);
-    };
     const fetchPosts = async () => {
       try {
         const data = await getAllPosts();
@@ -33,7 +27,7 @@ export default function Admin() {
       fetchPosts();
     },[]);
   return (
-    <BaseLayout>
+    <BaseLayout onFetchPosts={fetchPosts}>
       <S.Container>
         <Button
           text={"Criar novo Post"}
@@ -42,11 +36,7 @@ export default function Admin() {
           width={'80%'}        />
       </S.Container>
       <S.Title>Gestão de Posts</S.Title>
-      <Lista 
-        posts={posts} 
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
-        }/>
+      <Lista posts={posts} />
     </BaseLayout>
   );
 }

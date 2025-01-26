@@ -1,13 +1,33 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView } from 'react-native';
 import styles from './styled';
 
-const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface BaseLayoutProps{
+  children: React.ReactNode, 
+  onFetchPosts?: () => void 
+}
+
+export default function BaseLayout({ children, onFetchPosts }: BaseLayoutProps) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    if (onFetchPosts) {
+      onFetchPosts();
+    }
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }, [onFetchPosts]);
+
   return (
     <SafeAreaView style={styles.baseLayoutContainer}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>{children}</ScrollView>
+      <ScrollView contentContainerStyle={styles.contentContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >{children}</ScrollView>
     </SafeAreaView>
   );
 };
 
-export default BaseLayout;
