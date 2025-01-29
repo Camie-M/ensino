@@ -8,8 +8,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
+import PostDetails from '@/app/pages/PostDetails';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 const AdminStack = createStackNavigator();
 
 const HomeLabel = "Home";
@@ -29,34 +31,21 @@ function AdminStackNavigator() {
       <AdminStack.Screen 
         name="CreatePost" 
         component={CreatePostForm} 
-        options={{ headerShown: false, headerTitle: '',}}
+        options={{ headerShown: false, headerTitle: '' }}
       />
       <AdminStack.Screen 
         name="UpdatePost" 
         component={UpdatePost} 
-        options={{ headerShown: false,  headerTitle: ''}} 
+        options={{ headerShown: false, headerTitle: '' }} 
       />
     </AdminStack.Navigator>
   );
 }
 
-
-export function AppRoutes() {
-  const [isLoged, setIsLoged] = useState(false)
-  useEffect(()=>{
-    // codigo que verificar o localStorage pelo token 
-    console.log();
-    
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo'
-    if(token){
-      setIsLoged(true)
-    }else{
-      setIsLoged(false)
-    }
-  },[])
+function MainTabNavigator({ isLoged }: { isLoged: boolean }) {
   return (
     <Tab.Navigator
-      initialRouteName={AdminLabel}
+      initialRouteName={HomeLabel}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
@@ -93,17 +82,35 @@ export function AppRoutes() {
       <Tab.Screen name={HomeLabel} component={Home} />
       <Tab.Screen name={GestaoLabel} component={Gestao} />
       <Tab.Screen
-          name={AdminLabel}
-          component={AdminStackNavigator}
-          listeners={({ navigation }) => ({
-            tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('Admin', { screen: 'AdminHome' });
-            },
-          })}
-        />
-        
-        <Tab.Screen name={isLoged?logOut:logIn} component={Login} />
+        name={AdminLabel}
+        component={AdminStackNavigator}
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('Admin', { screen: 'AdminHome' });
+          },
+        })}
+      />
+      <Tab.Screen name={isLoged ? logOut : logIn} component={Login} />
     </Tab.Navigator>
+  );
+}
+
+export function AppRoutes() {
+  const [isLoged, setIsLoged] = useState(false);
+
+  useEffect(() => {
+    console.log();
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo';
+    setIsLoged(!!token);
+  }, []);
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Blog Ensino">
+        {() => <MainTabNavigator isLoged={isLoged} />}
+      </Stack.Screen>
+      <Stack.Screen name="PostDetails" component={PostDetails} options={{ headerShown: true, title: "Detalhes do Post" }} /> 
+    </Stack.Navigator>
   );
 }

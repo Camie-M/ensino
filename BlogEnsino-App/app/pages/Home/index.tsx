@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import BaseLayout from '../../components/BaseLayout';
-import Search from '../../components/Search';
-import PaginatedPosts from '../../components/Posts/PaginatedPosts';
-import mockPosts from './mockPosts'; // Importando os dados mockados
-import styles from './styled';
+import React, { useState, useEffect } from "react";
+import { View, Text } from "react-native";
+import BaseLayout from "../../components/BaseLayout";
+import Search from "../../components/Search";
+import PaginatedPosts from "../../components/Posts/PaginatedPosts";
+import mockPosts from "./mockPosts";
+import * as S from "./styled";
 
 const Home: React.FC = () => {
-  const [posts, setPosts] = useState(mockPosts); // Inicializa com os dados mockados
+  const [posts, setPosts] = useState(mockPosts); 
   const [filteredPosts, setFilteredPosts] = useState(mockPosts);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!searchTerm) {
@@ -27,13 +27,13 @@ const Home: React.FC = () => {
 
   return (
     <BaseLayout>
-      <View>
-        <View style={styles.headerSection}>
-          <Text style={styles.title}>Posts publicados recentemente</Text>
+      <S.Container>
+        <S.HeaderSection>
+          <S.Title>Posts publicados recentemente</S.Title>
           <Search onSearch={(query) => setSearchTerm(query)} />
-        </View>
-        <PaginatedPosts posts={filteredPosts} />
-      </View>
+        </S.HeaderSection>
+        <PaginatedPosts posts={posts} searchTerm={searchTerm} /> 
+      </S.Container>
     </BaseLayout>
   );
 };

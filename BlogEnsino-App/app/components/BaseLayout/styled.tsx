@@ -1,13 +1,10 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  baseLayoutContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  contentContainer: {
-    padding: 16,
-  },
-});
+export const BaseLayoutContainer = styled.SafeAreaView`
+  flex: 1;
+  background-color: #fff;
+`;
 
-export default styles;
+export const ContentContainer = styled.ScrollView`
+  padding: 16px;
+`;

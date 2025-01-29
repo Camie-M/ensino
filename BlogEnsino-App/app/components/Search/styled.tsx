@@ -1,18 +1,15 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  searchContainer: {
-    marginVertical: 16,
-  },
-  searchInput: {
-    height: 40,
-    paddingHorizontal: 8,
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    color: '#333',
-  },
-});
+export const SearchContainer = styled.View`
+  margin-vertical: 16px;
+`;
 
-export default styles;
+export const SearchInput = styled.TextInput`
+  height: 40px;
+  padding-horizontal: 8px;
+  border-width: 1px;
+  border-radius: 4px;
+  border-color: #ccc;
+  background-color: #fff;
+  color: #333;
+`;
