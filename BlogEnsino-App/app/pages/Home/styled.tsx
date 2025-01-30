@@ -1,17 +1,21 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: '500',
-    marginVertical: 16,
-    color: '#333',
-  },
-  headerSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-});
+export const Container = styled.ScrollView`
+  padding: 16px;
+  margin-bottom:16px;
+`;
 
-export default styles;
+export const HeaderSection = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+export const Title = styled.Text`
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 16px;
+  color: #333;
+  width: 60%;
+`;

@@ -1,16 +1,15 @@
 import React from 'react';
-import {SafeAreaView } from 'react-native';
-import styles from './styled';
+import { RefreshControl } from 'react-native';
+import * as S from './styled';
 
-interface BaseLayoutProps{
-  children: React.ReactNode, 
+interface BaseLayoutProps {
+  children: React.ReactNode;
 }
 
 export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
-    <SafeAreaView style={styles.baseLayoutContainer}>
+    <S.BaseLayoutContainer>
       {children}
-    </SafeAreaView>
+    </S.BaseLayoutContainer>
   );
-};
-
+}

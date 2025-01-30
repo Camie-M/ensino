@@ -8,11 +8,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import PostDetails from '@/app/pages/PostDetails';
 
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
-
+const HomeStack = createStackNavigator();
 const HomeLabel = "Home";
 const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
@@ -21,42 +21,36 @@ const logOut = "logOut";
 
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator>
-      <AdminStack.Screen 
-        name="AdminHome" 
-        component={Admin} 
-        options={{ headerShown: false }}
-      />
-      <AdminStack.Screen 
-        name="CreatePost" 
-        component={CreatePostForm} 
-        options={{ headerShown: false, headerTitle: '',}}
-      />
-      <AdminStack.Screen 
-        name="UpdatePost" 
-        component={UpdatePost} 
-        options={{ headerShown: false,  headerTitle: ''}} 
-      />
+    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+      <AdminStack.Screen name="AdminHome" component={Admin} />
+      <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
+      <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
     </AdminStack.Navigator>
+  );
+}
+function HomeStackNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="HomeScreen" component={Home} />
+      <HomeStack.Screen name="PostDetails" component={PostDetails} />
+    </HomeStack.Navigator>
   );
 }
 
 
 export function AppRoutes() {
   const [isLoged, setIsLoged] = useState(false)
-  useEffect(() => {
-    const checkToken = async () => {
-        const token = await AsyncStorage.getItem('userToken');
-        if (token) {
-            setIsLoged(true);
-        } else {
-            setIsLoged(false);
-        }
-    };
-    checkToken();
-
-}, []);
-
+  useEffect(()=>{
+    // codigo que verificar o localStorage pelo token 
+    console.log();
+    
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo'
+    if(token){
+      setIsLoged(true)
+    }else{
+      setIsLoged(false)
+    }
+  },[])
   return (
     <Tab.Navigator
       initialRouteName={AdminLabel}
@@ -93,7 +87,7 @@ export function AppRoutes() {
         tabBarLabel: route.name,
       })}
     >
-      <Tab.Screen name={HomeLabel} component={Home} />
+      <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
       <Tab.Screen name={GestaoLabel} component={Gestao} />
       <Tab.Screen
           name={AdminLabel}
@@ -106,7 +100,7 @@ export function AppRoutes() {
           })}
         />
         
-        <Tab.Screen name={isLoged?logIn:logOut} component={Login} />
+        <Tab.Screen name={isLoged?logOut:logIn} component={Login} />
     </Tab.Navigator>
   );
 }

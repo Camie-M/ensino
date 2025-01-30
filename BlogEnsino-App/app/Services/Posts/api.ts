@@ -116,9 +116,9 @@ export const formatFormData = async (formData: PostDataProp) => {
       const form = new FormData();
       form.append('title', formData.title);
       form.append('text', formData.text);
-      if (formData.image) {
+      if (formData.image_url) {
         form.append('image', {
-          uri: formData.image,
+          uri: formData.image_url,
           name: 'image.jpg',
           type: 'image/jpeg',
         } as any);

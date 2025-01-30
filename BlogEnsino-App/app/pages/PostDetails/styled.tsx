@@ -1,21 +1,13 @@
 import styled from 'styled-components/native';
 
-export const ContainerAnchor = styled.TouchableOpacity`
-  flex-direction: column;
+export const Container = styled.ScrollView`
+  flex: 1;
   padding: 16px;
-  border-radius: 8px;
-  background-color: #fff;
-  shadow-color: #000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  margin-bottom: 16px;
-  elevation: 3;
 `;
 
 export const ImageContainer = styled.View`
   width: 100%;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   border-radius: 8px;
 `;
@@ -37,26 +29,15 @@ export const DateText = styled.Text`
   margin-bottom: 8px;
 `;
 
-export const TitleContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
 export const Title = styled.Text`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #333;
-  flex: 1;
-`;
-
-export const ArrowIcon = styled.Text`
-  font-size: 16px;
-  color: #007AFF;
-  margin-left: 8px;
+  margin-bottom: 12px;
 `;
 
 export const Description = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
+  line-height: 22px;
 `;

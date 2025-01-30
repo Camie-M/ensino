@@ -1,16 +1,18 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
-import styles from './styled';
+import * as S from './styled';
 
-const Search: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
+interface SearchProps {
+  onSearch: (query: string) => void;
+}
+
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
   return (
-    <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.searchInput}
+    <S.SearchContainer>
+      <S.SearchInput
         placeholder="Buscar posts..."
-        onChangeText={(text) => onSearch(text)}
+        onChangeText={(text: string) => onSearch(text)}
       />
-    </View>
+    </S.SearchContainer>
   );
 };
 

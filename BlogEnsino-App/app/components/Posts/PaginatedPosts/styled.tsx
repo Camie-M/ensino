@@ -1,24 +1,23 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  paginatedPostsContainer: {
-    marginTop: 16,
-  },
-  postsGrid: {
-    marginBottom: 16,
-  },
-  paginationControls: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-  emptyMessage: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#666',
-    marginTop: 16,
-  },
-});
+export const PaginatedPostsContainer = styled.View`
+  margin-top: 16px;
+`;
 
-export default styles;
+export const PostsGrid = styled.FlatList`
+  margin-bottom: 16px;
+`;
+
+export const PaginationControls = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-vertical: 16px;
+`;
+
+export const EmptyMessage = styled.Text`
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  margin-top: 16px;
+`;

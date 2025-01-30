@@ -1,12 +1,9 @@
 import React, { useLayoutEffect } from 'react';
-import { Button } from 'react-native';
 import { createPost } from '@/app/Services/Posts/api';
 import FormPost, { FormData } from '@/app/components/FormPost';
 import BaseLayout from '@/app/components/BaseLayout';
-import { useNavigation } from '@react-navigation/native';
-import { NavigationProp } from '@react-navigation/native';
-import RootStackParamList from '@/app/types/navigations';
 import GoBackButton from '@/app/components/goBackButton';
+import * as S from "./styled"
 
 export default function CreatePostForm() {
 
@@ -16,8 +13,10 @@ export default function CreatePostForm() {
 
   return (
     <BaseLayout>
-     <GoBackButton/>
-      <FormPost isEditMode={false} onSubmit={handleSave} />
+      <S.Scroll>
+        <GoBackButton/>
+        <FormPost isEditMode={false} onSubmit={handleSave} />
+      </S.Scroll>
     </BaseLayout>
   );
 }
