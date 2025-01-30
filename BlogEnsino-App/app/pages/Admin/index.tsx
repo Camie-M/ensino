@@ -12,6 +12,7 @@ import BaseLayout from '@/app/components/BaseLayout';
 
 export default function Admin() {
     const [posts, setPosts] = useState<PostDataProp[]>([]);  
+    const [refreshing, setRefreshing] = React.useState(false);
     const fetchPosts = async () => {
       try {
         const data = await getAllPosts();
@@ -22,12 +23,19 @@ export default function Admin() {
         console.error('Error fetching posts:', error);
       }
     };
+    const onRefresh = () => {
+      setRefreshing(true);
+      setTimeout(() => {
+        fetchPosts()
+        setRefreshing(false);
+      }, 2000);
+    };
 
     useEffect(() => {
       fetchPosts();
     },[]);
   return (
-    <BaseLayout onFetchPosts={fetchPosts}>
+    <BaseLayout>
       <S.Container>
         <Button
           text={"Criar novo Post"}
@@ -36,7 +44,10 @@ export default function Admin() {
           width={'80%'}        />
       </S.Container>
       <S.Title>Gestão de Posts</S.Title>
-      <Lista posts={posts} />
+      <Lista posts={posts} 
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }/>
     </BaseLayout>
   );
 }

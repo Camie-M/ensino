@@ -9,7 +9,6 @@ import RootStackParamList from '@/app/types/navigations';
 import GoBackButton from '@/app/components/goBackButton';
 
 export default function CreatePostForm() {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleSave = (formData: FormData) => {
     createPost(formData);

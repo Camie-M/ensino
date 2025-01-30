@@ -46,7 +46,7 @@ export const getPostById = async (id: string): Promise<PostDataProp | null> => {
 
 export const updatePostbyId = async (id: string, formData: PostDataProp): Promise<PostDataProp | null> => {
   try {
-    const token = await getToken();
+    const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
     const response = await fetch(`http://192.168.15.18:3001/posts/${id}`, {
       method: "PUT",
@@ -73,7 +73,7 @@ export const updatePostbyId = async (id: string, formData: PostDataProp): Promis
 };
 export const createPost = async (formData: PostDataProp): Promise<PostDataProp | null> => {
   try {
-    const token = await getToken();
+    const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
 
     const response = await fetch(`http://192.168.15.18:3001/posts`, {
@@ -105,8 +105,7 @@ export const createPost = async (formData: PostDataProp): Promise<PostDataProp |
 
 export const getToken = async () => {
     try {
-        // let token = await AsyncStorage.getItem('token');
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo"
+        const token = await AsyncStorage.getItem('userToken')
         return token;
     } catch (error) {
         console.error('Erro ao tentar recuperar o token', error);

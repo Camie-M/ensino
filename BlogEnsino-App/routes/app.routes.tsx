@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
@@ -43,17 +44,19 @@ function AdminStackNavigator() {
 
 export function AppRoutes() {
   const [isLoged, setIsLoged] = useState(false)
-  useEffect(()=>{
-    // codigo que verificar o localStorage pelo token 
-    console.log();
-    
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo'
-    if(token){
-      setIsLoged(true)
-    }else{
-      setIsLoged(false)
-    }
-  },[])
+  useEffect(() => {
+    const checkToken = async () => {
+        const token = await AsyncStorage.getItem('userToken');
+        if (token) {
+            setIsLoged(true);
+        } else {
+            setIsLoged(false);
+        }
+    };
+    checkToken();
+
+}, []);
+
   return (
     <Tab.Navigator
       initialRouteName={AdminLabel}
@@ -103,7 +106,7 @@ export function AppRoutes() {
           })}
         />
         
-        <Tab.Screen name={isLoged?logOut:logIn} component={Login} />
+        <Tab.Screen name={isLoged?logIn:logOut} component={Login} />
     </Tab.Navigator>
   );
 }
