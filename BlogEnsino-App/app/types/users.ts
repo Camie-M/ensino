@@ -1,5 +1,13 @@
-export interface UserDataProp {
+interface UserDataProp {
     email?: string;
     senha?: string;
 };
-export default UserDataProp;
+
+interface UserInfoProp {
+    id?: number;
+    name: string;
+    type?: string;
+    email: string;
+}; 
+
+export { UserDataProp, UserInfoProp };
