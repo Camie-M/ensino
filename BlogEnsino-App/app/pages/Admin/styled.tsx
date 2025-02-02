@@ -15,4 +15,4 @@ export const Title = styled.Text`
   margin-bottom:30px
 `;
 
-export default {Container,Title}
+export default { Container,Title }

@@ -11,29 +11,30 @@ import { PostDataProp } from '@/app/types/post';
 import BaseLayout from '@/app/components/BaseLayout';
 
 export default function Admin() {
-    const [posts, setPosts] = useState<PostDataProp[]>([]);  
-    const [refreshing, setRefreshing] = React.useState(false);
-    const fetchPosts = async () => {
-      try {
-        const data = await getAllPosts();
-        if (data) {
-          setPosts(data);
-        }
-      } catch (error) {
-        console.error('Error fetching posts:', error);
+  const [posts, setPosts] = useState<PostDataProp[]>([]);  
+  const [refreshing, setRefreshing] = React.useState(false);
+  const fetchPosts = async () => {
+    try {
+      const data = await getAllPosts();
+      if (data) {
+        setPosts(data);
       }
-    };
-    const onRefresh = () => {
-      setRefreshing(true);
-      setTimeout(() => {
-        fetchPosts()
-        setRefreshing(false);
-      }, 2000);
-    };
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      fetchPosts()
+      setRefreshing(false);
+    }, 2000);
+  };
 
-    useEffect(() => {
-      fetchPosts();
-    },[]);
+  useEffect(() => {
+    fetchPosts();
+  },[]);
+
   return (
     <BaseLayout>
       <S.Container>

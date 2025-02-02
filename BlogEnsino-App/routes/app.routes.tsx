@@ -6,6 +6,9 @@ import Admin from '@/app/pages/Admin';
 import Gestao from '@/app/pages/Gestao';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
+import CreateUser from '@/app/pages/Gestao/CreateUser';
+import UpdateUser from '@/app/pages/Gestao/UpdateUser';
+import DeleteUser from '@/app/pages/Gestao/DeleteUser';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
 import PostDetails from '@/app/pages/PostDetails';
@@ -13,6 +16,7 @@ import PostDetails from '@/app/pages/PostDetails';
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
+const GestaoStack = createStackNavigator();
 const HomeLabel = "Home";
 const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
@@ -28,12 +32,24 @@ function AdminStackNavigator() {
     </AdminStack.Navigator>
   );
 }
+
 function HomeStackNavigator() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="HomeScreen" component={Home} />
       <HomeStack.Screen name="PostDetails" component={PostDetails} />
     </HomeStack.Navigator>
+  );
+}
+
+function GestaoStackNavigator() {
+  return (
+    <GestaoStack.Navigator screenOptions={{ headerShown: false }}>
+      <GestaoStack.Screen name="GestaoHome" component={Gestao} />
+      <GestaoStack.Screen name="CreateUser" component={CreateUser} />
+      <GestaoStack.Screen name="UpdateUser" component={UpdateUser} />
+      <GestaoStack.Screen name="DeleteUser" component={DeleteUser} />
+    </GestaoStack.Navigator>
   );
 }
 
@@ -88,7 +104,7 @@ export function AppRoutes() {
       })}
     >
       <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
-      <Tab.Screen name={GestaoLabel} component={Gestao} />
+      <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
       <Tab.Screen
           name={AdminLabel}
           component={AdminStackNavigator}

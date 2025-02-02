@@ -1,8 +1,58 @@
-import { StyleSheet } from "react-native"
-const styles = StyleSheet.create({
-    homeContainer:{
-      flex:1
-    } 
-  })
+import styled from 'styled-components/native';
 
-  export default styles;
+export const Container = styled.View`
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const Title = styled.Text`
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 30px
+`;
+
+export const UserContainer = styled.SafeAreaView`
+  height: auto;
+  width: 320px;
+  background-color: #ffffff;
+  align-items: left;
+  justify-content: center;
+  padding: 10px;
+  gap: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+`;
+
+export const TxtContainer = styled.View`
+  gap:10px;
+`;
+
+export const NameContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+`
+
+export const NameText = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+`
+
+export const EmailText = styled.Text`
+  font-size: 12px;
+  font-style: italic;
+  color: #a1a1a1;
+`
+
+export const BtnContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+`;
+
+
+export default { Container, Title, UserContainer, TxtContainer, BtnContainer }

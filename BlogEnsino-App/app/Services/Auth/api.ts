@@ -1,4 +1,4 @@
-import UserDataProp from "@/app/types/users";
+import { UserDataProp } from "@/app/types/users";
 
 export const TokenGenerator = async (data: UserDataProp): Promise<string | null> => {
     try {

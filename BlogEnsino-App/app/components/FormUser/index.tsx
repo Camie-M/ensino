@@ -37,39 +37,39 @@ export default function FormUser({ email, senha, onSubmit }: UserFormData) {
 
   return (
     <BaseLayout>
-        <S.PageContainer>
-            <S.Title>Login</S.Title>
-            <S.Container>
-                <S.Input
-                    placeholder="E-mail"
-                    value={formData.email}
-                    editable
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    onChangeText={(text: string) => onChangeForm('email', text)}
-                />
-            </S.Container>
+      <S.PageContainer>
+        <S.Title>Login</S.Title>
+        <S.Container>
+          <S.Input
+              placeholder="E-mail"
+              value={formData.email}
+              editable
+              keyboardType="email-address"
+              autoCapitalize="none"
+              onChangeText={(text: string) => onChangeForm('email', text)}
+          />
+        </S.Container>
 
-            <S.Container>
-                <S.Input
-                    placeholder="Senha"
-                    value={formData.senha}
-                    editable
-                    secureTextEntry={!showPassword}
-                    onChangeText={(text: string) => onChangeForm('senha', text)}
-                />
-                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                {showPassword ? 
-                <Ionicons name={"eye-off-outline"} size={24} color={"#000"} /> : 
-                <Ionicons name={"eye-outline"} size={24} color={"#000"} />
-                }
-            </TouchableOpacity>
-            </S.Container>
+        <S.Container>
+          <S.Input
+              placeholder="Senha"
+              value={formData.senha}
+              editable
+              secureTextEntry={!showPassword}
+              onChangeText={(text: string) => onChangeForm('senha', text)}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          {showPassword ? 
+            <Ionicons name={"eye-off-outline"} size={24} color={"#000"} /> : 
+            <Ionicons name={"eye-outline"} size={24} color={"#000"} />
+          }
+        </TouchableOpacity>
+        </S.Container>
 
-            <S.SubmitButton onPress={handleSubmit}>
-              <S.SubmitButtonText>Login</S.SubmitButtonText>
-            </S.SubmitButton>
-        </S.PageContainer>
+        <S.SubmitButton onPress={handleSubmit}>
+          <S.SubmitButtonText>Login</S.SubmitButtonText>
+        </S.SubmitButton>
+      </S.PageContainer>
     </BaseLayout>
   );
 }
