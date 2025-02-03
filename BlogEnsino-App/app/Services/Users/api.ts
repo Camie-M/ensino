@@ -83,7 +83,7 @@ export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
         console.error('Erro ao buscar users:', error);
         return null;
     }
-  };
+};
 
 export const createUser = async (formData: UserInfoProp): Promise<UserInfoProp | null> => {
 try {
@@ -190,4 +190,6 @@ export const deleteUser = async (id: string): Promise<UserInfoProp | null> => {
       }
       return null;
     }
-  };
+};
+
+export default {formatFormData,errorHandler,LoginUser,getAllUsers,createUser,getUserById,updateUserbyId,deleteUser}

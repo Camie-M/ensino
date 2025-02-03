@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const PaginatedPostsContainer = styled.View`
   margin-top: 16px;
+  margin-bottom:100px;
 `;
 
 export const PostsGrid = styled.FlatList`
@@ -21,3 +22,6 @@ export const EmptyMessage = styled.Text`
   color: #666;
   margin-top: 16px;
 `;
+
+
+export default {PaginatedPostsContainer,PostsGrid,PaginationControls,EmptyMessage}

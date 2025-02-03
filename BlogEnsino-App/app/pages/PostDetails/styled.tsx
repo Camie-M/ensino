@@ -41,3 +41,5 @@ export const Description = styled.Text`
   color: #666;
   line-height: 22px;
 `;
+
+export default {Container,ImageContainer,PostImage,TextContainer,DateText,Title,Description}

@@ -46,7 +46,7 @@ export default function Lista({ posts, refreshControl  }: ListaProps) {
       contentContainerStyle={{
         justifyContent: "center",
         alignItems: "center",
-        paddingBottom: 200,
+        paddingBottom: 50,
       }}
       showsVerticalScrollIndicator={true}
       numColumns={1}

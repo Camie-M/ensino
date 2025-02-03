@@ -7,7 +7,7 @@ import * as S from "./styled"
 import Lista from '@/app/components/Lista';
 import Button from '@/app/components/Button';
 import { getAllPosts } from '@/app/Services/Posts/api';
-import { PostDataProp } from '@/app/types/post';
+import PostDataProp from '@/app/types/post';
 import BaseLayout from '@/app/components/BaseLayout';
 
 export default function Admin() {

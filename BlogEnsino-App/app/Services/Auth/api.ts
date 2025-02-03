@@ -24,3 +24,5 @@ export const TokenGenerator = async (data: UserDataProp): Promise<string | null>
       return null; 
     }
   };
+
+export default {TokenGenerator}

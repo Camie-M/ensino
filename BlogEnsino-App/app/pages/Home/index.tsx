@@ -27,13 +27,11 @@ const Home: React.FC = () => {
 
   return (
     <BaseLayout>
-      <S.Container>
-        <S.HeaderSection>
-          <S.Title>Posts publicados recentemente</S.Title>
-          <Search onSearch={(query) => setSearchTerm(query)} />
-        </S.HeaderSection>
-        <PaginatedPosts posts={posts} searchTerm={searchTerm} /> 
-      </S.Container>
+      <S.HeaderSection>
+        <S.Title>Posts publicados recentemente</S.Title>
+        <Search onSearch={(query) => setSearchTerm(query)} />
+      </S.HeaderSection>
+      <PaginatedPosts posts={posts} searchTerm={searchTerm} /> 
     </BaseLayout>
   );
 };

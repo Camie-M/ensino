@@ -12,5 +12,5 @@ export interface RootStackParamList {
     [key: string]: undefined | { postId: string } | { userId: string };
   }
   
-  export default RootStackParamList;
+export default RootStackParamList;
   

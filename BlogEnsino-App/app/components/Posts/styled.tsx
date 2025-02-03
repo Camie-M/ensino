@@ -60,3 +60,5 @@ export const Description = styled.Text`
   font-size: 14px;
   color: #666;
 `;
+
+export default {ContainerAnchor,ImageContainer,PostImage,TextContainer,DateText,TitleContainer,Title,ArrowIcon,Description}

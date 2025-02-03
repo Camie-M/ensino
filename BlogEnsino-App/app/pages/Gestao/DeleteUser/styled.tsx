@@ -7,3 +7,5 @@ export const Scroll = styled.ScrollView.attrs({
 })`
   padding: 16px;
 `;
+
+export default {Scroll}

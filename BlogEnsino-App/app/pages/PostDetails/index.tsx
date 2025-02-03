@@ -6,7 +6,6 @@ import * as S from './styled';
 import RootStackParamList from '@/app/types/navigations';
 import { PostData } from '@/app/pages/Home/mockPosts';
 import mockPosts from '@/app/pages/Home/mockPosts';
-import GoBackButton from '@/app/components/goBackButton';
 import BaseLayout from '@/app/components/BaseLayout';
 
 type PostDetailsRouteProp = RouteProp<RootStackParamList, 'PostDetails'>;

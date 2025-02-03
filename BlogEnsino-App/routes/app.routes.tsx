@@ -25,7 +25,7 @@ const logOut = "logOut";
 
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+    <AdminStack.Navigator screenOptions={{ headerShown: true }}>
       <AdminStack.Screen name="AdminHome" component={Admin} />
       <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
       <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
@@ -35,8 +35,8 @@ function AdminStackNavigator() {
 
 function HomeStackNavigator() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="HomeScreen" component={Home} />
+    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
+      <HomeStack.Screen name="Post Recentes" component={Home} />
       <HomeStack.Screen name="PostDetails" component={PostDetails} />
     </HomeStack.Navigator>
   );
@@ -44,7 +44,7 @@ function HomeStackNavigator() {
 
 function GestaoStackNavigator() {
   return (
-    <GestaoStack.Navigator screenOptions={{ headerShown: false }}>
+    <GestaoStack.Navigator screenOptions={{ headerShown: true }}>
       <GestaoStack.Screen name="GestaoHome" component={Gestao} />
       <GestaoStack.Screen name="CreateUser" component={CreateUser} />
       <GestaoStack.Screen name="UpdateUser" component={UpdateUser} />

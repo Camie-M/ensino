@@ -12,7 +12,7 @@ export const Title = styled.Text`
   text-align: center;
   font-weight: bold;
   font-size:30px;
-  margin-bottom:30px
+  margin-bottom:30px;
 `;
 
 export default { Container,Title }

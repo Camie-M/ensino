@@ -13,3 +13,5 @@ export const SearchInput = styled.TextInput`
   background-color: #fff;
   color: #333;
 `;
+
+export default {SearchContainer,SearchInput}

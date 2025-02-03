@@ -19,3 +19,5 @@ export const Title = styled.Text`
   color: #333;
   width: 60%;
 `;
+
+export default {Container,HeaderSection,Title}
