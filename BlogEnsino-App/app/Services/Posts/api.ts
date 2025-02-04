@@ -1,11 +1,13 @@
 import PostDataProp from "@/app/types/post";
-import { LOCALHOST } from "@env";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from "expo-constants";
 
+const localHost = Constants.expoConfig?.extra?.LOCALHOST;
 
 export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
     try {
-        const postResponse = await fetch(`${LOCALHOST}:3001/posts`, {
+  
+        const postResponse = await fetch(`${localHost}:3001/posts`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -25,7 +27,7 @@ export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
 
 export const getPostById = async (id: string): Promise<PostDataProp | null> => {
     try {
-        const postResponse = await fetch(`${LOCALHOST}:3001/posts/${id}`, {
+        const postResponse = await fetch(`${localHost}:3001/posts/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -49,7 +51,7 @@ export const updatePostbyId = async (id: string, formData: PostDataProp): Promis
   try {
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
-    const response = await fetch(`${LOCALHOST}:3001/posts/${id}`, {
+    const response = await fetch(`${localHost}:3001/posts/${id}`, {
       method: "PUT",
       headers: {
         'Authorization': `${token}`,
@@ -77,7 +79,7 @@ export const createPost = async (formData: PostDataProp): Promise<PostDataProp |
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
 
-    const response = await fetch(`${LOCALHOST}:3001/posts`, {
+    const response = await fetch(`${localHost}:3001/posts`, {
       method: "POST",
       headers: {
         'Authorization': `${token}`,

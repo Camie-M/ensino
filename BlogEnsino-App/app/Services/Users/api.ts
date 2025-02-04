@@ -1,7 +1,9 @@
 import  { UserDataProp, UserInfoProp }  from '@/app/types/users';
 import { TokenGenerator } from '../Auth/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LOCALHOST } from '@env';
+import Constants from "expo-constants";
+
+const localHost = Constants.expoConfig?.extra?.LOCALHOST;
 
 export const formatFormData = async (formData: UserInfoProp) => {
     try {
@@ -47,7 +49,7 @@ export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataPro
             return null;
         }
         await AsyncStorage.setItem('userToken', token);
-        const userResponse = await fetch(`${LOCALHOST}:3001/users/self`, {
+        const userResponse = await fetch(`${localHost}:3001/users/self`, {
         method: "GET",
         headers: {
             'Authorization': token,
@@ -68,7 +70,7 @@ export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataPro
 
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
-        const usersResponse = await fetch(`${LOCALHOST}:3001/users`, {
+        const usersResponse = await fetch(`${localHost}:3001/users`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -91,7 +93,7 @@ try {
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
 
-    const response = await fetch(`${LOCALHOST}:3001/users`, {
+    const response = await fetch(`${localHost}:3001/users`, {
     method: "POST",
     headers: {
         'Authorization': `${token}`,
@@ -118,7 +120,7 @@ try {
 
 export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
     try {
-        const userResponse = await fetch(`${LOCALHOST}:3001/users/${id}`, {
+        const userResponse = await fetch(`${localHost}:3001/users/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -142,7 +144,7 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
   try {
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
-    const response = await fetch(`${LOCALHOST}:3001/users/${id}`, {
+    const response = await fetch(`${localHost}:3001/users/${id}`, {
       method: "PUT",
       headers: {
         'Authorization': `${token}`,
@@ -169,7 +171,7 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
 export const deleteUser = async (id: string): Promise<UserInfoProp | null> => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await fetch(`${LOCALHOST}:3001/users/${id}`, {
+      const response = await fetch(`${localHost}:3001/users/${id}`, {
         method: "DELETE",
         headers: {
           'Authorization': `${token}`,

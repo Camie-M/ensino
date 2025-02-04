@@ -26,7 +26,7 @@ const logOut = "logOut";
 function AdminStackNavigator() {
   return (
     <AdminStack.Navigator screenOptions={{ headerShown: true }}>
-      <AdminStack.Screen name="AdminHome" component={Admin} />
+      <AdminStack.Screen name="Gestão de Posts" component={Admin} />
       <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
       <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
     </AdminStack.Navigator>
@@ -116,7 +116,7 @@ export function AppRoutes() {
           })}
         />
         
-        <Tab.Screen name={isLoged?logOut:logIn} component={Login} />
+        <Tab.Screen name={isLoged?logIn:logOut} component={Login} />
     </Tab.Navigator>
   );
 }
