@@ -1,9 +1,10 @@
 import { UserDataProp } from "@/app/types/users";
+import {LOCALHOST} from "@env"
 
 export const TokenGenerator = async (data: UserDataProp): Promise<string | null> => {
     try {
       const usernamePassword = `${btoa(`${data.email}:${data.senha}`)}`;
-      const response = await fetch(`http://192.168.15.18:3001/auth/token`, {
+      const response = await fetch(`${LOCALHOST}:3001/auth/token`, {
         method: 'POST',
         headers: {
           'Authorization': usernamePassword,

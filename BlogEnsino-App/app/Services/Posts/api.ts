@@ -1,10 +1,11 @@
 import PostDataProp from "@/app/types/post";
+import { LOCALHOST } from "@env";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
     try {
-        const postResponse = await fetch('http://192.168.15.18:3001/posts', {
+        const postResponse = await fetch(`${LOCALHOST}:3001/posts`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -24,7 +25,7 @@ export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
 
 export const getPostById = async (id: string): Promise<PostDataProp | null> => {
     try {
-        const postResponse = await fetch(`http://192.168.15.18:3001/posts/${id}`, {
+        const postResponse = await fetch(`${LOCALHOST}:3001/posts/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         });
@@ -48,7 +49,7 @@ export const updatePostbyId = async (id: string, formData: PostDataProp): Promis
   try {
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
-    const response = await fetch(`http://192.168.15.18:3001/posts/${id}`, {
+    const response = await fetch(`${LOCALHOST}:3001/posts/${id}`, {
       method: "PUT",
       headers: {
         'Authorization': `${token}`,
@@ -76,7 +77,7 @@ export const createPost = async (formData: PostDataProp): Promise<PostDataProp |
     const token = await AsyncStorage.getItem('userToken');
     const formatedFormData = await formatFormData(formData)
 
-    const response = await fetch(`http://192.168.15.18:3001/posts`, {
+    const response = await fetch(`${LOCALHOST}:3001/posts`, {
       method: "POST",
       headers: {
         'Authorization': `${token}`,
@@ -116,9 +117,9 @@ export const formatFormData = async (formData: PostDataProp) => {
       const form = new FormData();
       form.append('title', formData.title);
       form.append('text', formData.text);
-      if (formData.image_url) {
+      if (formData.image) {
         form.append('image', {
-          uri: formData.image_url,
+          uri: formData.image,
           name: 'image.jpg',
           type: 'image/jpeg',
         } as any);
