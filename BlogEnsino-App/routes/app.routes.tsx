@@ -26,9 +26,13 @@ const logOut = "logOut";
 function AdminStackNavigator() {
   return (
     <AdminStack.Navigator>
-      <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false }}/>
-      <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true }} />
-      <AdminStack.Screen name="UpdatePost" component={UpdatePost} options={{ headerShown: true }} />
+      <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false, title: "Voltar" }} />
+      <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true, title: "Voltar" }}  />
+      <AdminStack.Screen 
+        name="UpdatePost" 
+        component={UpdatePost} 
+        options={{ headerShown: true, title: "Voltar" }} 
+      />
     </AdminStack.Navigator>
   );
 }
@@ -36,9 +40,9 @@ function AdminStackNavigator() {
 
 function HomeStackNavigator() {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: true }}>
-      <HomeStack.Screen name="Post Recentes" component={Home} />
-      <HomeStack.Screen name="PostDetails" component={PostDetails} />
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Post Recentes" component={Home}  options={{ headerShown: false }} />
+      <HomeStack.Screen name="PostDetails" component={PostDetails}  options={{ headerShown: true, title: "Voltar" }}  />
     </HomeStack.Navigator>
   );
 }

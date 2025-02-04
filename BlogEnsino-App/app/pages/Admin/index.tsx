@@ -13,6 +13,7 @@ import BaseLayout from '@/app/components/BaseLayout';
 export default function Admin() {
   const [posts, setPosts] = useState<PostDataProp[]>([]);  
   const [refreshing, setRefreshing] = React.useState(false);
+
   const fetchPosts = async () => {
     try {
       const data = await getAllPosts();
@@ -23,6 +24,7 @@ export default function Admin() {
       console.error('Error fetching posts:', error);
     }
   };
+  
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
