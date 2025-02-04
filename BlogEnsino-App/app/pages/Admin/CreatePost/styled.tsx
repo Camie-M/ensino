@@ -5,7 +5,6 @@ export const Scroll = styled.ScrollView.attrs({
     paddingBottom: 50, // Ajuste para evitar sobreposição do botão
   },
 })`
-  padding: 16px;
 `;
 
 export default {Scroll}

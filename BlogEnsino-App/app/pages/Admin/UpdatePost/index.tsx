@@ -39,7 +39,7 @@ export default function UpdatePost() {
   return (
     <BaseLayout>
       <S.Scroll>
-        <GoBackButton />
+        {/* <GoBackButton /> */}
         {postData ? (
           <FormPost
             isEditMode={true}

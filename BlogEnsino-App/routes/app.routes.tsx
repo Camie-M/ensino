@@ -25,13 +25,14 @@ const logOut = "logOut";
 
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator screenOptions={{ headerShown: true }}>
-      <AdminStack.Screen name="Gestão de Posts" component={Admin} />
-      <AdminStack.Screen name="CreatePost" component={CreatePostForm} />
-      <AdminStack.Screen name="UpdatePost" component={UpdatePost} />
+    <AdminStack.Navigator>
+      <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false }}/>
+      <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true }} />
+      <AdminStack.Screen name="UpdatePost" component={UpdatePost} options={{ headerShown: true }} />
     </AdminStack.Navigator>
   );
 }
+
 
 function HomeStackNavigator() {
   return (

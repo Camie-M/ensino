@@ -3,7 +3,7 @@ import * as S from "./styled";
 import Button from '../Button';
 import { FlatList, RefreshControlProps } from 'react-native';
 import { getAllPosts } from '@/app/Services/Posts/api';
-import { PostDataProp } from '@/app/types/post';
+import PostDataProp from '@/app/types/post';
 
 interface ListaProps {
   posts: PostDataProp[];

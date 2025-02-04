@@ -14,7 +14,7 @@ export default function CreatePostForm() {
   return (
     <BaseLayout>
       <S.Scroll>
-        <GoBackButton/>
+        {/* <GoBackButton/> */}
         <FormPost isEditMode={false} onSubmit={handleSave} />
       </S.Scroll>
     </BaseLayout>
