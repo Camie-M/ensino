@@ -68,6 +68,32 @@ export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataPro
     }
 };
 
+export const getOwnUserData = async (): Promise<UserDataProp | null> => {
+  try {
+
+      const token = await AsyncStorage.getItem('userToken');
+      if (!token) {
+        console.error("Token não encontrado.");
+        return null;
+      }
+      const userResponse = await fetch(`${localHost}:3001/users/self`, {
+      method: "GET",
+      headers: {
+          'Authorization': token,
+        },
+      });
+      if (!userResponse.ok) {
+          console.error('Erro ao buscar Usuario:', userResponse.status, userResponse.statusText);
+          return null;
+      }
+      const userData: UserDataProp = await userResponse.json();      
+      return userData;
+  } catch (error) {
+      console.error('Erro ao buscar Usuario:', error);
+      return null;
+  }
+};
+
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
         const usersResponse = await fetch(`${localHost}:3001/users`, {

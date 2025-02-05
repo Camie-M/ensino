@@ -3,6 +3,12 @@ interface UserDataProp {
     senha?: string;
 };
 
+interface UserLogOut {
+    username?: string;
+    role?: string;
+    createdAt?:string;
+};
+
 interface UserInfoProp {
     id?: number;
     name: string;
@@ -10,4 +16,4 @@ interface UserInfoProp {
     email: string;
 }; 
 
-export { UserDataProp, UserInfoProp };
+export { UserDataProp, UserInfoProp,UserLogOut };

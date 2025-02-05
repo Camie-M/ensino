@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '@/app/pages/Home';
@@ -12,16 +12,19 @@ import DeleteUser from '@/app/pages/Gestao/DeleteUser';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
 import PostDetails from '@/app/pages/PostDetails';
-
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import LogOut from '@/app/pages/Logout';
+import { AuthProvider, useAuth } from '@/app/context/AuthContext';
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const GestaoStack = createStackNavigator();
+const LoginStack = createStackNavigator();
 const HomeLabel = "Home";
 const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
-const logIn = "logIn";
-const logOut = "logOut";
+const UserLabel = "Conta"
 
 function AdminStackNavigator() {
   return (
@@ -36,7 +39,6 @@ function AdminStackNavigator() {
     </AdminStack.Navigator>
   );
 }
-
 
 function HomeStackNavigator() {
   return (
@@ -58,70 +60,52 @@ function GestaoStackNavigator() {
   );
 }
 
+export default function LoginStackNavigator() {
+  const { isAuthenticated } = useAuth();  
+  return (
+    <LoginStack.Navigator>
+      {isAuthenticated ? (
+        <LoginStack.Screen name="LogOutPage" component={LogOut} options={{ headerShown: false }} />
+      ) : (
+        <LoginStack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
+      )}
+    </LoginStack.Navigator>
+  );
+}
+
+
+
 
 export function AppRoutes() {
-  const [isLoged, setIsLoged] = useState(false)
-  useEffect(()=>{
-    // codigo que verificar o localStorage pelo token 
-    console.log();
-    
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjc3MGRhLTI1ZDItNGNiMS04MjhkLTZjYjI3YjgwNDNkYiIsInVzZXJuYW1lIjoiQnJlbm8iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mzc2NzgzMTgsImV4cCI6MTczNzc2NDcxOH0.gmbVpsqbbQzQ2cLWOq2I9jHtIUiZyRIw_xU9p4bFRWo'
-    if(token){
-      setIsLoged(true)
-    }else{
-      setIsLoged(false)
-    }
-  },[])
+ 
   return (
-    <Tab.Navigator
-      initialRouteName={AdminLabel}
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          switch (route.name) {
-            case HomeLabel:
-              iconName = focused ? 'home' : 'home-outline';
-              break;
-            case AdminLabel:
-              iconName = focused ? 'settings' : 'settings-outline';
-              break;
-            case GestaoLabel:
-              iconName = focused ? 'bar-chart' : 'bar-chart-outline';
-              break;
-            case logIn:
-              iconName = focused ? 'log-in' : 'log-in-outline';
-              break;
-            case logOut:
-              iconName = focused ? 'log-out' : 'log-out-outline';
-              break;
-            default:
-              iconName = 'help-circle';
-              break;
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
-        tabBarLabel: route.name,
-      })}
-    >
-      <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
-      <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
-      <Tab.Screen
-          name={AdminLabel}
-          component={AdminStackNavigator}
-          listeners={({ navigation }) => ({
-            tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('Admin', { screen: 'AdminHome' });
-            },
-          })}
-        />
-        
-        <Tab.Screen name={isLoged?logIn:logOut} component={Login} />
-    </Tab.Navigator>
+    <AuthProvider>
+      <Tab.Navigator
+        initialRouteName={AdminLabel}
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            switch (route.name) {
+              case HomeLabel: iconName = focused ? 'home' : 'home-outline'; break;
+              case AdminLabel: iconName = focused ? 'settings' : 'settings-outline'; break;
+              case GestaoLabel: iconName = focused ? 'bar-chart' : 'bar-chart-outline'; break;
+              case UserLabel: iconName = focused ? 'person-circle' : 'person-circle-outline'; break;
+              default: iconName = 'help-circle'; break;
+            }
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+          tabBarLabel: route.name,
+        })}
+      >
+        <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
+        <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
+        <Tab.Screen name={AdminLabel} component={AdminStackNavigator} />
+        <Tab.Screen name={UserLabel} component={LoginStackNavigator} />
+      
+      </Tab.Navigator>
+    </AuthProvider>
   );
 }
