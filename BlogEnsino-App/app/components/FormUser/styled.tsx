@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 export const PageContainer = styled.View`
+    flex:1;
     justify-content: center;
 `
 
@@ -23,7 +24,7 @@ export const SubmitButtonText = styled.Text`
   font-weight: bold;
 `;
 export const Container = styled.View`
-flex-direction: row;
+  flex-direction: row;
   align-items: center;
   border-width: 1px;
   border-color: #ccc;

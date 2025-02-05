@@ -6,6 +6,9 @@ import { LoginUser } from '@/app/Services/Users/api';
 import RootStackParamList from '@/app/types/navigations';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import * as S from "./styled";
+
+
 
 export default function Login() { 
    const navigation = useNavigation<NavigationProp<RootStackParamList>>(); 
@@ -19,7 +22,9 @@ export default function Login() {
 };
   return (
     <BaseLayout>
-      <FormUser onSubmit={handleSave} />
+      <S.Container>
+        <FormUser onSubmit={handleSave} />
+      </S.Container>
     </BaseLayout>
   );
 }
