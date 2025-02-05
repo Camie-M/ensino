@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { RefreshControl, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import FormPost, { FormData } from '@/app/components/FormPost';
 import { RouteProp } from '@react-navigation/native';
@@ -16,29 +16,40 @@ export default function UpdatePost() {
   const route = useRoute<UpdatePostRouteProp>();
   const { postId } = route.params as { postId: string };
   const [postData, setPostData] = useState<PostDataProp>();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const fetchPosts = async () => {
+    try {
+      const data = await getPostById(postId);
+      if (data) {
+        setPostData(data);
+      }
+    } catch (error) {
+      console.error('Error fetching post:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await getPostById(postId);
-        if (data) {
-          setPostData(data);
-        }
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      }
-    };
-
     fetchPosts();
   }, [postId]);
 
   const handleSave = (formData: FormData) => {
     updatePostbyId(postId, formData);
   };
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      fetchPosts()
+      setRefreshing(false);
+    }, 2000);
+  };
 
   return (
-    <BaseLayout>
-      <S.Scroll>
+    <BaseLayout >
+      <S.Scroll
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {/* <GoBackButton /> */}
         {postData ? (
           <FormPost

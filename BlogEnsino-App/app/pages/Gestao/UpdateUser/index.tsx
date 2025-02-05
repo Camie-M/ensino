@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Text } from 'react-native';
+import { RefreshControl, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 
@@ -20,19 +20,20 @@ export default function UpdateUser() {
   const route = useRoute<UpdateUserRouteProp>();
   const { userId } = route.params as { userId: string };
   const [userData, setUserData] = useState<UserInfoProp>();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const fetchUser = async () => {
+    try {
+      const data = await getUserById(userId);
+      if (data) {
+        setUserData(data);
+      }
+    } catch (error) {
+      console.error('Error fetching post:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const data = await getUserById(userId);
-        if (data) {
-          setUserData(data);
-        }
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      }
-    };
-
     fetchUser();
   }, [userId]);
 
@@ -40,9 +41,21 @@ export default function UpdateUser() {
     updateUserbyId(userId, formData);
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      fetchUser()
+      setRefreshing(false);
+    }, 2000);
+  };
+
   return (
     <BaseLayout>
-      <S.Scroll>
+      <S.Scroll
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <GoBackButton />
         {userData ? (
           <FormUserData
