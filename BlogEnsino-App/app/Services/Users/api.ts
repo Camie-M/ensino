@@ -96,9 +96,12 @@ export const getOwnUserData = async (): Promise<UserDataProp | null> => {
 
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
+        const token = await AsyncStorage.getItem('userToken');
         const usersResponse = await fetch(`${localHost}:3001/users`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              'Authorization': `${token}`,
+            },
         });
   
         if (!usersResponse.ok) {

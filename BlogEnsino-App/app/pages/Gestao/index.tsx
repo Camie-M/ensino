@@ -44,15 +44,14 @@ export default function Gestao({ route }: any) {
   const [selectedType, setSelectedType] = useState<string>('all'); // New state for filter
 
   const fetchUsers = async () => {
-    console.log('fetchUsers')
-    /* try {
-      const data = await getAllUsers();
+    try {
+      const data = await getAllUsers();      
       if (data) {
         setUsers(data);
       }
     } catch (error) {
       console.error('Error fetching posts:', error);
-    } */
+    }
   };
 
   const onRefresh = () => {

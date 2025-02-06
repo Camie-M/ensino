@@ -16,6 +16,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import LogOut from '@/app/pages/Logout';
 import { AuthProvider, useAuth } from '@/app/context/AuthContext';
+import { PostProvider } from '@/app/context/PostContext';
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -79,7 +80,9 @@ export default function LoginStackNavigator() {
 export function AppRoutes() {
  
   return (
+   
     <AuthProvider>
+       <PostProvider>
       <Tab.Navigator
         initialRouteName={AdminLabel}
         screenOptions={({ route }) => ({
@@ -106,6 +109,8 @@ export function AppRoutes() {
         <Tab.Screen name={UserLabel} component={LoginStackNavigator} />
       
       </Tab.Navigator>
+      </PostProvider>
     </AuthProvider>
+    
   );
 }
