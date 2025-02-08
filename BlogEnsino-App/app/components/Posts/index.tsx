@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as S from './styled';
 import RootStackParamList from '@/app/types/navigations';
 import PostDataProp from '@/app/types/post';
+import { usePostId } from '@/app/context/PostContext';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -20,12 +21,12 @@ type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>
 
 const Post: React.FC<PostDataProp> = ({ id, title, text, image}) => {
   const navigation = useNavigation<PostNavigationProp>();
-
+  const { setPostId } = usePostId();
   const handleNavigation = () => {   
     if (!id) {
       return;
-    }
-
+    }    
+    setPostId(id)
     navigation.navigate('PostDetails', { postId: id });
   };
 

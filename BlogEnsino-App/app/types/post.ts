@@ -4,6 +4,7 @@ interface PostDataProp {
   author: string;
   text: string;
   image: string;
+  createdAt:string;
 }
 
 export default PostDataProp;

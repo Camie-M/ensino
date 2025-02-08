@@ -1,64 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Button, ActivityIndicator } from 'react-native';
-import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import * as S from './styled';
-import RootStackParamList from '@/app/types/navigations';
-import { PostData } from '@/app/pages/Home/mockPosts';
-import mockPosts from '@/app/pages/Home/mockPosts';
-import BaseLayout from '@/app/components/BaseLayout';
+import { Text, ActivityIndicator, RefreshControl } from 'react-native';
 
-type PostDetailsRouteProp = RouteProp<RootStackParamList, 'PostDetails'>;
-type PostDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>;
+import * as S from './styled';
+
+import BaseLayout from '@/app/components/BaseLayout';
+import { usePostId } from '@/app/context/PostContext';
+import { getPostById } from '@/app/Services/Posts/api';
+import PostDataProp from '@/app/types/post';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function PostDetails() {
-  const route = useRoute<PostDetailsRouteProp>();
-  const navigation = useNavigation<PostDetailsNavigationProp>();
-  const { postId } = route.params;
-
-  const [postData, setPostData] = useState<PostData | null>(null);
+  const { postId } = usePostId();
+  const [postData, setPostData] = useState<PostDataProp | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const insets = useSafeAreaInsets();
+
+  const fetchPosts = async () => {
+    try {
+      if(postId){
+        const data = await getPostById(postId);
+        console.log(data);
+        setLoading(false)
+        setPostData(data);
+      } 
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+  
+  const onRefresh = () => {
+    if(postId){
+      setRefreshing(true);
+      setTimeout(() => {
+        getPostById(postId);
+        setRefreshing(false);
+      }, 1000);
+    }
+   
+  };
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const post = mockPosts.find((p) => p.id === postId);
-
-    if (post) {
-      setPostData(post);
-    } else {
-      setError('Post não encontrado.');
-    }
-
-    setLoading(false);
-  }, [postId]);
+    fetchPosts();
+  },[]);
 
   return (
     <BaseLayout>
-    <S.Container>
+   
     {loading ? (
         <ActivityIndicator size="large" color="#007AFF" />
       ) : error ? (
         <Text>{error}</Text>
       ) : postData ? (
-        <>
+        <S.Container 
+          contentContainerStyle={{ paddingBottom: insets.bottom + 30 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          } 
+          >
           <S.ImageContainer>
-            <S.PostImage source={{ uri: postData.image_url }} />
+            <S.PostImage source={{ uri: postData.image }} />
           </S.ImageContainer>
 
           <S.TextContainer>
-            <S.DateText>{new Date(postData.created_at).toLocaleDateString('pt-BR')}</S.DateText>
+          <S.DateText>
+            {new Date(postData.createdAt).toLocaleDateString('pt-BR', {
+              timeZone: 'America/Sao_Paulo',
+            })}
+            <S.Author> - {postData.author}</S.Author>
+          </S.DateText>
             <S.Title>{postData.title}</S.Title>
             <S.Description>{postData.text}</S.Description>
           </S.TextContainer>
-        </>
+          </S.Container>
       ) : (
         <Text>Post não encontrado.</Text>
       )}
-    </S.Container>
-     
     </BaseLayout>
   );
 }

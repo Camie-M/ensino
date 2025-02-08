@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView`
   flex: 1;
+  
   padding: 16px;
 `;
 
@@ -40,6 +41,12 @@ export const Description = styled.Text`
   font-size: 16px;
   color: #666;
   line-height: 22px;
+`;
+
+export const Author = styled.Text`
+  font-size: 12px;
+  color: #a00cfca3;
+  margin-bottom: 8px;
 `;
 
 export default {Container,ImageContainer,PostImage,TextContainer,DateText,Title,Description}

@@ -27,23 +27,31 @@ export const getAllPosts = async (): Promise<PostDataProp[] | null> => {
 
 export const getPostById = async (id: string): Promise<PostDataProp | null> => {
     try {
+        const token = await AsyncStorage.getItem('userToken');
         const postResponse = await fetch(`${localHost}:3001/posts/${id}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              'Authorization': `${token}`,
+            },
         });
-  
+        errorHandler(postResponse)
         if (!postResponse.ok) {
             console.error('Erro ao buscar post:', postResponse.status, postResponse.statusText);
             return null;
         }
   
         const postData: PostDataProp = await postResponse.json();
-        console.log(postData);
+        // console.log(postData);
         
         return postData;
-    } catch (error) {
-        console.error('Erro ao buscar post:', error);
-        return null;
+    }  catch (error) {
+      // Tratamento de erros inesperados
+      if (error instanceof TypeError) {
+        console.error('Erro de conexão: Verifique sua conexão com a internet ou o servidor.', error.message);
+      } else {
+        console.error('Erro inesperado ao atualizar post:', error);
+      }
+      return null;
     }
 };
 
