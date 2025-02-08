@@ -4,15 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import * as S from './styled';
 import RootStackParamList from '@/app/types/navigations';
-
-interface PostProps {
-  id: string;
-  title: string;
-  text: string;
-  author: string;
-  image_url: string;
-  created_at: string;
-}
+import PostDataProp from '@/app/types/post';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -26,7 +18,7 @@ const formatDate = (dateString: string): string => {
 
 type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>;
 
-const Post: React.FC<PostProps> = ({ id, title, text, image_url, created_at }) => {
+const Post: React.FC<PostDataProp> = ({ id, title, text, image}) => {
   const navigation = useNavigation<PostNavigationProp>();
 
   const handleNavigation = () => {   
@@ -40,11 +32,11 @@ const Post: React.FC<PostProps> = ({ id, title, text, image_url, created_at }) =
   return (
     <S.ContainerAnchor onPress={handleNavigation}>
       <S.ImageContainer>
-        <S.PostImage source={{ uri: image_url }} />
+        <S.PostImage source={{ uri: image }} />
       </S.ImageContainer>
 
       <S.TextContainer>
-        <S.DateText>{formatDate(created_at)}</S.DateText>
+        <S.DateText>{}</S.DateText>
 
         <S.TitleContainer>
           <S.Title>{title}</S.Title>

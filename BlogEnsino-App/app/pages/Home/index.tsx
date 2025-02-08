@@ -3,13 +3,34 @@ import { View, Text } from "react-native";
 import BaseLayout from "../../components/BaseLayout";
 import Search from "../../components/Search";
 import PaginatedPosts from "../../components/Posts/PaginatedPosts";
-import mockPosts from "./mockPosts";
+import { getAllPosts } from "@/app/Services/Posts/api";
+import PostDataProp from "@/app/types/post";
 import * as S from "./styled";
 
 const Home: React.FC = () => {
-  const [posts, setPosts] = useState(mockPosts); 
-  const [filteredPosts, setFilteredPosts] = useState(mockPosts);
+  const [posts, setPosts] = useState<PostDataProp[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<PostDataProp[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllPosts();
+      if (data) {
+        setPosts(data);
+        setFilteredPosts(data);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -31,7 +52,12 @@ const Home: React.FC = () => {
         <S.Title>Posts publicados recentemente</S.Title>
         <Search onSearch={(query) => setSearchTerm(query)} />
       </S.HeaderSection>
-      <PaginatedPosts posts={posts} searchTerm={searchTerm} /> 
+
+      {loading ? (
+        <Text>Carregando posts...</Text>
+      ) : (
+        <PaginatedPosts posts={filteredPosts} searchTerm={searchTerm} />
+      )}
     </BaseLayout>
   );
 };

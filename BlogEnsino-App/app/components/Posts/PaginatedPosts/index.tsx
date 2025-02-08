@@ -2,18 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Text, Button, FlatList } from 'react-native';
 import * as S from './styled';
 import Post from '..';
-
-interface PostData {
-  id: string;
-  title: string;
-  text: string;
-  author: string;
-  image_url: string;
-  created_at: string;
-}
+import PostDataProp from '@/app/types/post';
 
 interface PaginatedPostsProps {
-  posts: PostData[];
+  posts: PostDataProp[];
   searchTerm: string;
 }
 
@@ -48,15 +40,14 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) =>
         <>
           <FlatList
             data={currentPosts}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item: PostDataProp, index: number) => item.id ?? index.toString()}
             renderItem={({ item }) => (
               <Post 
                 id={item.id} 
                 title={item.title} 
                 text={item.text} 
                 author={item.author} 
-                image_url={item.image_url} 
-                created_at={item.created_at} 
+                image={item.image}
               />
             )}
           />
