@@ -38,10 +38,14 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) =>
         <S.EmptyMessage>Nenhum post encontrado para esta pesquisa.</S.EmptyMessage>
       ) : (
         <>
-          <FlatList
+          <S.PostsGrid
             data={currentPosts}
             keyExtractor={(item: PostDataProp, index: number) => item.id ?? index.toString()}
-            renderItem={({ item }) => (
+            contentContainerStyle={{
+              justifyContent: 'center',
+              paddingBottom: 30,
+            }}
+            renderItem={({ item }: { item: PostDataProp }) => (
               <Post 
                 id={item.id} 
                 title={item.title} 

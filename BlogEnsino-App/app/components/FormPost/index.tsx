@@ -46,7 +46,6 @@ export default function FormPost({
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
-    // console.log(formData);
     onSubmit(formData);
   };
 

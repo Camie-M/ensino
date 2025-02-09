@@ -15,8 +15,8 @@ export default function Login() {
       console.error('Erro no login, usuário não autenticado');
       return;
     } 
-
-    login(); // Atualiza o estado global
+    login();
+    
   };
 
   return (

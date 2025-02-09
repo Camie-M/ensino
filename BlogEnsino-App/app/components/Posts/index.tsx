@@ -6,7 +6,7 @@ import * as S from './styled';
 import RootStackParamList from '@/app/types/navigations';
 import PostDataProp from '@/app/types/post';
 import { usePostId } from '@/app/context/PostContext';
-import { checkForToken } from '@/app/Services/Auth/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>;
@@ -16,9 +16,9 @@ const Post: React.FC<PostDataProp> = ({ id, title, text, image, createdAt}) => {
   const { setPostId } = usePostId();
   const handleNavigation = async () => {   
     if (!id) return;
-    const token = await checkForToken();
+    const token =  await AsyncStorage.getItem('userToken');
     if (!token) {
-      navigation.navigate('Conta'); // UserLabel
+      navigation.navigate('Conta');
       return;
     }
     setPostId(id);

@@ -18,13 +18,11 @@ export default function LogOut() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { logout } = useAuth();
 
-  // Função para buscar os dados do usuário
   const getUserData = useCallback(async () => {
     setLoading(true);
     try {
       setLoading(true);
       const userData = await getOwnUserData();
-      console.log(userData);
       
       if (userData) {
         setUser(userData as UserLogOut);
@@ -45,7 +43,10 @@ export default function LogOut() {
         onPress: async () => {
           await AsyncStorage.removeItem("userToken");
           logout(); // Atualiza o contexto de autenticação
-          navigation.navigate("Home"); // Redireciona para a Home
+          navigation.reset({
+            index: 0, // Define qual tela será a primeira na pilha
+            routes: [{ name: "Home" }], // Rota para a qual você quer ir
+          });
         },
       },
     ]);
@@ -65,7 +66,7 @@ export default function LogOut() {
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>Perfil do Usuário</Text>
             <Text>Nome: {user.username}</Text>
             <Text>Email: {user.role}</Text>
-            <Text>Usuário desde: {user.createdAt ? formatDate(user.createdAt) : "Data não disponível"}</Text>
+            <Text>Criado: {user.createdAt ? formatDate(user.createdAt) : "Data não disponível"}</Text>
 
             <TouchableOpacity onPress={handleLogout} style={{ marginTop: 20, padding: 10, backgroundColor: "#ff4444", borderRadius: 5 }}>
               <Text style={{ color: "#fff", fontSize: 16, textAlign: "center" }}>Log-out</Text>

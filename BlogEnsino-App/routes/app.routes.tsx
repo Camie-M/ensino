@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '@/app/pages/Home';
@@ -17,6 +17,9 @@ import { useCallback } from 'react';
 import LogOut from '@/app/pages/Logout';
 import { AuthProvider, useAuth } from '@/app/context/AuthContext';
 import { PostProvider } from '@/app/context/PostContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getOwnUserData } from '@/app/Services/Users/api';
+import { UserDataProp, UserLogOut } from '@/app/types/users';
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -27,9 +30,12 @@ const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
 const UserLabel = "Conta"
 
+const adminPageRoles = ["admin"]
+const gestaoPageRoles = ["admin","professor"]
+
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator>
+    <AdminStack.Navigator >
       <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false, title: "Voltar" }} />
       <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true, title: "Voltar" }}  />
       <AdminStack.Screen 
@@ -44,7 +50,7 @@ function AdminStackNavigator() {
 function HomeStackNavigator() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Post Recentes" component={Home}  options={{ headerShown: false }} />
+      <HomeStack.Screen name="HomeScreen" component={Home}  options={{ headerShown: false }} />
       <HomeStack.Screen name="PostDetails" component={PostDetails}  options={{ headerShown: true, title: "Voltar" }}  />
     </HomeStack.Navigator>
   );
@@ -74,14 +80,25 @@ export default function LoginStackNavigator() {
   );
 }
 
+export function AppRoutes() {  
+  const [data, setData] = useState<UserLogOut>(); 
+  const { login, logout } = useAuth();
 
-
-
-export function AppRoutes() {
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      const userData = await getOwnUserData();
+      setData(userData); 
+      if (!token) return logout()
+      login();
+    };
+    checkAuthStatus();
+  }, [login, logout]);
+  
   return (
-    <AuthProvider>
-       <PostProvider>
+    <PostProvider>
       <Tab.Navigator
+        key={data ? 'user' : null}
         initialRouteName={"Home"}
         screenOptions={({ route }) => ({
           headerShown: false,
@@ -102,12 +119,20 @@ export function AppRoutes() {
         })}
       >
         <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
-        <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
-        <Tab.Screen name={AdminLabel} component={AdminStackNavigator} />
+
+        {data?.role && gestaoPageRoles.includes(data.role) ? (
+          <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
+        ) : null}
+       
+        {data?.role && adminPageRoles.includes(data.role) ?
+          <Tab.Screen
+            name={AdminLabel}
+            component={AdminStackNavigator}
+          /> : null
+        }
+        
         <Tab.Screen name={UserLabel} component={LoginStackNavigator} /> 
       </Tab.Navigator>
-      </PostProvider>
-    </AuthProvider>
-    
+    </PostProvider>
   );
 }

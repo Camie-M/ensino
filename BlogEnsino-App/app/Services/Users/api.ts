@@ -1,4 +1,4 @@
-import  { UserDataProp, UserInfoProp }  from '@/app/types/users';
+import  { UserDataProp, UserInfoProp, UserLogOut }  from '@/app/types/users';
 import { TokenGenerator } from '../Auth/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from "expo-constants";
@@ -68,13 +68,11 @@ export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataPro
     }
 };
 
-export const getOwnUserData = async (): Promise<UserDataProp | null> => {
+export const getOwnUserData = async (): Promise<UserLogOut | undefined> => {
   try {
-
       const token = await AsyncStorage.getItem('userToken');
       if (!token) {
-        console.error("Token não encontrado.");
-        return null;
+        return undefined;
       }
       const userResponse = await fetch(`${localHost}:3001/users/self`, {
       method: "GET",
@@ -84,13 +82,13 @@ export const getOwnUserData = async (): Promise<UserDataProp | null> => {
       });
       if (!userResponse.ok) {
           console.error('Erro ao buscar Usuario:', userResponse.status, userResponse.statusText);
-          return null;
+          return undefined;
       }
-      const userData: UserDataProp = await userResponse.json();      
+      const userData: UserLogOut = await userResponse.json();      
       return userData;
   } catch (error) {
       console.error('Erro ao buscar Usuario:', error);
-      return null;
+      return undefined;
   }
 };
 
@@ -160,7 +158,7 @@ export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
         }
   
         const userData: UserInfoProp = await userResponse.json();
-        console.log(userData);
+        console.log("teste", userData);
         
         return userData;
     } catch (error) {

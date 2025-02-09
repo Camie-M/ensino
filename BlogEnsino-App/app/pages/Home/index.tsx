@@ -6,6 +6,7 @@ import PaginatedPosts from "../../components/Posts/PaginatedPosts";
 import { getAllPosts } from "@/app/Services/Posts/api";
 import PostDataProp from "@/app/types/post";
 import * as S from "./styled";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostDataProp[]>([]);

@@ -24,3 +24,4 @@ export const usePostId = () => {
   }
   return context;
 };
+export default {usePostId, PostProvider}
