@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
 
 export const PaginatedPostsContainer = styled.View`
+  flex: 1; 
   margin-top: 16px;
-  margin-bottom:100px;
 `;
 
 export const PostsGrid = styled.FlatList`
@@ -13,7 +13,7 @@ export const PaginationControls = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-vertical: 16px;
+  padding: 12px;
 `;
 
 export const EmptyMessage = styled.Text`
@@ -23,5 +23,4 @@ export const EmptyMessage = styled.Text`
   margin-top: 16px;
 `;
 
-
-export default {PaginatedPostsContainer,PostsGrid,PaginationControls,EmptyMessage}
+export default {PaginatedPostsContainer, PostsGrid, PaginationControls, EmptyMessage};

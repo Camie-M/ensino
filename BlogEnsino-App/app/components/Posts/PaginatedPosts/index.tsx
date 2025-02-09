@@ -48,6 +48,7 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) =>
                 text={item.text} 
                 author={item.author} 
                 image={item.image}
+                createdAt={item.createdAt}
               />
             )}
           />

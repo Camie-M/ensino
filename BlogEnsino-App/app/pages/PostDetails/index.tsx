@@ -21,7 +21,6 @@ export default function PostDetails() {
     try {
       if(postId){
         const data = await getPostById(postId);
-        console.log(data);
         setLoading(false)
         setPostData(data);
       } 
@@ -65,7 +64,7 @@ export default function PostDetails() {
 
           <S.TextContainer>
           <S.DateText>
-            {new Date(postData.createdAt).toLocaleDateString('pt-BR', {
+            {new Date(postData.createdAt!).toLocaleDateString('pt-BR', {
               timeZone: 'America/Sao_Paulo',
             })}
             <S.Author> - {postData.author}</S.Author>

@@ -6,29 +6,25 @@ import * as S from './styled';
 import RootStackParamList from '@/app/types/navigations';
 import PostDataProp from '@/app/types/post';
 import { usePostId } from '@/app/context/PostContext';
+import { checkForToken } from '@/app/Services/Auth/api';
 
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('pt-BR', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date);
-};
 
 type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>;
 
-const Post: React.FC<PostDataProp> = ({ id, title, text, image}) => {
+const Post: React.FC<PostDataProp> = ({ id, title, text, image, createdAt}) => {
   const navigation = useNavigation<PostNavigationProp>();
   const { setPostId } = usePostId();
-  const handleNavigation = () => {   
-    if (!id) {
+  const handleNavigation = async () => {   
+    if (!id) return;
+    const token = await checkForToken();
+    if (!token) {
+      navigation.navigate('Conta'); // UserLabel
       return;
-    }    
-    setPostId(id)
+    }
+    setPostId(id);
     navigation.navigate('PostDetails', { postId: id });
   };
+  
 
   return (
     <S.ContainerAnchor onPress={handleNavigation}>
@@ -37,7 +33,11 @@ const Post: React.FC<PostDataProp> = ({ id, title, text, image}) => {
       </S.ImageContainer>
 
       <S.TextContainer>
-        <S.DateText>{}</S.DateText>
+      <S.DateText>
+        {new Date(createdAt!).toLocaleDateString('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+        })}
+      </S.DateText>
 
         <S.TitleContainer>
           <S.Title>{title}</S.Title>

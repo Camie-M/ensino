@@ -68,7 +68,7 @@ export default function LoginStackNavigator() {
       {isAuthenticated ? (
         <LoginStack.Screen name="LogOutPage" component={LogOut} options={{ headerShown: false }} />
       ) : (
-        <LoginStack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
+        <LoginStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       )}
     </LoginStack.Navigator>
   );
@@ -78,13 +78,11 @@ export default function LoginStackNavigator() {
 
 
 export function AppRoutes() {
- 
   return (
-   
     <AuthProvider>
        <PostProvider>
       <Tab.Navigator
-        initialRouteName={AdminLabel}
+        initialRouteName={"Home"}
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
@@ -106,8 +104,7 @@ export function AppRoutes() {
         <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
         <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
         <Tab.Screen name={AdminLabel} component={AdminStackNavigator} />
-        <Tab.Screen name={UserLabel} component={LoginStackNavigator} />
-      
+        <Tab.Screen name={UserLabel} component={LoginStackNavigator} /> 
       </Tab.Navigator>
       </PostProvider>
     </AuthProvider>

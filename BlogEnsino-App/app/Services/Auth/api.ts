@@ -1,4 +1,5 @@
 import { UserDataProp } from "@/app/types/users";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 
 const localHost = Constants.expoConfig?.extra?.LOCALHOST;
@@ -27,6 +28,17 @@ export const TokenGenerator = async (data: UserDataProp): Promise<string | null>
       console.error('Erro ao buscar o token:', error);
       return null; 
     }
-  };
+};
 
-export default {TokenGenerator}
+
+export const checkForToken = async (): Promise<string | null> => {
+  try {
+    return await AsyncStorage.getItem('userToken');
+  } catch (error) {
+    console.error('Erro ao buscar o token:', error);
+    return null;
+  }
+};
+
+
+export default {TokenGenerator,checkForToken}
