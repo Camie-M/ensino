@@ -16,8 +16,6 @@ export default function Button({ text, color, route, width }: Button) {
   const handlePress = () => {
     const [routeName, paramString] = route.split(', ');
     const params = paramString ? { postId: paramString } : undefined;
-
-    // Explicitly cast routeName to string
     navigation.navigate(routeName as string, params);
   };
 

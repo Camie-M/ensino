@@ -10,10 +10,9 @@ interface UserLogOut {
 };
 
 interface UserInfoProp {
-    id?: number;
-    name: string;
-    type?: string;
-    email: string;
+    id?: string;
+    username: string;
+    role?: string;
 }; 
 
 export { UserDataProp, UserInfoProp,UserLogOut };

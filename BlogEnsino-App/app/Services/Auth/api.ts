@@ -1,7 +1,6 @@
 import { UserDataProp } from "@/app/types/users";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import { getOwnUserData } from "../Users/api";
 
 const localHost = Constants.expoConfig?.extra?.LOCALHOST;
 

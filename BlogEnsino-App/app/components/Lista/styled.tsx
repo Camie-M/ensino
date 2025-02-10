@@ -16,7 +16,6 @@ export const PostContainer = styled.SafeAreaView`
 export const TxtContainer = styled.View`
   gap:10px;
 `;
-
 export const PostContentTitle = styled.Text`
   font-size: 20px;
   color: #1A1A1A;

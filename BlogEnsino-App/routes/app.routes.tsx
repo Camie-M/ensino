@@ -8,18 +8,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostForm from '@/app/pages/Admin/CreatePost';
 import CreateUser from '@/app/pages/Gestao/CreateUser';
 import UpdateUser from '@/app/pages/Gestao/UpdateUser';
-import DeleteUser from '@/app/pages/Gestao/DeleteUser';
 import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
 import PostDetails from '@/app/pages/PostDetails';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
 import LogOut from '@/app/pages/Logout';
-import { AuthProvider, useAuth } from '@/app/context/AuthContext';
-import { PostProvider } from '@/app/context/PostContext';
+import {useAuth } from '@/app/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getOwnUserData } from '@/app/Services/Users/api';
-import { UserDataProp, UserLogOut } from '@/app/types/users';
+import { UserLogOut } from '@/app/types/users';
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -62,7 +58,6 @@ function GestaoStackNavigator() {
       <GestaoStack.Screen name="GestaoHome" component={Gestao} />
       <GestaoStack.Screen name="CreateUser" component={CreateUser} />
       <GestaoStack.Screen name="UpdateUser" component={UpdateUser} />
-      <GestaoStack.Screen name="DeleteUser" component={DeleteUser} />
     </GestaoStack.Navigator>
   );
 }
@@ -81,10 +76,11 @@ export default function LoginStackNavigator() {
 }
 
 export function AppRoutes() {  
-  const [data, setData] = useState<UserLogOut>(); 
+  const [data, setData] = useState<UserLogOut| null>(); 
   const { login, logout } = useAuth();
 
   useEffect(() => {
+    // AsyncStorage.clear()
     const checkAuthStatus = async () => {
       const token = await AsyncStorage.getItem('userToken');
       const userData = await getOwnUserData();
@@ -96,43 +92,40 @@ export function AppRoutes() {
   }, [login, logout]);
   
   return (
-    <PostProvider>
-      <Tab.Navigator
-        key={data ? 'user' : null}
-        initialRouteName={"Home"}
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            switch (route.name) {
-              case HomeLabel: iconName = focused ? 'home' : 'home-outline'; break;
-              case AdminLabel: iconName = focused ? 'settings' : 'settings-outline'; break;
-              case GestaoLabel: iconName = focused ? 'bar-chart' : 'bar-chart-outline'; break;
-              case UserLabel: iconName = focused ? 'person-circle' : 'person-circle-outline'; break;
-              default: iconName = 'help-circle'; break;
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
-          tabBarLabel: route.name,
-        })}
-      >
-        <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
+    <Tab.Navigator
+      key={data ? 'user' : null}
+      initialRouteName={"Home"}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          switch (route.name) {
+            case HomeLabel: iconName = focused ? 'home' : 'home-outline'; break;
+            case AdminLabel: iconName = focused ? 'settings' : 'settings-outline'; break;
+            case GestaoLabel: iconName = focused ? 'bar-chart' : 'bar-chart-outline'; break;
+            case UserLabel: iconName = focused ? 'person-circle' : 'person-circle-outline'; break;
+            default: iconName = 'help-circle'; break;
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+        tabBarLabel: route.name,
+      })}
+    >
+      <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
 
-        {data?.role && gestaoPageRoles.includes(data.role) ? (
-          <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
-        ) : null}
-       
-        {data?.role && adminPageRoles.includes(data.role) ?
-          <Tab.Screen
-            name={AdminLabel}
-            component={AdminStackNavigator}
-          /> : null
-        }
-        
-        <Tab.Screen name={UserLabel} component={LoginStackNavigator} /> 
-      </Tab.Navigator>
-    </PostProvider>
+      {data?.role && gestaoPageRoles.includes(data.role) ? (
+        <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
+      ) : null}
+      
+      {data?.role && adminPageRoles.includes(data.role) ?
+        <Tab.Screen
+          name={AdminLabel}
+          component={AdminStackNavigator}
+        /> : null
+      }
+      <Tab.Screen name={UserLabel} component={LoginStackNavigator} /> 
+    </Tab.Navigator>
   );
 }

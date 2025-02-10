@@ -14,14 +14,15 @@ type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>
 const Post: React.FC<PostDataProp> = ({ id, title, text, image, createdAt}) => {
   const navigation = useNavigation<PostNavigationProp>();
   const { setPostId } = usePostId();
+  
   const handleNavigation = async () => {   
     if (!id) return;
-    const token =  await AsyncStorage.getItem('userToken');
+    const token =  await AsyncStorage.getItem('userToken')
+    setPostId(id);
     if (!token) {
       navigation.navigate('Conta');
       return;
     }
-    setPostId(id);
     navigation.navigate('PostDetails', { postId: id });
   };
   

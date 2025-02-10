@@ -23,7 +23,6 @@ export default function LogOut() {
     try {
       setLoading(true);
       const userData = await getOwnUserData();
-      
       if (userData) {
         setUser(userData as UserLogOut);
       }
@@ -41,7 +40,7 @@ export default function LogOut() {
       {
         text: "Sair",
         onPress: async () => {
-          await AsyncStorage.removeItem("userToken");
+          AsyncStorage.clear()
           logout(); // Atualiza o contexto de autenticação
           navigation.reset({
             index: 0, // Define qual tela será a primeira na pilha

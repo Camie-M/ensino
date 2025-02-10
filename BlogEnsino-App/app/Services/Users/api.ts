@@ -8,10 +8,9 @@ const localHost = Constants.expoConfig?.extra?.LOCALHOST;
 export const formatFormData = async (formData: UserInfoProp) => {
     try {
       const form = new FormData();
-      form.append('name', formData.name);
-      form.append('email', formData.email);
-      if (formData.type) {
-          form.append('type', formData.type);
+      form.append('name', formData.username);
+      if (formData.role) {
+          form.append('type', formData.role);
       }
       return form;
     } catch (error) {
@@ -42,7 +41,7 @@ export const errorHandler = async (response: Response) => {
 
 export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataProp | null> => {
     try {
-        
+       
         const token = await TokenGenerator(UserFormData);
         if (!token) {
             console.error("Token não gerado.");
@@ -56,23 +55,23 @@ export const LoginUser = async (UserFormData: UserDataProp): Promise<UserDataPro
           },
         });
        if (!userResponse.ok) {
-            console.error('Erro ao buscar Usuario:', userResponse.status, userResponse.statusText);
+            console.error('Erro ao buscar Usuario 1:', userResponse.status, userResponse.statusText);
             return null;
         }
 
         const userData: UserDataProp = await userResponse.json();
         return userData;
     } catch (error) {
-        console.error('Erro ao buscar Usuario:', error);
+        console.error('Erro ao buscar Usuario 2:', error);
         return null;
     }
 };
 
-export const getOwnUserData = async (): Promise<UserLogOut | undefined> => {
+export const getOwnUserData = async (): Promise<UserLogOut | null> => {
   try {
       const token = await AsyncStorage.getItem('userToken');
       if (!token) {
-        return undefined;
+        return null;
       }
       const userResponse = await fetch(`${localHost}:3001/users/self`, {
       method: "GET",
@@ -81,34 +80,40 @@ export const getOwnUserData = async (): Promise<UserLogOut | undefined> => {
         },
       });
       if (!userResponse.ok) {
-          console.error('Erro ao buscar Usuario:', userResponse.status, userResponse.statusText);
-          return undefined;
+          console.error('Erro ao buscar Usuario 3:', userResponse.status, userResponse.statusText);
+          return null;
       }
       const userData: UserLogOut = await userResponse.json();      
       return userData;
   } catch (error) {
-      console.error('Erro ao buscar Usuario:', error);
-      return undefined;
+      console.error('Erro ao buscar Usuario 4:', error);
+      return null;
   }
 };
 
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
-        const token = await AsyncStorage.getItem('userToken');
+      const token = await AsyncStorage.getItem('userToken');
+      
+      if (!token) {
+        return null;
+      }
         const usersResponse = await fetch(`${localHost}:3001/users`, {
             method: "GET",
             headers: {
               'Authorization': `${token}`,
             },
         });
-  
+        
         if (!usersResponse.ok) {
             console.error('Erro ao buscar users:', usersResponse.status, usersResponse.statusText);
             return null;
         }
-  
-        const postsData: UserInfoProp[] = await usersResponse.json();
-        return postsData;
+         
+        const usersData: UserInfoProp[] = await usersResponse.json();
+        
+        return usersData;
+        
     } catch (error) {
         console.error('Erro ao buscar users:', error);
         return null;
@@ -158,7 +163,6 @@ export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
         }
   
         const userData: UserInfoProp = await userResponse.json();
-        console.log("teste", userData);
         
         return userData;
     } catch (error) {
@@ -198,12 +202,14 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
 export const deleteUser = async (id: string): Promise<UserInfoProp | null> => {
     try {
       const token = await AsyncStorage.getItem('userToken');
+      if (!token || !id) {
+        return null;
+      }
       const response = await fetch(`${localHost}:3001/users/${id}`, {
         method: "DELETE",
         headers: {
           'Authorization': `${token}`,
         },
-        body: id,
       });
       errorHandler(response)
   
