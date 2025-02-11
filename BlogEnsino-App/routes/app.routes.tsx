@@ -80,12 +80,14 @@ export function AppRoutes() {
   const { login, logout } = useAuth();
 
   useEffect(() => {
-    // AsyncStorage.clear()
     const checkAuthStatus = async () => {
       const token = await AsyncStorage.getItem('userToken');
       const userData = await getOwnUserData();
       setData(userData); 
-      if (!token) return logout()
+      if (!token){
+        logout()
+        return
+      }
       login();
     };
     checkAuthStatus();
