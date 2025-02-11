@@ -18,15 +18,9 @@ module.exports = {
         allowNull: false
       },
       user_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      },
+        type: DataTypes.UUID,
+        allowNull: true, // Pode ser null, se necessário
+    },    
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -38,9 +32,5 @@ module.exports = {
         defaultValue: Sequelize.NOW
       }
     });
-  },
-
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('posts');
   }
 };

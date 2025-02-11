@@ -38,24 +38,24 @@ app.listen(3001, () => {
 const creatMockUser = async () => {
   await sequelize.models.User.bulkCreate([
     {
-      username: "Breno",
+      username: "breno",
       role: "admin",
-      password: hashGenerator("admin_breno_123")
+      password: hashGenerator("admin")
     },
     {
-      username: "Camila",
+      username: "camila",
       role: "professor",
-      password: hashGenerator("user_camila_123")
+      password: hashGenerator("professor")
     },
     {
-      username: "Valdir",
+      username: "valdir",
       role: "professor",
-      password: hashGenerator("admin_valdir_123")
+      password: hashGenerator("professor")
     },
     {
-      username: "Matheus",
+      username: "matheus",
       role: "aluno",
-      password: hashGenerator("admin_matheus_123")
+      password: hashGenerator("aluno")
     }
   ])
 }
@@ -65,10 +65,10 @@ function hashGenerator(password: string) {
 }
 const creatMockPost = async () => {
   const Post = sequelize.models.Post
-  const userAdmin1 = await User.findOne({ where: { username: "Breno" } })
-  const userAdmin2 = await User.findOne({ where: { username: "Valdir" } })
-  const userAdmin3 = await User.findOne({ where: { username: "Matheus" } })
-  const userAdmin4 = await User.findOne({ where: { username: "Camila" } })
+  const userAdmin1 = await User.findOne({ where: { username: "breno" } })
+  const userAdmin2 = await User.findOne({ where: { username: "valdir" } })
+  const userAdmin3 = await User.findOne({ where: { username: "matheus" } })
+  const userAdmin4 = await User.findOne({ where: { username: "camila" } })
   
   if (userAdmin1 && userAdmin2 && userAdmin3) {
     await Post.bulkCreate([

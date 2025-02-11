@@ -48,14 +48,8 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                 },
                 user_id: {
                     type: DataTypes.UUID,
-                    allowNull: false,
-                    references: {
-                        model: 'users',
-                        key: 'id'
-                    },
-                    onUpdate: 'CASCADE',
-                    onDelete: 'SET NULL'
-                },
+                    allowNull: true, // Pode ser null, se necessário
+                },                
             },
             {
                 sequelize,
@@ -63,10 +57,6 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                 timestamps: true,
             }
         );
-    }
-
-    static associate(models: any) {
-        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     }
 }
 Post.initModel();
