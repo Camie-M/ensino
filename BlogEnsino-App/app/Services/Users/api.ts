@@ -94,6 +94,7 @@ export const getOwnUserData = async (): Promise<UserLogOut | null> => {
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
       const token = await AsyncStorage.getItem('userToken');
+      console.log(token);
       
       if (!token) {
         return null;

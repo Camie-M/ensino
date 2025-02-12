@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface PostContextType {
   postId: string | null;
-  setPostId: (id: string) => void;
+  setPostId: (id: string | null) => void;
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);

@@ -10,13 +10,15 @@ import { UserLogOut } from "@/app/types/users";
 import { formatDate } from "@/app/utils/dataFormat";
 import { useAuth } from "@/app/context/AuthContext";
 import RootStackParamList from "@/app/types/navigations";
+import { usePostId } from "@/app/context/PostContext";
 
 export default function LogOut() {
   const [user, setUser] = useState<UserLogOut | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { logout } = useAuth();
+  const { setPostId } = usePostId();
 
   const getUserData = useCallback(async () => {
     setLoading(true);
@@ -33,7 +35,7 @@ export default function LogOut() {
     }
   }, []);
 
-  // Função de Logout com confirmação
+  
   const handleLogout = async () => {
     Alert.alert("Confirmar Logout", "Tem certeza de que deseja sair?", [
       { text: "Cancelar", style: "cancel" },
@@ -41,10 +43,11 @@ export default function LogOut() {
         text: "Sair",
         onPress: async () => {
           AsyncStorage.clear()
-          logout(); // Atualiza o contexto de autenticação
+          logout(); 
+          setPostId(null)
           navigation.reset({
-            index: 0, // Define qual tela será a primeira na pilha
-            routes: [{ name: "Home" }], // Rota para a qual você quer ir
+            index: 0, 
+            routes: [{ name: "Home" }], 
           });
         },
       },

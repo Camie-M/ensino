@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  login: () => void;
-  logout: () => void;
+  login: (token: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -12,8 +12,24 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = () => setIsAuthenticated(true);
-  const logout = () => setIsAuthenticated(false);
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      setIsAuthenticated(!!token);
+    };
+
+    checkToken();
+  }, []);
+
+  const login = async (token: string) => {
+    await AsyncStorage.setItem('userToken', token);
+    setIsAuthenticated(true);
+  };
+
+  const logout = async () => {
+    await AsyncStorage.removeItem('userToken');
+    setIsAuthenticated(false);
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
@@ -30,4 +46,4 @@ export const useAuth = () => {
   return context;
 };
 
-export default {AuthProvider, useAuth}
+export default { AuthProvider, useAuth };

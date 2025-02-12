@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import BaseLayout from "../../components/BaseLayout";
 import Search from "../../components/Search";
 import PaginatedPosts from "../../components/Posts/PaginatedPosts";
 import { getAllPosts } from "@/app/Services/Posts/api";
 import PostDataProp from "@/app/types/post";
 import * as S from "./styled";
-
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostDataProp[]>([]);

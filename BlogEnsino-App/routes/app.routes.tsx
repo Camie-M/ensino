@@ -12,33 +12,31 @@ import UpdatePost from '@/app/pages/Admin/UpdatePost';
 import Login from '@/app/pages/Login';
 import PostDetails from '@/app/pages/PostDetails';
 import LogOut from '@/app/pages/Logout';
-import {useAuth } from '@/app/context/AuthContext';
+import { useAuth } from '@/app/context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getOwnUserData } from '@/app/Services/Users/api';
 import { UserLogOut } from '@/app/types/users';
+
 const Tab = createBottomTabNavigator();
 const AdminStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const GestaoStack = createStackNavigator();
 const LoginStack = createStackNavigator();
+
 const HomeLabel = "Home";
 const GestaoLabel = "Gestao";
 const AdminLabel = "Admin";
-const UserLabel = "Conta"
+const UserLabel = "Conta";
 
-const adminPageRoles = ["admin"]
-const gestaoPageRoles = ["admin","professor"]
+const adminPageRoles = ["admin", "professor"];
+const gestaoPageRoles = ["admin"];
 
 function AdminStackNavigator() {
   return (
-    <AdminStack.Navigator >
-      <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false, title: "Voltar" }} />
-      <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true, title: "Voltar" }}  />
-      <AdminStack.Screen 
-        name="UpdatePost" 
-        component={UpdatePost} 
-        options={{ headerShown: true, title: "Voltar" }} 
-      />
+    <AdminStack.Navigator>
+      <AdminStack.Screen name="Gestão de Posts" component={Admin} options={{ headerShown: false }} />
+      <AdminStack.Screen name="CreatePost" component={CreatePostForm} options={{ headerShown: true, title: "Voltar" }} />
+      <AdminStack.Screen name="UpdatePost" component={UpdatePost} options={{ headerShown: true, title: "Voltar" }} />
     </AdminStack.Navigator>
   );
 }
@@ -46,8 +44,8 @@ function AdminStackNavigator() {
 function HomeStackNavigator() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeScreen" component={Home}  options={{ headerShown: false }} />
-      <HomeStack.Screen name="PostDetails" component={PostDetails}  options={{ headerShown: true, title: "Voltar" }}  />
+      <HomeStack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }} />
+      <HomeStack.Screen name="PostDetails" component={PostDetails} options={{ headerShown: true, title: "Voltar" }} />
     </HomeStack.Navigator>
   );
 }
@@ -63,7 +61,7 @@ function GestaoStackNavigator() {
 }
 
 export default function LoginStackNavigator() {
-  const { isAuthenticated } = useAuth();  
+  const { isAuthenticated } = useAuth();
   return (
     <LoginStack.Navigator>
       {isAuthenticated ? (
@@ -76,26 +74,30 @@ export default function LoginStackNavigator() {
 }
 
 export function AppRoutes() {  
-  const [data, setData] = useState<UserLogOut| null>(); 
-  const { login, logout } = useAuth();
+  const [data, setData] = useState<UserLogOut | null>(null); 
+  const { isAuthenticated, login, logout } = useAuth();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = await AsyncStorage.getItem('userToken');
+      
+      if (!token) {
+        logout();
+        setData(null); // Reseta os dados ao deslogar
+        return;
+      }
+
       const userData = await getOwnUserData();
       setData(userData); 
-      if (!token){
-        logout()
-        return
-      }
-      login();
+      login(token);
     };
+
     checkAuthStatus();
-  }, [login, logout]);
-  
+  }, [isAuthenticated]); // Adicionando `isAuthenticated` como dependência
+
   return (
     <Tab.Navigator
-      key={data ? 'user' : null}
+      key={isAuthenticated ? 'authenticated' : 'guest'} // Força recriação do Navigator
       initialRouteName={"Home"}
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -117,17 +119,16 @@ export function AppRoutes() {
     >
       <Tab.Screen name={HomeLabel} component={HomeStackNavigator} />
 
-      {data?.role && gestaoPageRoles.includes(data.role) ? (
+      {data?.role && gestaoPageRoles.includes(data.role) && (
         <Tab.Screen name={GestaoLabel} component={GestaoStackNavigator} />
-      ) : null}
+      )}
       
-      {data?.role && adminPageRoles.includes(data.role) ?
-        <Tab.Screen
-          name={AdminLabel}
-          component={AdminStackNavigator}
-        /> : null
-      }
+      {data?.role && adminPageRoles.includes(data.role) && (
+        <Tab.Screen name={AdminLabel} component={AdminStackNavigator} />
+      )}
+
       <Tab.Screen name={UserLabel} component={LoginStackNavigator} /> 
     </Tab.Navigator>
   );
 }
+
