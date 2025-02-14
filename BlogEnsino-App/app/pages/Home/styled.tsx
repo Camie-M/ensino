@@ -6,9 +6,11 @@ export const Container = styled.ScrollView`
 `;
 
 export const HeaderSection = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
 `;
 
@@ -17,7 +19,7 @@ export const Title = styled.Text`
   font-weight: 500;
   margin-top: 16px;
   color: #333;
-  width: 60%;
+  width: 100%;
 `;
 
 export default {Container,HeaderSection,Title}

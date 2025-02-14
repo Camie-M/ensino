@@ -6,6 +6,7 @@ export const SearchContainer = styled.View`
 
 export const SearchInput = styled.TextInput`
   height: 40px;
+  width: 100%;
   padding-horizontal: 8px;
   border-width: 1px;
   border-radius: 4px;
