@@ -65,7 +65,7 @@ export const updatePostbyId = async (id: string, formData: PostDataProp): Promis
       },
       body: formatedFormData,
     });
-    errorHandler(response)
+    // errorHandler(response)
 
     const postData: PostDataProp = await response.json();
     console.log('Post atualizado com sucesso:', postData);

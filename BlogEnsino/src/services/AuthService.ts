@@ -60,6 +60,7 @@ export class AuthService {
     }
 
     private generateJwtToken(payload: Omit<DecodedToken, 'iat' | 'exp'>): string {
-        return jwt.sign(payload, env.SECRET_KEY, { expiresIn: '1 day' });
+        // return jwt.sign(payload, env.SECRET_KEY, { expiresIn: '1 day' });
+        return jwt.sign(payload, env.SECRET_KEY);
     }
 }

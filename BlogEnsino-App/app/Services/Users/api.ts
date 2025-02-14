@@ -7,16 +7,25 @@ const localHost = Constants.expoConfig?.extra?.LOCALHOST;
 
 export const formatFormData = async (formData: UserInfoProp) => {
     try {
-      const form = new FormData();
-      form.append('name', formData.username);
-      if (formData.role) {
-          form.append('type', formData.role);
+      const formUser = {
+        username: formData.username,
+        role: formData.role
       }
-      return form;
+      const form = new FormData();
+      if (!formData.role || !formData.username) {
+          return null
+      }
+      form.append('username', formData.username);
+      form.append('role', formData.role);
+
+      console.log("form",formUser);
+      
+      return formUser;
     } catch (error) {
         console.error('Erro ao tentar formatar os campos do formulario', error);
     }
 };
+
 
 export const errorHandler = async (response: Response) => {
     try {
@@ -124,21 +133,18 @@ export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
 export const createUser = async (formData: UserInfoProp): Promise<UserInfoProp | null> => {
 try {
     const token = await AsyncStorage.getItem('userToken');
-    const formatedFormData = await formatFormData(formData)
-
+    const formatedFormData = JSON.stringify(formData);
+  
     const response = await fetch(`${localHost}:3001/users`, {
     method: "POST",
     headers: {
         'Authorization': `${token}`,
+        'Content-Type': 'application/json', // Adicione essa linha
     },
     body: formatedFormData,
     });
     
-    errorHandler(response)
-    
-
     const userData: UserInfoProp = await response.json();
-    console.log('User atualizado com sucesso:', userData);
 
     return userData;
 } catch (error) {
@@ -153,9 +159,15 @@ try {
 
 export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
     try {
+        const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          return null;
+        }
         const userResponse = await fetch(`${localHost}:3001/users/${id}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              'Authorization': `${token}`,
+          },
         });
   
         if (!userResponse.ok) {
@@ -175,18 +187,21 @@ export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
 export const updateUserbyId = async (id: string, formData: UserInfoProp): Promise<UserInfoProp | null> => {
   try {
     const token = await AsyncStorage.getItem('userToken');
-    const formatedFormData = await formatFormData(formData)
+    if(!token) return null;
+    const formatedFormData = JSON.stringify(formData);
+
     const response = await fetch(`${localHost}:3001/users/${id}`, {
       method: "PUT",
       headers: {
         'Authorization': `${token}`,
+        'Content-Type': 'application/json',
       },
       body: formatedFormData,
     });
     errorHandler(response)
 
     const userData: UserInfoProp = await response.json();
-    console.log('User atualizado com sucesso:', userData);
+
 
     return userData;
   } catch (error) {

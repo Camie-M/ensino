@@ -64,6 +64,8 @@ export class UserService {
             TokenUtils.validateUser(token, allowedRoles);
             const user = await this.findUserById(id);
             await this.validateUsername(updatedFields.username)
+            console.log("antes de rodar update");
+            
             const updatedUser = await userRepository.update(user, updatedFields);
             return UserMapper.mapToResource(updatedUser);
         } catch (error) {

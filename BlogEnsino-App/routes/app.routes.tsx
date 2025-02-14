@@ -80,9 +80,10 @@ export function AppRoutes() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = await AsyncStorage.getItem('userToken');
-      
+      // AsyncStorage.clear()
       if (!token) {
         logout();
+        
         setData(null); // Reseta os dados ao deslogar
         return;
       }

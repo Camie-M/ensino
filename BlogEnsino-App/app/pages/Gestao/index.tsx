@@ -9,11 +9,15 @@ import { deleteUser, getAllUsers } from '@/app/Services/Users/api';
 import { UserInfoProp } from '@/app/types/users';
 
 import * as S from "./styled";
-
+import RootStackParamList from '@/app/types/navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from 'expo-router';
+type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostDetails'>;
 
 export default function Gestao() {
   const [users, setUsers] = useState<UserInfoProp[]>();
   const [filteredUsers, setFilteredUsers] = useState<UserInfoProp[]>();
+   const navigation = useNavigation<PostNavigationProp>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [selectedType, setSelectedType] = useState<string>('all'); // New state for filter
 
@@ -51,6 +55,12 @@ export default function Gestao() {
       },
     ]);
   }
+  
+  const handleEdit = async (id:string | undefined) => {
+    if(!id)return
+    navigation.navigate('UpdateUser', {userId:id});
+  }
+  
   const handleFilterChange = (type: string) => {
     setSelectedType(type);
 
@@ -79,7 +89,10 @@ export default function Gestao() {
         <Text>Tipo: {item.role}</Text>
       </S.TxtContainer>
       <S.BtnContainer>
-        <Button text={'Editar'} color={'#4CAF50'} route={`UpdateUser, ${item.id}`} width='25%' />
+        <TouchableOpacity onPress={() => handleEdit(item.id)}>
+          <Text>Editar</Text>
+        </TouchableOpacity>
+        {/* <Button text={'Editar'} color={'#4CAF50'} route={`UpdateUser, ${item.id}`} width='25%' /> */}
         <TouchableOpacity onPress={() => handleDelete(item.id)}>
           <Text>Deletar</Text>
         </TouchableOpacity>
@@ -117,7 +130,7 @@ export default function Gestao() {
       <FlatList
         data={filteredUsers}
         renderItem={renderItem}
-        keyExtractor={(item: UserInfoProp, index: number) => item.username ?? index.toString()}
+        keyExtractor={(item: UserInfoProp, index: number) => item.id ?? index.toString()}
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",

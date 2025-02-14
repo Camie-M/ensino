@@ -4,30 +4,30 @@ import { Alert } from 'react-native';
 import * as S from './styled';
 
 interface Form {
-  email?: string;
-  name?: string;
-  type?: string;
+  username?: string;
+  password?:string;
+  role?: string;
   isEditMode: boolean;
   onSubmit: (formData: UserFormData) => void;
 }
 
 export interface UserFormData {
-  email: string;
-  name: string;
-  type: string;
+  username: string;
+  password:string;
+  role: string;
 }
 
 export default function FormUserData({
-  email = '',
-  name = '',
-  type = '',
+  password='',
+  username = '',
+  role = '',
   isEditMode,
   onSubmit,
 }: Form) {
   const [formData, setFormData] = useState<UserFormData>({
-    email,
-    name,
-    type,
+    password,
+    username,
+    role,
   });
 
   const onChangeForm = (field: string, value: string) => {
@@ -38,7 +38,7 @@ export default function FormUserData({
   };
 
   const handleSubmit = () => {
-    if (!formData.email || !formData.name || !formData.type) {
+    if ( !formData.username || !formData.role) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -51,22 +51,22 @@ export default function FormUserData({
 
       <S.Input
         placeholder="Nome do usuário"
-        value={formData.name}
+        value={formData.username}
         editable
-        onChangeText={(text: string) => onChangeForm('name', text)}
+        onChangeText={(text: string) => onChangeForm('username', text)}
       />
-      
+      {isEditMode ? "" :  
       <S.Input
-        placeholder="Email do usuário"
-        value={formData.email}
+        placeholder="Senha"
+        value={formData.password}
         editable
-        onChangeText={(text: string) => onChangeForm('email', text)}
-      />
+        onChangeText={(text: string) => onChangeForm('password', text)}
+      />}
       <S.Input
         placeholder="Tipo de usuário"
-        value={formData.type}
+        value={formData.role}
         editable
-        onChangeText={(text: string) => onChangeForm('type', text)}
+        onChangeText={(text: string) => onChangeForm('role', text)}
       />
       <S.SubmitButton onPress={handleSubmit}>
         <S.SubmitButtonText>

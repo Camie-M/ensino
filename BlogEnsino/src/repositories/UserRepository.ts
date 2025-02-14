@@ -23,6 +23,7 @@ export class UserRepository {
     }
 
     update(user: User, fields: { username: string; role: string }): Promise<User> {
+        console.log("update dentro do update");
         return user.update(fields)
     }
 

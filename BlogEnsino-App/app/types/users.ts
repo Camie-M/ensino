@@ -12,7 +12,7 @@ interface UserLogOut {
 interface UserInfoProp {
     id?: string;
     username: string;
-    role?: string;
+    role: string;
 }; 
 
 export { UserDataProp, UserInfoProp,UserLogOut };
