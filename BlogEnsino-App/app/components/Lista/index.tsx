@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./styled";
-import Button from "../Button";
-import { Text, FlatList, RefreshControlProps } from "react-native";
+import ButtonCreate from "../Button";
+import { Text, Button, FlatList, RefreshControlProps } from "react-native";
 import { getAllPosts } from "@/app/Services/Posts/api";
 import PostDataProp from "@/app/types/post";
 
@@ -35,7 +35,7 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
         <S.PostContentAuthor>{item.author}</S.PostContentAuthor>
       </S.TxtContainer>
       <S.BtnContainer>
-        <Button
+        <ButtonCreate
           text={"Editar Post"}
           color={"#4CAF50"}
           route={`UpdatePost, ${item.id}`}
@@ -45,7 +45,7 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
   );
 
   const loadMoreItens = () => {
-    // Função para fazer a paginação/loading
+    // Função para fazer a paginação/loading (pode ser implementada futuramente)
   };
 
   return (
@@ -77,16 +77,14 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
 
           <S.PaginationControls>
             <Button
-              text="Anterior"
-              color="#3b9aff"
-              route={currentPage > 1 ? `Page${currentPage - 1}` : ""}
+              title="Anterior"
+              onPress={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             />
             <Text>{`Página ${currentPage} de ${totalPages}`}</Text>
             <Button
-              text="Próxima"
-              color="#3b9aff"
-              route={currentPage < totalPages ? `Page${currentPage + 1}` : ""}
+              title="Próxima"
+              onPress={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages || totalPages === 0}
             />
           </S.PaginationControls>
