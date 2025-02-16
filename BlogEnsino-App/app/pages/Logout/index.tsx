@@ -67,7 +67,7 @@ export default function LogOut() {
           <>
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>Perfil do Usuário</Text>
             <Text>Nome: {user.username}</Text>
-            <Text>Email: {user.role}</Text>
+            <Text>categoria: {user.role}</Text>
             <Text>Criado: {user.createdAt ? formatDate(user.createdAt) : "Data não disponível"}</Text>
 
             <TouchableOpacity onPress={handleLogout} style={{ marginTop: 20, padding: 10, backgroundColor: "#ff4444", borderRadius: 5 }}>

@@ -15,6 +15,7 @@ export const HeaderSection = styled.View`
 `;
 
 export const Title = styled.Text`
+  text-align:center;
   font-size: 20px;
   font-weight: 500;
   margin-top: 16px;

@@ -19,29 +19,29 @@ export default function Gestao() {
   const [filteredUsers, setFilteredUsers] = useState<UserInfoProp[]>();
    const navigation = useNavigation<PostNavigationProp>();
   const [refreshing, setRefreshing] = React.useState(false);
-  const [selectedType, setSelectedType] = useState<string>('all'); // New state for filter
+  const [selectedType, setSelectedType] = useState<string>('all'); 
 
   const fetchUsers = async () => {
     try {
-      const data = await getAllUsers();  
-      console.log(data);
-          
+      const data = await getAllUsers();
       if (data) {
-        setFilteredUsers(data);
+        setUsers(data); 
+        setFilteredUsers(data); 
       }
-      
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error('Error fetching users:', error);
     }
   };
+  
 
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       fetchUsers();
+      setSelectedType("all")
       setRefreshing(false);
     }, 2000);
-  };
+  };  
 
   const handleDelete = async (id:string | undefined) => {
     if(!id)return
@@ -68,6 +68,7 @@ export default function Gestao() {
       setFilteredUsers(users);
     } else {
       const filtered = users?.filter(user => user.role === type);
+      console.log(filtered);
       setFilteredUsers(filtered);
     }
   };
@@ -89,14 +90,15 @@ export default function Gestao() {
         <Text>Tipo: {item.role}</Text>
       </S.TxtContainer>
       <S.BtnContainer>
-        <TouchableOpacity onPress={() => handleEdit(item.id)}>
-          <Text>Editar</Text>
-        </TouchableOpacity>
-        {/* <Button text={'Editar'} color={'#4CAF50'} route={`UpdateUser, ${item.id}`} width='25%' /> */}
-        <TouchableOpacity onPress={() => handleDelete(item.id)}>
-          <Text>Deletar</Text>
-        </TouchableOpacity>
+        <S.ButtonContainer color="#4CAF50" onPress={() => handleEdit(item.id)}>
+          <S.ButtonText>Editar</S.ButtonText>
+        </S.ButtonContainer>
+
+        <S.ButtonContainer color="#FF3B30" onPress={() => handleDelete(item.id)}>
+          <S.ButtonText>Deletar</S.ButtonText>
+        </S.ButtonContainer>
       </S.BtnContainer>
+
     </S.UserContainer>
   );
 

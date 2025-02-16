@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const SearchContainer = styled.View`
   margin-vertical: 16px;
+  width:80%;
 `;
 
 export const SearchInput = styled.TextInput`

@@ -24,7 +24,7 @@ export default function UpdateUser() {
   const fetchUser = async () => {
     try {
       const data = await getUserById(userId);
-    
+  
       if (data) {
         setUserData(data);
       }

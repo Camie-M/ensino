@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./styled";
 import ButtonCreate from "../Button";
-import { Text, Button, FlatList, RefreshControlProps } from "react-native";
-import { getAllPosts } from "@/app/Services/Posts/api";
+import { Text, Button, FlatList, RefreshControlProps, Alert } from "react-native";
+import { deletePost, getAllPosts } from "@/app/Services/Posts/api";
 import PostDataProp from "@/app/types/post";
 
 interface ListaProps {
@@ -19,14 +19,34 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return;
+
+    Alert.alert("Confirmar Exclusão", "Tem certeza de que deseja deletar este post?", [
+        { text: "Cancelar", style: "cancel" },
+        {
+            text: "Deletar",
+            onPress: async () => {
+                const success = await deletePost(id);
+                if (success) {
+                    Alert.alert("Sucesso", "Post deletado com sucesso!");
+                } else {
+                    Alert.alert("Erro", "Não foi possível deletar o post. Tente novamente.");
+                }
+            },
+        },
+    ]);
+};
+
+
   const renderItem = ({ item }: { item: PostDataProp }) => (
     <S.PostContainer
       style={{
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 1,
-        shadowRadius: 5,
-        elevation: 5,
+        elevation: 5, // Apenas para Android
+        shadowColor: "#000", // Funciona no iOS
+        shadowOffset: { width: 0, height: 2 }, // iOS
+        shadowOpacity: 0.2, // iOS (valor reduzido para suavizar)
+        shadowRadius: 5, // iOS
       }}
     >
       <S.TxtContainer>
@@ -39,14 +59,15 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
           text={"Editar Post"}
           color={"#4CAF50"}
           route={`UpdatePost, ${item.id}`}
+          width="45%"
         />
+         <S.ButtonDelete color="#FF3B30" onPress={() => handleDelete(item.id)}>
+            <S.ButtonText>Deletar</S.ButtonText>
+          </S.ButtonDelete>
       </S.BtnContainer>
     </S.PostContainer>
   );
 
-  const loadMoreItens = () => {
-    // Função para fazer a paginação/loading (pode ser implementada futuramente)
-  };
 
   return (
     <S.ListContainer>
@@ -67,7 +88,6 @@ export default function Lista({ posts, refreshControl }: ListaProps) {
             }}
             showsVerticalScrollIndicator={true}
             numColumns={1}
-            onEndReached={loadMoreItens}
             onEndReachedThreshold={0.5}
             ListFooterComponent={
               isLoading ? <S.FooterText>Loading...</S.FooterText> : null

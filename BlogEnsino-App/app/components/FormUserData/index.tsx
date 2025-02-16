@@ -39,7 +39,7 @@ export default function FormUserData({
 
   const handleSubmit = () => {
     if ( !formData.username || !formData.role) {
-      Alert.alert('Error', 'Please fill in all fields.');
+      Alert.alert('Error', 'Por favor, preencha todos os campos');
       return;
     }
     onSubmit(formData);

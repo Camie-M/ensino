@@ -72,7 +72,7 @@ export default function FormPost({
 
   const handleSubmit = () => {
     if (!formData.title || !formData.author || !formData.text || !formData.image) {
-      Alert.alert('Error', 'Please fill in all fields.');
+      Alert.alert('Error', 'Por favor, preecnah todos os campos');
       return;
     }
     onSubmit(formData);

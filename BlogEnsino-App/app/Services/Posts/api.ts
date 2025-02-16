@@ -112,6 +112,36 @@ export const createPost = async (formData: PostDataProp): Promise<PostDataProp |
   }
 };
 
+export const deletePost = async (id: string): Promise<boolean> => {
+  try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (!token) {
+          console.error("Erro: Token de autenticação não encontrado.");
+          return false;
+      }
+
+      const response = await fetch(`${localHost}:3001/posts/${id}`, {
+          method: "DELETE",
+          headers: {
+              'Authorization': `${token}`,
+              'Content-Type': 'application/json',
+          },
+      });
+
+      if (!response.ok) {
+          const errorMessage = await response.text();
+          console.error(`Erro ao deletar post (${response.status}): ${errorMessage}`);
+          return false;
+      }
+
+      return true;
+  } catch (error) {
+      console.error("Erro inesperado ao deletar post:", error);
+      return false;
+  }
+};
+
+
 
 export const getToken = async () => {
     try {

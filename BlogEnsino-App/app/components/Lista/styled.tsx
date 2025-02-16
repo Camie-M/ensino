@@ -17,7 +17,9 @@ export const PostContainer = styled.SafeAreaView`
   gap: 30px;
   margin-bottom: 20px;
   border-radius: 10px;
+  
 `;
+
 
 export const TxtContainer = styled.View`
   gap: 10px;
@@ -39,7 +41,10 @@ export const PostContentAuthor = styled.Text`
 `;
 
 export const BtnContainer = styled.View`
+  display:flex;
+  flex-direction:row;
   align-items: center;
+  justify-content:space-evenly;
 `;
 
 export const FooterText = styled.Text`
@@ -70,6 +75,25 @@ export const PageIndicator = styled.Text`
   color: #333;
 `;
 
+export const ButtonDelete = styled.TouchableOpacity`
+  background-color: ${(props: { color: any; }) => (props.color ? props.color : '#007BFF')};
+  padding: 10px 15px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: space-evenly;
+  justify-content: center;
+  /* flex:1; */
+  height: 50px;
+  width:45%;
+`;
+
+export const ButtonText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+
 export default { 
   ListContainer, 
   PostContainer, 
@@ -81,5 +105,7 @@ export default {
   FooterText, 
   EmptyMessage, 
   PaginationControls, 
-  PageIndicator 
+  PageIndicator,
+  ButtonDelete,
+  ButtonText
 };

@@ -54,5 +54,22 @@ export const BtnContainer = styled.View`
   gap: 4px;
 `;
 
+export const ButtonContainer = styled.TouchableOpacity`
+  background-color: ${(props: { color: any; }) => (props.color ? props.color : '#007BFF')};
+  padding: 10px 15px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  flex:1;
+`;
 
-export default { Container, Title, UserContainer, TxtContainer, BtnContainer }
+export const ButtonText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+
+
+export default { Container, Title, UserContainer, TxtContainer, BtnContainer, ButtonContainer,ButtonText }

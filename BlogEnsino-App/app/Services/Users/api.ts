@@ -103,7 +103,6 @@ export const getOwnUserData = async (): Promise<UserLogOut | null> => {
 export const getAllUsers = async (): Promise<UserInfoProp[] | null> => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      console.log(token);
       
       if (!token) {
         return null;
@@ -187,9 +186,9 @@ export const getUserById = async (id: string): Promise<UserInfoProp | null> => {
 export const updateUserbyId = async (id: string, formData: UserInfoProp): Promise<UserInfoProp | null> => {
   try {
     const token = await AsyncStorage.getItem('userToken');
-    if(!token) return null;
     const formatedFormData = JSON.stringify(formData);
-
+    if(!token) return null;
+    
     const response = await fetch(`${localHost}:3001/users/${id}`, {
       method: "PUT",
       headers: {
@@ -198,6 +197,7 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
       },
       body: formatedFormData,
     });
+    
     errorHandler(response)
 
     const userData: UserInfoProp = await response.json();

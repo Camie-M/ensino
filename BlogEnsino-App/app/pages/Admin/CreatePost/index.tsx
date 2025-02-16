@@ -15,14 +15,14 @@ export default function CreatePostForm() {
     try {
       const response = await createPost(formData);
       if (response) {
-        Alert.alert('Sucesso', 'Post atualizado com sucesso!');
+        Alert.alert('Sucesso', 'Post criado com sucesso!');
         navigation.goBack()
       } else {
-        Alert.alert('Erro', 'Não foi possível editar o Post. Tente novamente.');
+        Alert.alert('Erro', 'Não foi possível criar o Post. Tente novamente.');
       }
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro inesperado.');
-      console.error("Erro ao editar Post:", error);
+      console.error("Erro ao criar Post:", error);
     }
   };
 
