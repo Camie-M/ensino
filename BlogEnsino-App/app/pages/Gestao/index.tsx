@@ -40,7 +40,7 @@ export default function Gestao() {
       fetchUsers();
       setSelectedType("all")
       setRefreshing(false);
-    }, 2000);
+    }, 1000);
   };  
 
   const handleDelete = async (id:string | undefined) => {

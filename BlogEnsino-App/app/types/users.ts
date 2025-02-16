@@ -4,6 +4,7 @@ interface UserDataProp {
 };
 
 interface UserLogOut {
+    id?:string;
     username?: string;
     role?: string;
     createdAt?:string;

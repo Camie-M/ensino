@@ -83,7 +83,7 @@ export class UserController {
     }
 
     static async editUser(req: Request, res: Response): Promise<void> {
-        try {
+        try {         
             const token = req.headers.authorization;
             const id = req.params.id;
             if(!token){

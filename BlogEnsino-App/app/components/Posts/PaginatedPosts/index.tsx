@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Text, Button, FlatList } from 'react-native';
-import * as S from './styled';
-import Post from '..';
-import PostDataProp from '@/app/types/post';
+import React, { useState, useEffect } from "react";
+import { Text, Button, FlatList, RefreshControl } from "react-native";
+import * as S from "./styled";
+import Post from "..";
+import PostDataProp from "@/app/types/post";
 
 interface PaginatedPostsProps {
   posts: PostDataProp[];
   searchTerm: string;
+  onRefresh: () => void;
+  refreshing: boolean;
 }
 
-const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) => {
+const PaginatedPosts: React.FC<PaginatedPostsProps> = ({
+  posts,
+  searchTerm,
+  onRefresh,
+  refreshing,
+}) => {
   const postsPerPage = 3;
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,9 +26,10 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) =>
       setFilteredPosts(posts);
     } else {
       setFilteredPosts(
-        posts.filter((post) =>
-          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.text.toLowerCase().includes(searchTerm.toLowerCase())
+        posts.filter(
+          (post) =>
+            post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.text.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
     }
@@ -38,23 +46,28 @@ const PaginatedPosts: React.FC<PaginatedPostsProps> = ({ posts, searchTerm }) =>
         <S.EmptyMessage>Nenhum post encontrado para esta pesquisa.</S.EmptyMessage>
       ) : (
         <>
-          <S.PostsGrid
+          <FlatList
             data={currentPosts}
-            keyExtractor={(item: PostDataProp, index: number) => item.id ?? index.toString()}
+            keyExtractor={(item: PostDataProp, index: number) =>
+              item.id ?? index.toString()
+            }
             contentContainerStyle={{
-              justifyContent: 'center',
+              justifyContent: "center",
               paddingBottom: 30,
             }}
             renderItem={({ item }: { item: PostDataProp }) => (
-              <Post 
-                id={item.id} 
-                title={item.title} 
-                text={item.text} 
-                author={item.author} 
+              <Post
+                id={item.id}
+                title={item.title}
+                text={item.text}
+                author={item.author}
                 image={item.image}
                 createdAt={item.createdAt}
               />
             )}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
 
           <S.PaginationControls>

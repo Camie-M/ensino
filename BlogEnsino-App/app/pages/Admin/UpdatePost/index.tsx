@@ -55,7 +55,7 @@ export default function UpdatePost() {
     setTimeout(() => {
       fetchPosts()
       setRefreshing(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (

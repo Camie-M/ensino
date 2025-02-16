@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { Text, RefreshControl } from "react-native";
 import BaseLayout from "../../components/BaseLayout";
 import Search from "../../components/Search";
 import PaginatedPosts from "../../components/Posts/PaginatedPosts";
 import { getAllPosts } from "@/app/Services/Posts/api";
 import PostDataProp from "@/app/types/post";
 import * as S from "./styled";
+
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostDataProp[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostDataProp[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -24,6 +27,15 @@ const Home: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      fetchPosts()
+      setRefreshing(false);
+    }, 1000);
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -54,7 +66,12 @@ const Home: React.FC = () => {
       {loading ? (
         <Text>Carregando posts...</Text>
       ) : (
-        <PaginatedPosts posts={filteredPosts} searchTerm={searchTerm} />
+        <PaginatedPosts
+          posts={filteredPosts}
+          searchTerm={searchTerm}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+        />
       )}
     </BaseLayout>
   );

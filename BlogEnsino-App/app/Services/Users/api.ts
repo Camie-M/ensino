@@ -197,8 +197,6 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
       },
       body: formatedFormData,
     });
-    
-    errorHandler(response)
 
     const userData: UserInfoProp = await response.json();
 
@@ -216,32 +214,46 @@ export const updateUserbyId = async (id: string, formData: UserInfoProp): Promis
 };
 
 export const deleteUser = async (id: string): Promise<UserInfoProp | null> => {
-    try {
+  try {
       const token = await AsyncStorage.getItem('userToken');
       if (!token || !id) {
-        return null;
+          return null;
       }
+
+      const loggedUser = await getOwnUserData();
+      if (!loggedUser) {
+          console.error("Erro ao obter usuário logado.");
+          return null;
+      }
+
+      // Impede a exclusão do próprio usuário
+      if (loggedUser.id === id) {
+          console.error("Usuário não pode excluir a própria conta.");
+          return null;
+      }
+
       const response = await fetch(`${localHost}:3001/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          'Authorization': `${token}`,
-        },
+          method: "DELETE",
+          headers: {
+              'Authorization': `${token}`,
+          },
       });
-      errorHandler(response)
-  
+
+      errorHandler(response);
+
       const userData: UserInfoProp = await response.json();
       console.log('User deletado com sucesso:', userData);
-  
+
       return userData;
-    } catch (error) {
-      // Tratamento de erros inesperados
+  } catch (error) {
       if (error instanceof TypeError) {
-        console.error('Erro de conexão: Verifique sua conexão com a internet ou o servidor.', error.message);
+          console.error('Erro de conexão: Verifique sua conexão com a internet ou o servidor.', error.message);
       } else {
-        console.error('Erro inesperado ao deletar usuário:', error);
+          console.error('Erro inesperado ao deletar usuário:', error);
       }
       return null;
-    }
+  }
 };
+
 
 export default {formatFormData,errorHandler,LoginUser,getAllUsers,createUser,getUserById,updateUserbyId,deleteUser}

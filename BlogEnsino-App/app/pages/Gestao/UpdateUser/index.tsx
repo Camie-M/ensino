@@ -58,7 +58,7 @@ export default function UpdateUser() {
     setTimeout(() => {
       fetchUser()
       setRefreshing(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (
